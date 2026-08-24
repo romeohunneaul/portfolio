@@ -1,22 +1,37 @@
+import Link from "next/link";
+
 type NoteCardProps = {
   title: string;
   summary: string;
+  slug?: string;
+  date?: string;
   tags?: string[];
 };
 
-export function NoteCard({ title, summary, tags = [] }: NoteCardProps) {
+export function NoteCard({ title, summary, slug, date, tags = [] }: NoteCardProps) {
+  const heading = slug ? (
+    <Link href={`/sandbox/${slug}`} className="underline-offset-4 hover:underline">
+      {title}
+    </Link>
+  ) : (
+    title
+  );
+
   return (
-    <article className="rounded-lg border border-black/10 p-4 dark:border-white/15">
-      <h3 className="font-medium">{title}</h3>
-      <p className="mt-1 text-sm opacity-70">{summary}</p>
-      {tags.length > 0 && (
-        <ul className="mt-2 flex gap-2">
-          {tags.map((tag) => (
-            <li key={tag} className="text-xs opacity-50">
-              #{tag}
-            </li>
-          ))}
-        </ul>
+    <article className="border-line border-t py-6">
+      <h3 className="text-lg font-medium tracking-tight">{heading}</h3>
+      <p className="text-muted mt-1 text-sm leading-relaxed">{summary}</p>
+      {(date || tags.length > 0) && (
+        <div className="text-muted mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
+          {date && <time dateTime={date}>{date}</time>}
+          {tags.length > 0 && (
+            <ul className="flex gap-2">
+              {tags.map((tag) => (
+                <li key={tag}>#{tag}</li>
+              ))}
+            </ul>
+          )}
+        </div>
       )}
     </article>
   );
