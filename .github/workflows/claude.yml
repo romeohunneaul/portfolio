@@ -21,6 +21,10 @@ jobs:
       contents: write
       pull-requests: write
       issues: write
+      # Requis par l'action : elle en a besoin pour obtenir un jeton
+      # d'identité GitHub à courte durée, indépendant de CLAUDE_CODE_OAUTH_TOKEN
+      # (qui, lui, n'authentifie que l'appel à Claude).
+      id-token: write
     steps:
       - uses: actions/checkout@v5
         with:
