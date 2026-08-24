@@ -1,0 +1,30 @@
+name: Claude
+
+# Uniquement sur invocation explicite : personne ne déclenche Claude à ma place.
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+
+jobs:
+  claude:
+    # Deux garde-fous cumulés :
+    #  1. le commentaire mentionne @claude
+    #  2. son auteur est le propriétaire du repo — sans quoi, le repo étant
+    #     public, n'importe qui pourrait déclencher des exécutions facturées.
+    if: |
+      contains(github.event.comment.body, '@claude')
+      && github.event.comment.author_association == 'OWNER'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: anthropics/claude-code-action@v1
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
