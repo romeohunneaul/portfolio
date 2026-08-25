@@ -9,9 +9,15 @@ publie réflexions et trouvailles.
 nouvelles formes d'expériences et d'interactions au travail. Tout arbitrage de
 contenu se tranche avec cette question.
 
-Le savoir *sur* ce projet (plan d'action, problématiques des case studies,
-notes de cadrage) vit dans le brain, hors de ce dépôt :
-`~/Desktop/Projects/_brain/projects/portfolio/`.
+## Brain
+
+Le savoir *sur* ce projet (plan d'action, problématiques des case studies, notes de
+cadrage) vit hors de ce dépôt.
+
+- **Dossier du projet dans le brain** : `~/Desktop/Projects/_brain/projects/portfolio/`
+- **Synthèses terrain** : `syntheses/` · **Briefs** : `briefs/` · **Notes** : `notes/`
+
+Le flow de dev (quelle skill lancer quand) : `~/Desktop/Projects/_brain/skills-manager/FLOW.md`.
 
 ## Stack
 
