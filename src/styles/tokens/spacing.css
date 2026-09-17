@@ -1,0 +1,19 @@
+/* Notebook — spacing & layout. Nothing is rounded, ever. */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-11: 46px; /* between page sections */
+  --space-14: 56px; /* page padding, column gap */
+
+  --artboard-max: 1080px;
+  --aside-width: 272px; /* margin column holding the drawing */
+  --measure: 48ch;
+
+  --radius: 0px;
+  --border: 1.5px;
+}

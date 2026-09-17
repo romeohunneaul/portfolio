@@ -12,6 +12,21 @@ paths:
 - Le test vit à côté du composant : `note-card.tsx` + `note-card.test.tsx`.
 - Props typées par un `type` local nommé `<Composant>Props`.
 
+## Design system (Storybook)
+
+- `src/components/ui/` = briques du design system « Notebook » (tokens dans
+  `src/styles/tokens/`). **Un composant `ui/` n'existe pas sans sa story**
+  (`<nom>.stories.tsx` à côté) ; une story par état visible.
+- `src/components/sections/` = assemblages de page (timeline, listes…). Story
+  quand le composant a des variantes ; pas obligatoire sinon.
+- Les stories sont exécutées comme tests (`npm test`, projet `storybook`, Chromium
+  headless + addon a11y en mode `error`). Une violation a11y casse la CI.
+- Jamais de couleur, taille ou espacement en dur : `var(--…)` ou une classe
+  Tailwind mappée dans `@theme` (`bg-paper`, `text-ink`, `border-rule`…).
+- Le contenu vient de `src/data/*.ts` (profil, projets, trail, lectures) — même
+  source pour les pages et le serveur MCP `/api/mcp`. Pas de copy en dur dans
+  un composant.
+
 ## Server / Client
 
 - **Server Component par défaut.** N'ajouter `"use client"` que si le composant a

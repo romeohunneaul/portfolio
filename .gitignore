@@ -51,3 +51,6 @@ next-env.d.ts
 
 # Obsidian (le dossier content/ est ouvert comme vault)
 .obsidian/
+
+*storybook.log
+storybook-static

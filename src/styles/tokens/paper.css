@@ -1,0 +1,23 @@
+/* Notebook — paper, pens, shadow. */
+:root {
+  /* Grain is a real fractal-noise file; a gradient cannot fake it. */
+  --paper-grain: url("/grain.svg");
+  --paper-grain-size: 140px 140px;
+
+  --paper-grid:
+    repeating-linear-gradient(0deg, rgba(47, 53, 66, 0.1) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(90deg, rgba(47, 53, 66, 0.1) 0 1px, transparent 1px 24px);
+  --paper-grid-fine:
+    repeating-linear-gradient(0deg, rgba(47, 53, 66, 0.13) 0 1px, transparent 1px 16px),
+    repeating-linear-gradient(90deg, rgba(47, 53, 66, 0.13) 0 1px, transparent 1px 16px);
+
+  /* Pen families — one per page */
+  --stroke-fine: 1.5px;
+  --stroke-pencil: 2.2px;
+  --stroke-pencil-dash: 5 2 9 3;
+  --stroke-ballpoint: 1.1px;
+  --stroke-marker: 3.6px;
+
+  /* Hard offset shadow, hover only */
+  --shadow-hover: 4px 4px 0 var(--ink);
+}
