@@ -1,0 +1,21 @@
+/* Notebook — colours. Source: Claude Design project 82f4ba6a, tokens/colors.css */
+:root {
+  /* Paper & ink */
+  --paper: #f7f4ef;
+  --paper-card: #fdfcfa;
+  --ink: #2f3542;
+  --ink-soft: #5c6472; /* ≥ 4.5:1 on paper */
+  --ink-rule: rgba(47, 53, 66, 0.4);
+  --ink-shadow: rgba(47, 53, 66, 0.16);
+
+  /* Accents — pastel, applied as tint, never as fill */
+  --accent: #dbe7f2;
+  --accent-warm: #ffd9b8;
+  --accent-strong: #d98f6a; /* the single loud colour */
+  --highlight: #f6ecc9;
+  --highlight-punch: #ffd97d;
+
+  --accent-tint: color-mix(in srgb, var(--accent) 35%, transparent);
+  --accent-strong-tint: color-mix(in srgb, var(--accent-strong) 35%, transparent);
+  --highlight-tint: color-mix(in srgb, var(--highlight) 85%, transparent);
+}

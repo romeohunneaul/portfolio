@@ -9,14 +9,35 @@ publie réflexions et trouvailles.
 nouvelles formes d'expériences et d'interactions au travail. Tout arbitrage de
 contenu se tranche avec cette question.
 
-Le savoir *sur* ce projet (plan d'action, problématiques des case studies,
-notes de cadrage) vit dans le brain, hors de ce dépôt :
-`~/Desktop/Projects/_brain/projects/portfolio/`.
+## Brain
+
+Le savoir *sur* ce projet (plan d'action, problématiques des case studies, notes de
+cadrage) vit hors de ce dépôt.
+
+- **Dossier du projet dans le brain** : `~/Desktop/Projects/_brain/projects/portfolio/`
+- **Synthèses terrain** : `syntheses/` · **Briefs** : `briefs/` · **Notes** : `notes/`
+
+Le flow de dev (quelle skill lancer quand) : `~/Desktop/Projects/_brain/skills-manager/FLOW.md`.
 
 ## Stack
 
 Next.js 16 (App Router) · React 19 · TypeScript · Tailwind v4 · GSAP ·
-MDX via content-collections · Vitest · Playwright · déploiement Vercel.
+MDX via content-collections · Storybook 10 (`@storybook/nextjs-vite`) ·
+Vitest · Playwright · `mcp-handler` (serveur MCP sur `/api/mcp`) · déploiement Vercel.
+
+## Architecture du contenu
+
+| Où | Quoi |
+|---|---|
+| `src/data/profile.ts` | bio, liens, parcours, formation, compétences, outils |
+| `src/data/projects.ts` | problèmes traités (clients en coulisse, jamais de chiffres clients) |
+| `src/data/trail.ts` | index UTMB, courses, traces (`public/gpx/<slug>.gpx` ⇄ une entrée `routes`) |
+| `src/data/reading.ts` | articles marquants |
+| `content/notes/*.mdx` | notes du labo |
+| `src/styles/tokens/*.css` | design system « Notebook » (source : projet Claude Design, cf. brain) |
+
+Ces fichiers alimentent **les pages et le serveur MCP**. Ajouter une trace =
+déposer le `.gpx` + une ligne dans `routes`. Ajouter un article = une ligne.
 
 ⚠️ **Next.js 16 diffère des données d'entraînement des modèles.** Lire
 `node_modules/next/dist/docs/` avant d'écrire du code Next spécifique
@@ -29,8 +50,10 @@ npm run dev         # serveur de dev
 npm run build       # build de prod (compile aussi le contenu MDX)
 npm run typecheck   # next typegen && tsc --noEmit
 npm run lint        # eslint
-npm test            # vitest (unitaires)
+npm test            # vitest : unitaires (jsdom) + stories (Chromium headless, a11y)
 npm run test:e2e    # playwright (desktop + mobile)
+npm run storybook   # design system sur :6006
+
 ```
 
 ## Règles permanentes

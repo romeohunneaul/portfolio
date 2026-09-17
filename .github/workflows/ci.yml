@@ -20,9 +20,12 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # Les stories tournent aussi comme tests, dans Chromium (projet vitest « storybook »).
+      - run: npx playwright install --with-deps chromium
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
+      - run: npm run build-storybook
 
   e2e:
     name: Tests end-to-end
