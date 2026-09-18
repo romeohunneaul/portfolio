@@ -4,18 +4,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export const tabs = [
-  { href: "/", label: "home" },
-  { href: "/work", label: "work" },
-  { href: "/trail", label: "trail" },
-  { href: "/reading", label: "reading" },
-  { href: "/mcp", label: "mcp" },
+  { href: "/", label: "Home" },
+  { href: "/work", label: "Work" },
+  { href: "/trail", label: "Trail" },
+  { href: "/reading", label: "Reading" },
+  { href: "/mcp", label: "MCP" },
 ] as const;
 
 /** Client only for the active state; the links work without JS. */
 export function NavTabs() {
   const pathname = usePathname();
   return (
-    <nav aria-label="Sections" className="flex flex-wrap gap-x-3 gap-y-1 font-mono text-[length:var(--size-label)]">
+    <nav aria-label="Sections" className="-mx-2.5 flex flex-wrap gap-x-1 gap-y-1">
       {tabs.map(({ href, label }) => {
         const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
         return (
@@ -23,7 +23,7 @@ export function NavTabs() {
             key={href}
             href={href}
             aria-current={active ? "page" : undefined}
-            className={`px-2 py-px no-underline hover:bg-[var(--accent-tint)] ${active ? "bg-[var(--accent-tint)]" : ""}`}
+            className={`text-row px-2.5 py-1.5 no-underline hover:bg-[var(--accent-tint)] ${active ? "bg-[var(--accent-tint)] font-medium" : ""}`}
           >
             {label}
           </Link>

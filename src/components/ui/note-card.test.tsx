@@ -14,9 +14,9 @@ describe("NoteCard", () => {
     expect(screen.getByText("Ma note")).toBeInTheDocument();
   });
 
-  it("affiche la date en mois.année et les tags", () => {
+  it("affiche la date en mois abrégé + année et les tags", () => {
     render(<NoteCard title="Ma note" date="2026-08-27" tags={["demo", "ai"]} />);
-    expect(screen.getByText("08.2026")).toBeInTheDocument();
+    expect(screen.getByText("Aug 2026")).toBeInTheDocument();
     expect(screen.getByText("demo")).toBeInTheDocument();
     expect(screen.getByText("ai")).toBeInTheDocument();
   });

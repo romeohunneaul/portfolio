@@ -4,7 +4,7 @@
 @import "../styles/tokens/spacing.css";
 @import "../styles/tokens/paper.css";
 
-/* Tokens exposed as Tailwind utilities: bg-paper, text-ink, border-rule, font-mono… */
+/* Tokens exposed as Tailwind utilities: bg-paper, text-ink, border-rule, text-meta… */
 @theme inline {
   --color-paper: var(--paper);
   --color-card: var(--paper-card);
@@ -16,6 +16,18 @@
   --color-highlight: var(--highlight);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+  --text-lede: var(--size-lede);
+  --text-lede--line-height: var(--leading-tight);
+  --text-title: var(--size-title);
+  --text-title--line-height: var(--leading-tight);
+  --text-body: var(--size-body);
+  --text-body--line-height: var(--leading-body);
+  --text-row: var(--size-body);
+  --text-row--line-height: var(--leading-row);
+  --text-meta: var(--size-meta);
+  --text-meta--line-height: var(--leading-row);
+  --text-sticker: var(--size-sticker);
+  --text-sticker--line-height: 1.3;
   --radius-*: initial;
   --radius: 0px;
 }
@@ -37,22 +49,24 @@ body {
   text-wrap: pretty;
 }
 
+/* Links look like links. Rows and tabs opt out with `no-underline`. */
 a {
   color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--ink-rule);
+  text-underline-offset: 0.18em;
+}
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 2px;
 }
 
 ::selection {
   background: var(--highlight-punch);
-}
-
-/* Logo draw-in: hooks live on the paths (stroke-dashoffset). */
-@keyframes logo-draw {
-  from {
-    stroke-dashoffset: 1;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
 }
 
 /* Motion enriches, it never conditions reading. */

@@ -12,8 +12,8 @@ export function ReadingList({ limit }: { limit?: number }) {
           href={a.url}
           title={
             <>
-              {a.title}
-              <span className="text-soft"> — {a.author}</span>
+              <span className="font-semibold">{a.title}</span>
+              <span> — {a.author}</span>
             </>
           }
           meta={a.year}

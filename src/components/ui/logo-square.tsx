@@ -8,7 +8,7 @@ type LogoSquareProps = {
 };
 
 /** A company mark in a hairline square. Falls back to initials. */
-export function LogoSquare({ name, src, size = 28 }: LogoSquareProps) {
+export function LogoSquare({ name, src, size = 32 }: LogoSquareProps) {
   const initials = name
     .split(/\s+/)
     .slice(0, 2)
@@ -18,18 +18,12 @@ export function LogoSquare({ name, src, size = 28 }: LogoSquareProps) {
 
   return (
     <span
-      className="border-rule bg-card inline-flex shrink-0 items-center justify-center overflow-hidden border-[length:var(--border)] font-mono text-[length:var(--size-caption)]"
+      className="border-rule bg-card text-meta inline-flex shrink-0 items-center justify-center overflow-hidden border-[length:var(--border)] font-mono"
       style={{ width: size, height: size }}
       aria-hidden="true"
     >
       {src ? (
-        <Image
-          src={src}
-          alt=""
-          width={size - 6}
-          height={size - 6}
-          className="opacity-80 mix-blend-multiply grayscale contrast-125"
-        />
+        <Image src={src} alt="" width={size - 8} height={size - 8} className="opacity-80 mix-blend-multiply grayscale contrast-125" />
       ) : (
         initials
       )}

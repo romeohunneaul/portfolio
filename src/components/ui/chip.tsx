@@ -5,17 +5,17 @@ type ChipProps = {
   tone?: "accent" | "strong" | "highlight" | "none";
 };
 
+/* Tints are strong enough to tell apart; the border keeps them readable on grain. */
 const tones = {
-  accent: "bg-[var(--accent-tint)]",
-  strong: "bg-[var(--accent-strong-tint)]",
-  highlight: "bg-[var(--highlight-tint)]",
-  none: "border-rule border-[length:var(--border)]",
+  accent: "bg-[color-mix(in_srgb,var(--accent)_70%,transparent)]",
+  strong: "bg-[color-mix(in_srgb,var(--accent-strong)_45%,transparent)]",
+  highlight: "bg-[var(--highlight)]",
+  none: "bg-transparent",
 };
 
-/** Mono, tiny, tinted — never filled. */
 export function Chip({ children, tone = "accent" }: ChipProps) {
   return (
-    <span className={`inline-block px-[7px] py-[2px] font-mono text-[length:var(--size-caption)] whitespace-nowrap ${tones[tone]}`}>
+    <span className={`border-rule text-meta inline-block border px-2 py-0.5 font-mono whitespace-nowrap ${tones[tone]}`}>
       {children}
     </span>
   );

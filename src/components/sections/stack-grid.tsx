@@ -2,17 +2,17 @@ import { skills, stack, type Tech } from "@/data/profile";
 
 const groups: Tech["group"][] = ["AI", "Web", "Data", "Ops"];
 
-/** Skills as plain lists; tools as chips that say where they were used on hover. */
+/** Skills as plain lists; tools as rows that say where they were used — visible, not on hover. */
 export function StackGrid({ withSkills = false }: { withSkills?: boolean }) {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-10">
       {withSkills && (
-        <dl className="m-0 grid gap-x-8 gap-y-3 sm:grid-cols-3">
+        <dl className="m-0 grid gap-x-8 gap-y-6 sm:grid-cols-3">
           {skills.map((g) => (
-            <div key={g.name} className="flex flex-col gap-1">
-              <dt className="text-soft font-mono text-[length:var(--size-caption)] tracking-[var(--track-label)] uppercase">{g.name}</dt>
+            <div key={g.name} className="flex flex-col gap-2">
+              <dt className="font-semibold">{g.name}</dt>
               {g.items.map((s) => (
-                <dd key={s} className="m-0 text-[length:var(--size-body)]">
+                <dd key={s} className="m-0">
                   {s}
                 </dd>
               ))}
@@ -20,28 +20,23 @@ export function StackGrid({ withSkills = false }: { withSkills?: boolean }) {
           ))}
         </dl>
       )}
-      <dl className="m-0 flex flex-col gap-2">
+      <div className="grid gap-x-8 gap-y-8 sm:grid-cols-2">
         {groups.map((g) => (
-          <div key={g} className="grid grid-cols-[3.5rem_1fr] items-baseline gap-3">
-            <dt className="text-soft font-mono text-[length:var(--size-caption)] tracking-[var(--track-label)] uppercase">{g}</dt>
-            <dd className="m-0 flex flex-wrap gap-x-1 gap-y-1">
-              {stack
-                .filter((t) => t.group === g)
-                .map((t) => (
-                  <a
-                    key={t.name}
-                    href={t.url}
-                    rel="noreferrer"
-                    title={t.used}
-                    className="inline-block bg-[var(--accent-tint)] px-[7px] py-[2px] font-mono text-[length:var(--size-caption)] no-underline hover:bg-[var(--highlight-tint)]"
-                  >
+          <dl key={g} className="m-0 flex flex-col gap-3">
+            <dt className="font-semibold">{g}</dt>
+            {stack
+              .filter((t) => t.group === g)
+              .map((t) => (
+                <dd key={t.name} className="m-0 flex flex-col">
+                  <a href={t.url} rel="noreferrer">
                     {t.name}
                   </a>
-                ))}
-            </dd>
-          </div>
+                  <span className="text-soft text-meta">{t.used}</span>
+                </dd>
+              ))}
+          </dl>
         ))}
-      </dl>
+      </div>
     </div>
   );
 }

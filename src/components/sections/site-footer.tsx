@@ -2,12 +2,21 @@ import { profile } from "@/data/profile";
 
 /** "Trouver François" — one line, not a banner. */
 export function SiteFooter() {
+  const links = [
+    ["Mail", `mailto:${profile.email}`],
+    ["GitHub", profile.links.github],
+    ["LinkedIn", profile.links.linkedin],
+    ["Strava", profile.links.strava],
+    ["MCP", "/mcp"],
+  ] as const;
   return (
-    <footer id="hello" className="border-rule text-soft mt-[var(--space-11)] border-t-[length:var(--border)] pt-4 text-[length:var(--size-meta)]">
-      Say hello:{" "}
-      <a href={`mailto:${profile.email}`}>mail</a> · <a href={profile.links.github} rel="noreferrer">github</a> ·{" "}
-      <a href={profile.links.linkedin} rel="noreferrer">linkedin</a> ·{" "}
-      <a href={profile.links.strava} rel="noreferrer">strava</a> · <a href="/api/mcp">mcp</a>
+    <footer id="hello" className="border-rule mt-16 flex flex-wrap items-baseline gap-x-6 gap-y-2 border-t-[length:var(--border)] pt-6">
+      <span className="text-soft">Say hello</span>
+      {links.map(([label, href]) => (
+        <a key={label} href={href} rel={href.startsWith("http") ? "noreferrer" : undefined}>
+          {label}
+        </a>
+      ))}
     </footer>
   );
 }

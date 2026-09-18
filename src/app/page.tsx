@@ -3,29 +3,24 @@ import { NoteCard } from "@/components/ui/note-card";
 import { Reveal } from "@/components/ui/reveal";
 import { Bio } from "@/components/sections/bio";
 import { Margin } from "@/components/sections/margin";
-import { PageTitle } from "@/components/sections/page-title";
-import { ProjectsList } from "@/components/sections/projects-list";
 import { ReadingList } from "@/components/sections/reading-list";
 import { Section } from "@/components/sections/section";
-import { StackGrid } from "@/components/sections/stack-grid";
 import { Timeline } from "@/components/sections/timeline";
 import { RaceList, UtmbLine } from "@/components/sections/trail-section";
-import { articles } from "@/data/reading";
 
+/** Four blocks: who, work, lab, on the side. Details live in the tabs. */
 export default function Home() {
   const notes = allNotes.filter((n) => !n.draft).sort((a, b) => b.date.localeCompare(a.date));
 
   return (
-    <main className="grid items-start gap-x-14 pt-10 lg:grid-cols-[1fr_var(--aside-width)]">
-      <PageTitle>François Massanes — notebook</PageTitle>
-
-      <div className="flex flex-col gap-[var(--space-11)]">
+    <main id="main" className="grid items-start gap-x-14 pt-12 lg:grid-cols-[1fr_var(--aside-width)]">
+      <div className="flex flex-col gap-16">
         <Reveal>
           <Bio />
         </Reveal>
 
         <Reveal delay={0.1}>
-          <Section id="work" label="Work" more="/work">
+          <Section id="work" label="Work" aside="Career, projects, tools" more="/work">
             <Timeline />
           </Section>
         </Reveal>
@@ -38,26 +33,18 @@ export default function Home() {
               ))}
             </div>
           ) : (
-            <p className="text-soft m-0 text-[length:var(--size-body)]">Nothing published yet. Soon.</p>
+            <p className="text-soft m-0">Nothing published yet.</p>
           )}
         </Section>
 
-        <Section id="projects" label="Problems worked on" more="/work">
-          <ProjectsList limit={4} />
-        </Section>
-
-        <Section id="stack" label="Tools actually used" more="/work#stack">
-          <StackGrid />
-        </Section>
-
-        <Section id="trail" label="Trail" more="/trail">
-          <div className="flex flex-col gap-3">
+        <Section id="trail" label="Trail" aside="Races and routes" more="/trail">
+          <div className="flex flex-col gap-6">
             <UtmbLine />
             <RaceList limit={3} />
           </div>
         </Section>
 
-        <Section id="reading" label="Reading" aside={`${articles.length} that stuck`} more="/reading">
+        <Section id="reading" label="Reading" aside="All articles" more="/reading">
           <ReadingList limit={4} />
         </Section>
       </div>

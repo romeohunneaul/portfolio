@@ -5,7 +5,7 @@ const meta = {
   title: "UI/Highlight",
   component: Highlight,
   render: (args) => (
-    <p className="m-0 max-w-[var(--measure)] text-[length:var(--size-lede)]">
+    <p className="m-0 max-w-[var(--measure)] text-lede">
       The rest of the time I run <Highlight {...args}>up hills, slowly</Highlight>. Both go in the notebook.
     </p>
   ),

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageTitle } from "@/components/sections/page-title";
+import { PageHeading } from "@/components/sections/page-heading";
 import { ReadingList } from "@/components/sections/reading-list";
 import { Section } from "@/components/sections/section";
 import { articles } from "@/data/reading";
@@ -8,9 +8,9 @@ export const metadata: Metadata = { title: "Reading", description: "Articles tha
 
 export default function ReadingPage() {
   return (
-    <main className="flex flex-col gap-[var(--space-11)] pt-10">
-      <PageTitle>Reading</PageTitle>
-      <Section id="articles" label="Articles that stuck" aside={`${articles.length}, one line each`}>
+    <main id="main" className="flex flex-col gap-16 pt-12">
+      <PageHeading lede="Articles that changed how I work. One line each on why.">Reading</PageHeading>
+      <Section id="articles" label="Articles that stuck" aside={`${articles.length} so far`}>
         <ReadingList />
       </Section>
     </main>

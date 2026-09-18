@@ -5,12 +5,13 @@ import { NavTabs } from "./nav-tabs";
 /** Wordmark left, five tabs right, one hairline under both. */
 export function SiteHeader() {
   return (
-    <header className="border-rule flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3 border-b-[length:var(--border)] pb-3">
+    <header className="border-rule flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-b-[length:var(--border)] pb-4">
+      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-[var(--highlight)] focus:px-3 focus:py-2">
+        Skip to content
+      </a>
       <Link href="/" className="flex items-center gap-3 no-underline">
-        <Logo size={40} animate className="translate-y-[3px]" />
-        <span className="font-mono text-[length:var(--size-caption)] tracking-[var(--track-name)] uppercase">
-          François Massanes
-        </span>
+        <Logo size={40} animate />
+        <span className="text-meta font-mono tracking-[var(--track-name)] uppercase">François Massanes</span>
       </Link>
       <NavTabs />
     </header>

@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("la home affiche la bio, le parcours et les tabs", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.getByRole("heading", { level: 1, name: /François Massanes/ })).toBeAttached();
+  await expect(page.getByRole("heading", { level: 1, name: /Product manager/ })).toBeVisible();
   await expect(page.getByText(/Product manager, AI in business software/)).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: /^Work/ })).toBeVisible();
   await expect(page.getByText("Taster")).toBeVisible();
@@ -25,7 +25,7 @@ test("on navigue de la home vers une note et retour", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1, name: "Première note de la sandbox" })).toBeVisible();
   await expect(page.getByText(/pipeline fonctionne/)).toBeVisible();
 
-  await page.getByRole("link", { name: "← notebook" }).click();
+  await page.getByRole("link", { name: "Back to the notebook" }).click();
   await expect(page).toHaveURL(/\/(#lab)?$/);
 });
 
@@ -40,7 +40,7 @@ test("les tabs mènent aux pages détaillées", async ({ page }) => {
   await nav.getByRole("link", { name: "trail" }).click();
   await expect(page).toHaveURL(/\/trail$/);
   await expect(page.getByRole("img", { name: /Mont Charvin loop, seen from above/ })).toBeVisible();
-  await expect(page.getByRole("link", { name: "download gpx ↓" }).first()).toHaveAttribute("href", /\.gpx$/);
+  await expect(page.getByRole("link", { name: "Download GPX" }).first()).toHaveAttribute("href", /\.gpx$/);
 
   await nav.getByRole("link", { name: "reading" }).click();
   await expect(page).toHaveURL(/\/reading$/);

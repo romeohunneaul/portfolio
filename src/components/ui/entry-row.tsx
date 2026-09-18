@@ -3,35 +3,35 @@ import type { ReactNode } from "react";
 
 type EntryRowProps = {
   title: ReactNode;
+  /** Right column: dates, counts. Several items render with a gap, no separators. */
   meta?: ReactNode;
-  /** Small mark or chip after the title. */
+  /** Chip or mark after the title. */
   mark?: ReactNode;
-  /** Second line, soft. */
+  /** Second line, measured. */
   detail?: ReactNode;
   href?: string;
 };
 
 const base =
-  "grid grid-cols-[1fr_auto] items-baseline gap-x-5 gap-y-1 border-b border-rule px-2 py-[13px] text-[length:var(--size-row)]";
+  "grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 border-b border-rule py-4 text-row";
 
 /** A hairline row. Everything that is not a published note is one of these. */
 export function EntryRow({ title, meta, mark, detail, href }: EntryRowProps) {
   const body = (
     <>
-      <span className="flex flex-wrap items-center gap-3">
+      <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <span>{title}</span>
         {mark}
       </span>
-      {meta && <span className="text-soft font-mono text-[length:var(--size-meta)] tabular-nums">{meta}</span>}
-      {detail && <span className="text-soft col-span-2 text-[length:var(--size-body)]">{detail}</span>}
+      {meta && <span className="text-soft text-meta flex gap-3 font-mono tabular-nums">{meta}</span>}
+      {detail && <span className="text-soft col-span-2 max-w-[var(--measure)]">{detail}</span>}
     </>
   );
 
   if (!href) return <div className={base}>{body}</div>;
 
-  const external = href.startsWith("http");
   const cls = `${base} no-underline hover:bg-[var(--accent-tint)]`;
-  return external ? (
+  return href.startsWith("http") ? (
     <a href={href} className={cls} rel="noreferrer">
       {body}
     </a>

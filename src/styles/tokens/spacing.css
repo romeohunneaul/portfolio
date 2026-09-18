@@ -1,19 +1,18 @@
-/* Notebook — spacing & layout. Nothing is rounded, ever. */
+/* Notebook — spacing on an 8px grid. Four steps carry the whole rhythm:
+   8 inside a row · 16 between rows · 24 heading → content · 64 between sections. */
 :root {
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
-  --space-5: 20px;
   --space-6: 24px;
   --space-8: 32px;
-  --space-11: 46px; /* between page sections */
-  --space-14: 56px; /* page padding, column gap */
+  --space-16: 64px;
 
   --artboard-max: 1080px;
   --aside-width: 272px; /* margin column holding the drawing */
-  --measure: 48ch;
+  --measure: 62ch; /* ≈ 70 characters at 16px */
 
-  --radius: 0px;
+  --radius: 0px; /* nothing is rounded, ever */
   --border: 1.5px;
 }

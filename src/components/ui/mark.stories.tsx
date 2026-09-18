@@ -20,7 +20,7 @@ export const Library: Story = {
       {names.map((n) => (
         <div key={n} className="flex flex-col items-start gap-2">
           <Mark name={n} />
-          <span className="text-soft font-mono text-[length:var(--size-caption)]">{n}</span>
+          <span className="text-soft font-mono text-meta">{n}</span>
         </div>
       ))}
     </div>

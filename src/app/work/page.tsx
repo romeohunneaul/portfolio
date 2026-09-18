@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageTitle } from "@/components/sections/page-title";
+import { PageHeading } from "@/components/sections/page-heading";
 import { ProjectsList } from "@/components/sections/projects-list";
 import { Section } from "@/components/sections/section";
 import { StackGrid } from "@/components/sections/stack-grid";
@@ -10,26 +10,26 @@ export const metadata: Metadata = { title: "Work", description: "Career, problem
 
 export default function WorkPage() {
   return (
-    <main className="flex flex-col gap-[var(--space-11)] pt-10">
-      <PageTitle>Work</PageTitle>
+    <main id="main" className="flex flex-col gap-16 pt-12">
+      <PageHeading lede="Ten years of product work, the last two building alone with an agent at my side.">Work</PageHeading>
 
       <Section
         id="career"
         label="Career"
         aside={
-          <a href={profile.links.linkedin} rel="noreferrer" className="no-underline hover:underline">
-            linkedin ↗
+          <a href={profile.links.linkedin} rel="noreferrer">
+            LinkedIn
           </a>
         }
       >
         <Timeline variant="full" />
       </Section>
 
-      <Section id="problems" label="Problems worked on" aside="click to unfold">
+      <Section id="problems" label="Problems worked on" aside="Open a row for the story">
         <ProjectsList variant="full" />
       </Section>
 
-      <Section id="stack" label="Skills & tools" aside="hover a tool for where it was used">
+      <Section id="stack" label="Skills and tools">
         <StackGrid withSkills />
       </Section>
 
@@ -37,12 +37,12 @@ export default function WorkPage() {
         id="code"
         label="Code"
         aside={
-          <a href={profile.links.github} rel="noreferrer" className="no-underline hover:underline">
-            github ↗
+          <a href={profile.links.github} rel="noreferrer">
+            GitHub
           </a>
         }
       >
-        <p className="text-soft m-0 max-w-[var(--measure)] text-[length:var(--size-body)]">
+        <p className="m-0 max-w-[var(--measure)]">
           Client repositories stay private. Public: this site, and a Garmin MCP server. The rest shows up as lab notes.
         </p>
       </Section>
