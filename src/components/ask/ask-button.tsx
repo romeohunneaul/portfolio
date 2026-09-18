@@ -1,26 +1,6 @@
 "use client";
 
-import type { AskContext } from "@/lib/ask/context";
 import { useAsk } from "./ask-provider";
-
-type AskButtonProps = { context?: AskContext; children?: string; className?: string };
-
-/** The visible way in: works on touch and keyboard, where ⌘K over a row does not. */
-export function AskButton({ context = null, children = "Ask", className = "" }: AskButtonProps) {
-  const { open } = useAsk();
-  return (
-    <button
-      type="button"
-      onClick={(e) => {
-        e.preventDefault(); // inside a <summary>, do not toggle the row
-        open(context);
-      }}
-      className={`text-soft text-meta hover:text-ink font-mono underline decoration-[var(--ink-rule)] underline-offset-4 ${className}`}
-    >
-      {children}
-    </button>
-  );
-}
 
 /** Header entry: the shortcut, spelled out. */
 export function AskShortcut() {

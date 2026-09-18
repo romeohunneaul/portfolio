@@ -1,27 +1,49 @@
 import { expect, test } from "@playwright/test";
 
-test("⌘K ouvre la boîte Ask avec les questions générales", async ({ page }) => {
+const panel = (page: import("@playwright/test").Page) => page.getByRole("dialog");
+
+test("⌘K ouvre le panneau avec le champ prêt, les questions arrivent ensuite", async ({ page }) => {
   await page.goto("/");
-  const dialog = page.getByRole("dialog", { name: "Ask about François" });
+  const dialog = panel(page);
   // Le raccourci n'existe qu'après l'hydratation : on réessaie jusqu'à ce qu'il réponde.
   await expect(async () => {
     await page.keyboard.press("ControlOrMeta+k");
     await expect(dialog).toBeVisible({ timeout: 1000 });
   }).toPass();
+
+  await expect(dialog.getByRole("heading", { name: "Ask about François" })).toBeVisible();
+  await expect(dialog.getByLabel("Your question")).toBeFocused();
   await expect(dialog.getByRole("button", { name: "What does François do today?" })).toBeVisible();
 
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
 });
 
-test("le lien d'une expérience ouvre des questions contextualisées", async ({ page }) => {
+test("une expérience ouvre le panneau avec son détail et ses questions", async ({ page }) => {
   await page.goto("/");
-  const taster = page.getByRole("listitem").filter({ hasText: "Taster" });
-  await taster.getByRole("button", { name: /Want to know more/ }).click();
+  await page.getByRole("button", { name: /Taster — VP Product/ }).click();
 
-  const dialog = page.getByRole("dialog", { name: "Ask about François" });
-  await expect(dialog.getByText("About: Taster, VP Product")).toBeVisible();
-  await expect(dialog.getByRole("button", { name: "What was the impact at Taster?" })).toBeVisible();
+  const dialog = panel(page);
+  await expect(dialog.getByRole("heading", { name: "Taster, VP Product" })).toBeVisible();
+  await expect(dialog.getByText(/Kept going into kitchens/)).toBeVisible();
+  await expect(dialog.getByRole("button", { name: "How did he run the product team there?" })).toBeVisible();
+});
+
+test("taper fait disparaître les questions suggérées", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: /Taster — VP Product/ }).click();
+  const dialog = panel(page);
+  await expect(dialog.getByRole("button", { name: "How did he run the product team there?" })).toBeVisible();
+  await dialog.getByLabel("Your question").fill("stack");
+  await expect(dialog.getByRole("button", { name: "How did he run the product team there?" })).toBeHidden();
+});
+
+test("un projet ouvre le panneau avec le problème et l'approche", async ({ page }) => {
+  await page.goto("/work");
+  await page.getByRole("button", { name: /A catalogue you can talk to/ }).click();
+  const dialog = panel(page);
+  await expect(dialog.getByText(/Publisher feeds are poor/)).toBeVisible();
+  await expect(dialog.getByRole("button", { name: "What is next on the roadmap?" })).toBeVisible();
 });
 
 test("sans réponse de l'assistant, la carte de contact apparaît", async ({ page }) => {
@@ -29,11 +51,12 @@ test("sans réponse de l'assistant, la carte de contact apparaît", async ({ pag
   await page.goto("/");
   await page.getByRole("button", { name: /^Ask/ }).first().click();
 
-  const dialog = page.getByRole("dialog", { name: "Ask about François" });
+  const dialog = panel(page);
   await dialog.getByLabel("Your question").fill("What is his favourite cheese?");
   await dialog.getByRole("button", { name: "Ask", exact: true }).click();
 
   await expect(dialog.getByText("Ask François directly")).toBeVisible();
+  await expect(dialog.getByRole("link", { name: "WhatsApp" })).toHaveAttribute("href", /^https:\/\/wa\.me\//);
   await expect(dialog.getByRole("link", { name: "Mail" })).toHaveAttribute("href", /^mailto:/);
 });
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHeading } from "@/components/sections/page-heading";
 import { Section } from "@/components/sections/section";
 import { ElsewhereLine, RouteGrid } from "@/components/sections/trail-section";
+import { ledes } from "@/data/sections";
 import { loadRoutes } from "@/lib/routes";
 
 export const metadata: Metadata = { title: "Outdoor", description: "Trail and ski routes worth the drive, as GPX files you can take." };
@@ -13,7 +14,7 @@ export default async function OutdoorPage() {
 
   return (
     <main id="main" className="flex flex-col gap-16 pt-12">
-      <PageHeading lede="Routes I would send a friend on. Each one is a GPX you can take; photos follow when I sort them.">Outdoor</PageHeading>
+      <PageHeading lede={ledes.outdoor}>Outdoor</PageHeading>
 
       <Section id="trail" label="Trail" aside={`${trail.length} routes`}>
         <RouteGrid routes={trail} />

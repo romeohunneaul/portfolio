@@ -1,7 +1,11 @@
 /**
- * "Ask" — what the visitor was looking at when they opened the dialog, and the
- * three questions that make sense from there. Shared by the client (chips) and
- * the server (instructions), so a context can never mean two different things.
+ * "Ask" — what the visitor was looking at when they opened the panel, and the
+ * questions that make sense from there. Shared by the client (panel) and the
+ * server (instructions), so a context can never mean two different things.
+ *
+ * Questions are authored next to the data (`questions` on each experience and
+ * project): a template like "What did he do at {company}" reads wrong as soon
+ * as the company is "Independent".
  */
 import { experience } from "@/data/profile";
 import { projects } from "@/data/projects";
@@ -22,17 +26,8 @@ export function resolve(context: AskContext) {
   return p ? { kind: "project" as const, label: p.title, data: p } : null;
 }
 
+const general = ["What does François do today?", "What has he shipped with AI?", "What kind of role is he looking for?"];
+
 export function suggestions(context: AskContext): string[] {
-  const r = resolve(context);
-  if (r?.kind === "experience") {
-    return [
-      `What did François actually do at ${r.data.company}?`,
-      `What was the impact at ${r.data.company}?`,
-      `What did he learn there that he still uses?`,
-    ];
-  }
-  if (r?.kind === "project") {
-    return [`Which technologies were used on this project?`, `What was the hard part?`, `What is the status today?`];
-  }
-  return [`What does François do today?`, `What has he shipped with AI?`, `What kind of role is he looking for?`];
+  return resolve(context)?.data.questions ?? general;
 }

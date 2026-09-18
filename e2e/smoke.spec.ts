@@ -51,13 +51,6 @@ test("les tabs mènent aux pages détaillées", async ({ page }) => {
   await expect(page.getByText("get_profile")).toBeVisible();
 });
 
-test("un projet se déplie sur /work", async ({ page }) => {
-  await page.goto("/work");
-  const summary = page.getByText("A catalogue you can talk to");
-  await summary.click();
-  await expect(page.getByText(/Publisher feeds are poor/)).toBeVisible();
-});
-
 test("le serveur MCP liste ses tools", async ({ request }) => {
   const res = await request.post("/api/mcp", {
     headers: { "content-type": "application/json", accept: "application/json, text/event-stream" },

@@ -5,13 +5,14 @@ import { Section } from "@/components/sections/section";
 import { StackGrid } from "@/components/sections/stack-grid";
 import { Timeline } from "@/components/sections/timeline";
 import { profile } from "@/data/profile";
+import { ledes } from "@/data/sections";
 
 export const metadata: Metadata = { title: "Work", description: "Career, problems worked on, tools actually used." };
 
 export default function WorkPage() {
   return (
     <main id="main" className="flex flex-col gap-16 pt-12">
-      <PageHeading lede="Ten years of product work, the last two building alone with an agent at my side.">Work</PageHeading>
+      <PageHeading lede={ledes.work}>Work</PageHeading>
 
       <Section
         id="career"
@@ -25,8 +26,8 @@ export default function WorkPage() {
         <Timeline variant="full" />
       </Section>
 
-      <Section id="problems" label="Problems worked on" aside="Open a row for the story">
-        <ProjectsList variant="full" />
+      <Section id="problems" label="Problems worked on" lede="Told by the problem. Clients stay backstage.">
+        <ProjectsList />
       </Section>
 
       <Section id="stack" label="Skills and tools">

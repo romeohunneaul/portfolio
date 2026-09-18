@@ -8,6 +8,7 @@ import { ReadingList } from "@/components/sections/reading-list";
 import { Section } from "@/components/sections/section";
 import { Timeline } from "@/components/sections/timeline";
 import { RouteGrid } from "@/components/sections/trail-section";
+import { ledes } from "@/data/sections";
 import { loadRoutes } from "@/lib/routes";
 
 /** Who, work, lab, outdoor, reading, listening. Each block opens onto its tab. */
@@ -24,12 +25,12 @@ export default async function Home() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <Section id="work" label="Work" aside="Career, projects, tools" more="/work">
+          <Section id="work" label="Work" lede={ledes.work} aside="Career, projects, tools" more="/work">
             <Timeline />
           </Section>
         </Reveal>
 
-        <Section id="lab" label="Lab" aside={`${notes.length} ${notes.length === 1 ? "note" : "notes"}`}>
+        <Section id="lab" label="Lab" lede={ledes.lab} aside={`${notes.length} ${notes.length === 1 ? "note" : "notes"}`}>
           {notes.length > 0 ? (
             <div className="flex flex-col gap-4">
               {notes.map((n) => (
@@ -41,15 +42,15 @@ export default async function Home() {
           )}
         </Section>
 
-        <Section id="outdoor" label="Outdoor" aside="All routes, ski included" more="/outdoor">
+        <Section id="outdoor" label="Outdoor" lede={ledes.outdoor} aside="All routes, ski included" more="/outdoor">
           <RouteGrid routes={picks} />
         </Section>
 
-        <Section id="reading" label="Reading" aside="Books and articles" more="/reading">
+        <Section id="reading" label="Reading" lede={ledes.reading} aside="Books and articles" more="/reading">
           <ReadingList limit={4} />
         </Section>
 
-        <Section id="listening" label="Listening" aside="Spotify, this month">
+        <Section id="listening" label="Listening" lede={ledes.listening} aside="Spotify">
           <Listening />
         </Section>
       </div>

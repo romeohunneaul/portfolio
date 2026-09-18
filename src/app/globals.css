@@ -69,12 +69,34 @@ a:hover {
   background: var(--highlight-punch);
 }
 
+/* Ask panel: slides in from the right; suggestions arrive late, one at a time. */
+@keyframes ask-panel-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+}
+.ask-panel[open] {
+  animation: ask-panel-in 0.22s ease-out;
+}
+@keyframes ask-suggestion-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+.ask-suggestion {
+  animation: ask-suggestion-in 0.45s ease-out both;
+  animation-delay: calc(2s + var(--i, 0) * 0.9s);
+}
+
 /* Motion enriches, it never conditions reading. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     transition-duration: 0.01ms !important;
   }
 }

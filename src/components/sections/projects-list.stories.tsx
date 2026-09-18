@@ -9,5 +9,5 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Compact: Story = { args: { variant: "compact", limit: 4 } };
-export const Full: Story = { args: { variant: "full" } };
+export const All: Story = {};
+export const FirstThree: Story = { args: { limit: 3 } };

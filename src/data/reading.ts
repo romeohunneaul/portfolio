@@ -4,8 +4,9 @@
  * marked until François rewrites them.
  */
 
-export const readingIntro =
-  "I don't write well, and I won't have an AI write for me. So instead of articles, here is a digest of what helped me most, at work and outside it.";
+import { ledes } from "./sections";
+
+export const readingIntro = ledes.reading;
 
 export type Article = {
   title: string;

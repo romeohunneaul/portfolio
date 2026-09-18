@@ -25,7 +25,7 @@ export const profile = {
     utmb: "https://utmb.world/fr/runner/5043490.francois.massanes",
     site: "https://francoismassanes.com",
     /** "https://wa.me/<number, international, digits only>" — empty hides the WhatsApp link. */
-    whatsapp: "" as string,
+    whatsapp: "https://wa.me/33659605652",
   },
   languages: ["French (native)", "English (full professional)", "German (professional)"],
 } as const;
@@ -40,12 +40,19 @@ export type Experience = {
   url?: string;
   summary: string;
   bullets?: string[];
+  /** Three questions a visitor would actually ask here — each answerable from this file. */
+  questions: string[];
   kind: "job" | "freelance";
 };
 
 export const experience: Experience[] = [
   {
     company: "Independent",
+    questions: [
+      "Which missions has he run since 2025, and in which sectors?",
+      "Which of these projects put an LLM in production?",
+      "What does he build himself, end to end?",
+    ],
     role: "Product builder — AI in business software",
     start: "2025",
     end: "now",
@@ -62,6 +69,11 @@ export const experience: Experience[] = [
   },
   {
     company: "Taster",
+    questions: [
+      "What did the operations platform at Taster cover?",
+      "How big was the scope — restaurants, countries, team?",
+      "How did he run the product team there?",
+    ],
     role: "VP Product",
     start: "2021",
     end: "2024",
@@ -79,6 +91,11 @@ export const experience: Experience[] = [
   },
   {
     company: "Leah Care",
+    questions: [
+      "What was Leah Care building?",
+      "What did he set up as the first product hire?",
+      "How did the team grow while he was there?",
+    ],
     role: "Head of Product",
     start: "2018",
     end: "2021",
@@ -89,6 +106,11 @@ export const experience: Experience[] = [
   },
   {
     company: "Artefact",
+    questions: [
+      "Which sectors did he work for at Artefact?",
+      "What did consulting teach him about measuring impact?",
+      "Where was he based during those years?",
+    ],
     role: "Product Manager",
     start: "2016",
     end: "2018",

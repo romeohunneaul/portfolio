@@ -13,12 +13,19 @@ export type Project = {
   approach: string[];
   stack: string[];
   links?: { label: string; url: string }[];
+  /** Three questions a visitor would actually ask here — each answerable from this file. */
+  questions: string[];
   status: "shipped" | "in progress" | "prototype" | "open source";
 };
 
 export const projects: Project[] = [
   {
     slug: "odyssee",
+    questions: [
+      "What problem do booksellers have with publisher feeds?",
+      "Where does the LLM come in, and how is it traced?",
+      "What is next on the roadmap?",
+    ],
     title: "A catalogue you can talk to",
     year: "2025–2026",
     role: "Product, design, build",
@@ -36,6 +43,11 @@ export const projects: Project[] = [
   },
   {
     slug: "cryospace",
+    questions: [
+      "Why is the data model the hard part here?",
+      "What happens when a tank reports an anomaly?",
+      "What does the stack look like?",
+    ],
     title: "Samples, tanks and the cold chain",
     year: "2026",
     role: "Product, data model, build",
@@ -53,6 +65,11 @@ export const projects: Project[] = [
   },
   {
     slug: "mineral-expertise",
+    questions: [
+      "Why build an assistant instead of a new app?",
+      "How does the price list build itself?",
+      "Which limits were accepted up front?",
+    ],
     title: "A price list that writes itself",
     year: "2026",
     role: "Discovery, architecture, skills",
@@ -69,6 +86,11 @@ export const projects: Project[] = [
   },
   {
     slug: "agicap",
+    questions: [
+      "What was the mission at Agicap?",
+      "What did he observe about the team's agent tooling?",
+      "Which squads did he work with?",
+    ],
     title: "A product team industrialising its agents",
     year: "2026",
     role: "Product manager, freelance",
@@ -85,6 +107,11 @@ export const projects: Project[] = [
   },
   {
     slug: "claude-garmin",
+    questions: [
+      "What can Claude do with the Garmin data?",
+      "How is the server built?",
+      "Is it open source?",
+    ],
     title: "Garmin, read by an agent",
     year: "2026",
     role: "Author",
@@ -98,6 +125,11 @@ export const projects: Project[] = [
   },
   {
     slug: "this-site",
+    questions: [
+      "How is this site built?",
+      "What does the MCP server expose?",
+      "How are the GPX traces drawn?",
+    ],
     title: "This notebook",
     year: "2026",
     role: "Everything",
