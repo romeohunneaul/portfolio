@@ -37,7 +37,9 @@ Vitest · Playwright · `mcp-handler` (serveur MCP sur `/api/mcp`) · déploieme
 | `content/notes/*.mdx` | notes du labo |
 | `src/styles/tokens/*.css` | design system « Notebook » (source : projet Claude Design, cf. brain) |
 
-Ces fichiers alimentent **les pages et le serveur MCP**. Ajouter une trace =
+Ces fichiers alimentent **les pages, le serveur MCP et l'assistant Ask** (`⌘K`, `/api/chat`,
+AI SDK 7 + AI Gateway ; le profil entier tient dans le prompt, pas de RAG ; clé dans
+`.env.local`, cf. `.env.example`). Ajouter une trace =
 déposer le `.gpx` + une ligne dans `routes`. Ajouter un article = une ligne.
 
 ⚠️ **Next.js 16 diffère des données d'entraînement des modèles.** Lire

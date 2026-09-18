@@ -24,6 +24,8 @@ export const profile = {
     strava: "https://www.strava.com/athletes/83347344",
     utmb: "https://utmb.world/fr/runner/5043490.francois.massanes",
     site: "https://francoismassanes.com",
+    /** "https://wa.me/<number, international, digits only>" — empty hides the WhatsApp link. */
+    whatsapp: "" as string,
   },
   languages: ["French (native)", "English (full professional)", "German (professional)"],
 } as const;

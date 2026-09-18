@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Schibsted_Grotesk, Space_Mono } from "next/font/google";
+import { AskProvider } from "@/components/ask/ask-provider";
 import { SiteHeader } from "@/components/sections/site-header";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { profile } from "@/data/profile";
@@ -29,11 +30,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${schibsted.variable} ${spaceMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
-        <div className="mx-auto flex w-full max-w-[var(--artboard-max)] flex-1 flex-col px-6 pt-8 pb-16 sm:px-10 sm:pt-10 lg:px-14">
-          <SiteHeader />
-          {children}
-          <SiteFooter />
-        </div>
+        <AskProvider>
+          <div className="mx-auto flex w-full max-w-[var(--artboard-max)] flex-1 flex-col px-6 pt-8 pb-16 sm:px-10 sm:pt-10 lg:px-14">
+            <SiteHeader />
+            {children}
+            <SiteFooter />
+          </div>
+        </AskProvider>
       </body>
     </html>
   );

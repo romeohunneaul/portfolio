@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/ui/logo";
+import { AskShortcut } from "@/components/ask/ask-button";
 import { NavTabs } from "./nav-tabs";
 
 /** Wordmark left, five tabs right, one hairline under both. */
@@ -13,7 +14,10 @@ export function SiteHeader() {
         <Logo size={40} />
         <span className="text-meta font-mono tracking-[var(--track-name)] uppercase">François Massanes</span>
       </Link>
-      <NavTabs />
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <NavTabs />
+        <AskShortcut />
+      </div>
     </header>
   );
 }
