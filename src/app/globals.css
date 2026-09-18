@@ -69,25 +69,55 @@ a:hover {
   background: var(--highlight-punch);
 }
 
-/* Ask panel: slides in from the right; suggestions arrive late, one at a time. */
+/* Rows that open the panel: a wash of accent follows the pointer,
+   like a marker passing over the paper. Painted here, tracked in ask-row.tsx. */
+.ask-row {
+  isolation: isolate; /* keeps the wash's negative z-index inside the row */
+}
+.ask-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1; /* under the ink, never over it */
+  pointer-events: none;
+  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), var(--accent-tint) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.ask-row:hover::before,
+.ask-row:focus-visible::before {
+  opacity: 1;
+}
+
+/* Ask panel: eases in like a sheet, the backdrop fades with it. */
 @keyframes ask-panel-in {
   from {
-    transform: translateX(24px);
+    transform: translateX(48px);
     opacity: 0;
   }
 }
 .ask-panel[open] {
-  animation: ask-panel-in 0.22s ease-out;
+  animation: ask-panel-in 0.4s cubic-bezier(0.32, 0.72, 0, 1);
 }
+@keyframes ask-backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+.ask-panel[open]::backdrop {
+  animation: ask-backdrop-in 0.35s ease-out both;
+}
+
+/* Suggestions drift in late, one at a time; typing dismisses them. */
 @keyframes ask-suggestion-in {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(8px);
   }
 }
 .ask-suggestion {
-  animation: ask-suggestion-in 0.45s ease-out both;
-  animation-delay: calc(2s + var(--i, 0) * 0.9s);
+  animation: ask-suggestion-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(1.4s + var(--i, 0) * 0.7s);
 }
 
 /* Motion enriches, it never conditions reading. */
