@@ -9,7 +9,7 @@ test("la home affiche la bio, le parcours et les tabs", async ({ page }) => {
   await expect(page.getByText("Taster")).toBeVisible();
 
   const nav = page.getByRole("navigation", { name: "Sections" });
-  for (const tab of ["home", "work", "trail", "reading", "mcp"]) {
+  for (const tab of ["Home", "Work", "Outdoor", "Reading", "MCP"]) {
     await expect(nav.getByRole("link", { name: tab })).toBeVisible();
   }
 });
@@ -37,14 +37,14 @@ test("les tabs mènent aux pages détaillées", async ({ page }) => {
   await expect(page).toHaveURL(/\/work$/);
   await expect(page.getByRole("heading", { level: 2, name: "Career" })).toBeVisible();
 
-  await nav.getByRole("link", { name: "trail" }).click();
-  await expect(page).toHaveURL(/\/trail$/);
+  await nav.getByRole("link", { name: "Outdoor" }).click();
+  await expect(page).toHaveURL(/\/outdoor$/);
   await expect(page.getByRole("img", { name: /Mont Charvin loop, seen from above/ })).toBeVisible();
   await expect(page.getByRole("link", { name: "Download GPX" }).first()).toHaveAttribute("href", /\.gpx$/);
 
   await nav.getByRole("link", { name: "reading" }).click();
   await expect(page).toHaveURL(/\/reading$/);
-  await expect(page.getByRole("link", { name: /The Bitter Lesson/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Getting Real/ })).toBeVisible();
 
   await nav.getByRole("link", { name: "mcp" }).click();
   await expect(page).toHaveURL(/\/mcp$/);

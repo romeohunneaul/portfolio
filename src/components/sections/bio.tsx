@@ -9,7 +9,8 @@ export function Bio() {
       <p className="text-title m-0">{profile.bio[0].replace(`${profile.headline} `, "")}</p>
       <p className="m-0">{profile.bio[1]}</p>
       <p className="m-0">
-        The rest of the time I run <Highlight>up hills, slowly</Highlight>. Both go in the notebook.
+        The rest of the time I am <Highlight>in the mountains</Highlight>, reading nerd articles, or listening to music.
+        All of it ends up in this notebook.
       </p>
     </div>
   );

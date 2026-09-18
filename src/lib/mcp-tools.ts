@@ -8,7 +8,7 @@ export const mcpTools = [
   { name: "get_projects", description: "Problems worked on: context, problem, approach, stack, status." },
   { name: "get_project", description: "One project by slug.", args: "slug" },
   { name: "get_skills", description: "Skill groups and the tools actually used, with where." },
-  { name: "get_trail", description: "UTMB index, races, and the GPX routes on the site." },
+  { name: "get_trail", description: "Outdoor: trail and ski routes (GPX), plus races and UTMB index." },
   { name: "get_reading", description: "Articles that stuck, with a one-line why." },
   { name: "search", description: "Full-text search across all of the above.", args: "query" },
 ] as const;

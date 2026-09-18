@@ -53,7 +53,7 @@ const handler = createMcpHandler(
     );
     server.registerTool(
       "get_trail",
-      { title: "Trail", description: "UTMB index, races, and the GPX routes on the site.", inputSchema: z.object({}) },
+      { title: "Trail", description: "Outdoor: trail and ski routes on the site (GPX), plus races and UTMB index.", inputSchema: z.object({}) },
       async () => json({ utmb, races, routes: routes.map((r) => ({ ...r, gpx: `${profile.links.site}/gpx/${r.slug}.gpx` })) }),
     );
     server.registerTool(

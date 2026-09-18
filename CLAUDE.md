@@ -31,8 +31,9 @@ Vitest · Playwright · `mcp-handler` (serveur MCP sur `/api/mcp`) · déploieme
 |---|---|
 | `src/data/profile.ts` | bio, liens, parcours, formation, compétences, outils |
 | `src/data/projects.ts` | problèmes traités (clients en coulisse, jamais de chiffres clients) |
-| `src/data/trail.ts` | index UTMB, courses, traces (`public/gpx/<slug>.gpx` ⇄ une entrée `routes`) |
-| `src/data/reading.ts` | articles marquants |
+| `src/data/trail.ts` | traces trail + ski (`public/gpx/<slug>.gpx` ⇄ une entrée `routes`, photos dans `public/photos/<slug>/`), courses et index UTMB (MCP seulement) |
+| `src/data/reading.ts` | livres et articles marquants + intro |
+| `src/data/music.ts` | playlist Spotify du moment (id → embed)
 | `content/notes/*.mdx` | notes du labo |
 | `src/styles/tokens/*.css` | design system « Notebook » (source : projet Claude Design, cf. brain) |
 

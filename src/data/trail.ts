@@ -1,27 +1,40 @@
 /**
- * Trail. Races come from the UTMB index page; routes are GPX files dropped in
- * `public/gpx/` — one line here per file.
+ * Outdoor. Routes are GPX files dropped in `public/gpx/` — one line here per
+ * file; photos go in `public/photos/<slug>/` and are listed in `photos`.
+ * Races and the UTMB index stay here for the MCP server; the site keeps them quiet.
  */
+
+export type Route = {
+  slug: string; // = public/gpx/<slug>.gpx
+  name: string;
+  where: string;
+  note: string;
+  sport: "trail" | "ski";
+  kind: "loop" | "race" | "stage" | "vertical" | "tour";
+  /** File names under public/photos/<slug>/ — empty shows a placeholder. */
+  photos: string[];
+};
+
+// `note` is one sentence, first person — placeholders below until François rewrites them.
+export const routes: Route[] = [
+  { slug: "mont-charvin", name: "Mont Charvin loop", where: "Aravis", note: "The one I send people to.", sport: "trail", kind: "loop", photos: [] },
+  { slug: "kv-manigod", name: "KV Manigod", where: "Aravis", note: "1,000 m up, no down. Millet Manigod Trail Challenge 2025.", sport: "trail", kind: "vertical", photos: [] },
+  { slug: "annecy-30k", name: "Annecy 30K, 1,500 m", where: "Annecy", note: "A long training loop above the lake.", sport: "trail", kind: "loop", photos: [] },
+  { slug: "grand-raid-ventoux-50k", name: "Grand Raid Ventoux 50K", where: "Ventoux", note: "Race trace, 2026 edition.", sport: "trail", kind: "race", photos: [] },
+  { slug: "pyrenees-etape-1", name: "Pyrénées, stage 1", where: "Pyrénées", note: "First day of a six-stage crossing.", sport: "trail", kind: "stage", photos: [] },
+  { slug: "courzieu-yzeron", name: "Courzieu – Yzeron", where: "Monts du Lyonnais", note: "The closest real climb to Lyon.", sport: "trail", kind: "loop", photos: [] },
+  // Ski tours: export the GPX from Garmin Connect (activities 22570425277, 21666362418,
+  // 22035493763), drop them in public/gpx/, then add a line here with sport: "ski".
+];
 
 export const utmb = {
   index: 701,
-  index20k: 701,
-  index50k: 700,
-  index100k: 641,
   races: 32,
   top10: 2,
-  category: "20-34 M",
   updated: "2026-09",
 };
 
-export type Race = {
-  date: string;
-  name: string;
-  km: number;
-  gain: number;
-  time: string;
-  rank: string;
-};
+export type Race = { date: string; name: string; km: number; gain: number; time: string; rank: string };
 
 export const races: Race[] = [
   { date: "2026-08-30", name: "La Grande Bambée", km: 44, gain: 2700, time: "4:48:51", rank: "4 / 124" },
@@ -36,22 +49,4 @@ export const races: Race[] = [
   { date: "2024-07-06", name: "Grand Raid Guillestrois-Queyras", km: 45, gain: 3200, time: "7:32:13", rank: "24 / 246" },
   { date: "2024-06-28", name: "Marathon du Mont-Blanc — KV", km: 3.8, gain: 1000, time: "0:52:00", rank: "70 / 553" },
   { date: "2023-03-18", name: "EcoTrail Paris", km: 18.6, gain: 400, time: "1:50:40", rank: "716 / 2536" },
-];
-
-export type Route = {
-  slug: string; // = public/gpx/<slug>.gpx
-  name: string;
-  where: string;
-  note: string;
-  kind: "loop" | "race" | "stage" | "vertical";
-};
-
-// `note` is one sentence, first person — placeholders below until François rewrites them.
-export const routes: Route[] = [
-  { slug: "mont-charvin", name: "Mont Charvin loop", where: "Aravis", note: "The one I send people to.", kind: "loop" },
-  { slug: "kv-manigod", name: "KV Manigod", where: "Aravis", note: "1,000 m up, no down. Millet Manigod Trail Challenge 2025.", kind: "vertical" },
-  { slug: "annecy-30k", name: "Annecy 30K, 1,500 m", where: "Annecy", note: "A long training loop above the lake.", kind: "loop" },
-  { slug: "grand-raid-ventoux-50k", name: "Grand Raid Ventoux 50K", where: "Ventoux", note: "Race trace, 2026 edition.", kind: "race" },
-  { slug: "pyrenees-etape-1", name: "Pyrénées, stage 1", where: "Pyrénées", note: "First day of a six-stage crossing.", kind: "stage" },
-  { slug: "courzieu-yzeron", name: "Courzieu – Yzeron", where: "Monts du Lyonnais", note: "The closest real climb to Lyon.", kind: "loop" },
 ];

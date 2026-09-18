@@ -1,9 +1,15 @@
 import { EntryRow } from "@/components/ui/entry-row";
-import { articles } from "@/data/reading";
+import { articles, type Article } from "@/data/reading";
+
+type ReadingListProps = {
+  items?: Article[];
+  /** Home: first N, titles only. */
+  limit?: number;
+};
 
 /** Title — author, and one sentence on why it stuck. */
-export function ReadingList({ limit }: { limit?: number }) {
-  const list = limit ? articles.slice(0, limit) : articles;
+export function ReadingList({ items = articles, limit }: ReadingListProps) {
+  const list = limit ? items.slice(0, limit) : items;
   return (
     <div>
       {list.map((a) => (

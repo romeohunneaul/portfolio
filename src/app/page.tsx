@@ -2,15 +2,19 @@ import { allNotes } from "content-collections";
 import { NoteCard } from "@/components/ui/note-card";
 import { Reveal } from "@/components/ui/reveal";
 import { Bio } from "@/components/sections/bio";
+import { Listening } from "@/components/sections/listening";
 import { Margin } from "@/components/sections/margin";
 import { ReadingList } from "@/components/sections/reading-list";
 import { Section } from "@/components/sections/section";
 import { Timeline } from "@/components/sections/timeline";
-import { RaceList, UtmbLine } from "@/components/sections/trail-section";
+import { RouteGrid } from "@/components/sections/trail-section";
+import { loadRoutes } from "@/lib/routes";
 
-/** Four blocks: who, work, lab, on the side. Details live in the tabs. */
-export default function Home() {
+/** Who, work, lab, outdoor, reading, listening. Each block opens onto its tab. */
+export default async function Home() {
   const notes = allNotes.filter((n) => !n.draft).sort((a, b) => b.date.localeCompare(a.date));
+  const routes = await loadRoutes();
+  const picks = [...routes.filter((r) => r.sport === "trail").slice(0, 3), ...routes.filter((r) => r.sport === "ski").slice(0, 3)];
 
   return (
     <main id="main" className="grid items-start gap-x-14 pt-12 lg:grid-cols-[1fr_var(--aside-width)]">
@@ -37,15 +41,16 @@ export default function Home() {
           )}
         </Section>
 
-        <Section id="trail" label="Trail" aside="Races and routes" more="/trail">
-          <div className="flex flex-col gap-6">
-            <UtmbLine />
-            <RaceList limit={3} />
-          </div>
+        <Section id="outdoor" label="Outdoor" aside="All routes, ski included" more="/outdoor">
+          <RouteGrid routes={picks} />
         </Section>
 
-        <Section id="reading" label="Reading" aside="All articles" more="/reading">
+        <Section id="reading" label="Reading" aside="Books and articles" more="/reading">
           <ReadingList limit={4} />
+        </Section>
+
+        <Section id="listening" label="Listening" aside="Spotify, this month">
+          <Listening />
         </Section>
       </div>
 
