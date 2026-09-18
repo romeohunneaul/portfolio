@@ -69,10 +69,17 @@ a:hover {
   background: var(--highlight-punch);
 }
 
-/* Rows that open the panel: a wash of accent follows the pointer,
-   like a marker passing over the paper. Painted here, tracked in ask-row.tsx. */
+/* Rows that open the panel. At rest: a hairline row. On hover: the row lifts
+   into a card — the paper thickens (denser grain), the hairline closes into a
+   full border, and the ink shadow drops. The DS's only interaction pair. */
 .ask-row {
-  isolation: isolate; /* keeps the wash's negative z-index inside the row */
+  isolation: isolate;
+  border: var(--border) solid transparent;
+  border-bottom-color: var(--ink-rule);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    translate 0.25s ease;
 }
 .ask-row::before {
   content: "";
@@ -80,9 +87,17 @@ a:hover {
   inset: 0;
   z-index: -1; /* under the ink, never over it */
   pointer-events: none;
-  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), var(--accent-tint) 0%, transparent 70%);
+  background-color: var(--paper-card);
+  background-image: var(--paper-grain);
+  background-size: 70px 70px; /* twice the page's density: the paper thickens */
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.25s ease;
+}
+.ask-row:hover,
+.ask-row:focus-visible {
+  border-color: var(--ink-rule);
+  box-shadow: var(--shadow-hover);
+  translate: -2px -2px;
 }
 .ask-row:hover::before,
 .ask-row:focus-visible::before {
