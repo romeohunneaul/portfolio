@@ -10,7 +10,7 @@ export function SiteHeader() {
         Skip to content
       </a>
       <Link href="/" className="flex items-center gap-3 no-underline">
-        <Logo size={40} animate />
+        <Logo size={40} />
         <span className="text-meta font-mono tracking-[var(--track-name)] uppercase">François Massanes</span>
       </Link>
       <NavTabs />
