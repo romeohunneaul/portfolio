@@ -19,7 +19,7 @@ export function ProjectsList({ limit }: { limit?: number }) {
           <AskRow context={{ kind: "project", id: p.slug }}>
             <span className="grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1">
               <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <span className="text-row font-semibold">{p.title}</span>
+                <span className="ask-title text-row font-semibold">{p.title}</span>
                 <Chip tone={statusTone[p.status]}>{p.status}</Chip>
               </span>
               <span className="text-soft text-meta font-mono tabular-nums">{p.year}</span>

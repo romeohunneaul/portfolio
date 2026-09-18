@@ -7,9 +7,9 @@ import { useAsk } from "./ask-provider";
 type AskRowProps = { context: NonNullable<AskContext>; children: ReactNode };
 
 /**
- * A row that opens the panel. At rest it is a hairline row; on hover it lifts
- * into a card — hard offset shadow, thicker grain — and a sticker names the
- * action (see .ask-row in globals.css). On touch the sticker is simply visible.
+ * A row that opens the panel. The outlined arrow at the right is the standing
+ * target; hover sweeps a marker under the title (`.ask-title` inside children)
+ * and fills the arrow. See .ask-row in globals.css.
  */
 export function AskRow({ context, children }: AskRowProps) {
   const { open } = useAsk();
@@ -19,11 +19,17 @@ export function AskRow({ context, children }: AskRowProps) {
       onClick={() => open(context)}
       data-ask-kind={context.kind}
       data-ask-id={context.id}
-      className="ask-row group relative -mx-4 flex w-[calc(100%+2rem)] cursor-pointer flex-col gap-3 px-4 py-5 text-left"
+      className="ask-row group border-rule flex w-full cursor-pointer items-center gap-6 border-b py-5 text-left"
     >
-      {children}
-      <span className="border-rule text-sticker self-start border-[length:var(--border)] bg-[var(--highlight)] px-2 py-1 font-mono opacity-0 shadow-[2px_2px_0_var(--ink-shadow)] transition-[opacity,rotate] duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 motion-safe:group-hover:-rotate-1 [@media(hover:none)]:opacity-100">
-        details and questions
+      <span className="min-w-0 flex-1">{children}</span>
+      <span
+        aria-hidden="true"
+        className="ask-arrow border-rule flex size-10 shrink-0 items-center justify-center border-[length:var(--border)] transition-colors duration-200"
+      >
+        <svg width="20" height="14" viewBox="0 0 24 16" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M1 8h20" />
+          <path d="M15 2l7 6-7 6" />
+        </svg>
       </span>
     </button>
   );

@@ -69,39 +69,25 @@ a:hover {
   background: var(--highlight-punch);
 }
 
-/* Rows that open the panel. At rest: a hairline row. On hover: the row lifts
-   into a card — the paper thickens (denser grain), the hairline closes into a
-   full border, and the ink shadow drops. The DS's only interaction pair. */
-.ask-row {
-  isolation: isolate;
-  border: var(--border) solid transparent;
-  border-bottom-color: var(--ink-rule);
-  transition:
-    border-color 0.25s ease,
-    box-shadow 0.25s ease,
-    translate 0.25s ease;
+/* Rows that open the panel. The outlined arrow is the standing target — it
+   survives touch and keyboard. Hover adds the marker sweep under the title
+   and fills the arrow: two signals, enrichment, never the only affordance. */
+.ask-title {
+  background-image: linear-gradient(transparent 14%, var(--highlight-punch) 14%, var(--highlight-punch) 86%, transparent 86%);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size 0.4s ease;
 }
-.ask-row::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1; /* under the ink, never over it */
-  pointer-events: none;
-  background-color: var(--paper-card);
-  background-image: var(--paper-grain);
-  background-size: 70px 70px; /* twice the page's density: the paper thickens */
-  opacity: 0;
-  transition: opacity 0.25s ease;
+.ask-row:hover .ask-title,
+.ask-row:focus-visible .ask-title {
+  background-size: 100% 100%;
 }
-.ask-row:hover,
-.ask-row:focus-visible {
-  border-color: var(--ink-rule);
-  box-shadow: var(--shadow-hover);
-  translate: -2px -2px;
-}
-.ask-row:hover::before,
-.ask-row:focus-visible::before {
-  opacity: 1;
+.ask-row:hover .ask-arrow,
+.ask-row:focus-visible .ask-arrow {
+  background-color: var(--highlight-punch);
+  border-color: var(--ink);
 }
 
 /* Ask panel: eases in like a sheet, the backdrop fades with it. */
