@@ -3,6 +3,7 @@
 @import "../styles/tokens/typography.css";
 @import "../styles/tokens/spacing.css";
 @import "../styles/tokens/paper.css";
+@source "../../node_modules/streamdown/dist/*.js";
 
 /* Tokens exposed as Tailwind utilities: bg-paper, text-ink, border-rule, text-meta… */
 @theme inline {
@@ -61,8 +62,13 @@ a:hover {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent-strong);
+  outline: 2px solid var(--ink);
   outline-offset: 2px;
+}
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  border-color: var(--ink);
 }
 
 ::selection {
@@ -84,10 +90,22 @@ a:hover {
 .ask-row:focus-visible .ask-title {
   background-size: 100% 100%;
 }
+.ask-arrow {
+  background-image: linear-gradient(transparent 14%, var(--highlight-punch) 14%, var(--highlight-punch) 86%, transparent 86%);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  transition: background-size 0.4s ease;
+}
+.ask-arrow svg {
+  transition: translate 0.3s ease;
+}
 .ask-row:hover .ask-arrow,
 .ask-row:focus-visible .ask-arrow {
-  background-color: var(--highlight-punch);
-  border-color: var(--ink);
+  background-size: 100% 100%;
+}
+.ask-row:hover .ask-arrow svg,
+.ask-row:focus-visible .ask-arrow svg {
+  translate: 3px 0;
 }
 
 /* Logo motions — from the "Logo — variations" board. CSS keyframes only.
@@ -239,6 +257,11 @@ a:hover {
     opacity: 0;
   }
 }
+.ask-panel {
+  background-image: var(--paper-grain);
+  background-size: var(--paper-grain-size);
+  box-shadow: -6px 0 0 var(--ink-shadow);
+}
 .ask-panel[open] {
   animation: ask-panel-in 0.4s cubic-bezier(0.32, 0.72, 0, 1);
 }
@@ -281,6 +304,42 @@ a:hover {
   content: "▍";
   color: var(--accent-strong);
   animation: ask-caret 1s steps(1) infinite;
+}
+
+/* Assistant markdown (streamdown): DS type, not plugin defaults. */
+.ask-md :is(p, ul, ol) {
+  margin: 0 0 var(--space-3);
+}
+.ask-md :is(p, ul, ol):last-child {
+  margin-bottom: 0;
+}
+.ask-md :is(ul, ol) {
+  padding-left: 20px;
+}
+.ask-md ul {
+  list-style: disc;
+}
+.ask-md ol {
+  list-style: decimal;
+}
+.ask-md code {
+  font-family: var(--font-mono);
+  font-size: var(--size-meta);
+  background: var(--paper-card);
+  border: 1px solid var(--ink-rule);
+  padding: 0 4px;
+}
+
+/* Panel buttons: the DS pair — hard shadow and a 1px lift on hover. */
+.ask-btn {
+  transition:
+    box-shadow 0.2s ease,
+    translate 0.2s ease;
+}
+.ask-btn:hover:not(:disabled),
+.ask-btn:focus-visible:not(:disabled) {
+  box-shadow: 3px 3px 0 var(--ink-shadow);
+  translate: -1px -1px;
 }
 
 /* Suggestions drift in late, one at a time; typing dismisses them. */

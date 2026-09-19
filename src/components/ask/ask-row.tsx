@@ -24,7 +24,7 @@ export function AskRow({ context, children }: AskRowProps) {
       <span className="min-w-0 flex-1">{children}</span>
       <span
         aria-hidden="true"
-        className="ask-arrow border-rule flex size-10 shrink-0 items-center justify-center border-[length:var(--border)] transition-colors duration-200"
+        className="ask-arrow flex size-10 shrink-0 items-center justify-center"
       >
         <svg width="20" height="14" viewBox="0 0 24 16" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
           <path d="M1 8h20" />

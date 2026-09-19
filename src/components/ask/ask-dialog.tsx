@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
+import { Streamdown } from "streamdown";
 import { resolve, suggestions, type AskContext } from "@/lib/ask/context";
 import { AskDetail } from "./ask-detail";
 import { ContactCard } from "./contact-card";
@@ -84,16 +85,21 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
 
           <div className="flex flex-col gap-4" aria-live="polite">
             {messages.map((m) => (
-              <div key={m.id} className={m.role === "user" ? "self-end bg-[var(--accent-tint)] px-4 py-2" : "flex flex-col gap-3"}>
+              <div key={m.id} className={m.role === "user" ? "border-rule self-end border bg-[var(--accent-tint)] px-4 py-2" : "flex flex-col gap-3"}>
                 {m.parts.map((part, i) => {
                   if (part.type === "text") {
+                    if (m.role === "user") {
+                      return (
+                        <p key={i} className="m-0 whitespace-pre-wrap">
+                          {part.text}
+                        </p>
+                      );
+                    }
                     return (
-                      <p key={i} className="m-0 whitespace-pre-wrap">
-                        {part.text}
-                        {status === "streaming" && m.id === lastId && m.role === "assistant" && i === m.parts.length - 1 && (
-                          <span aria-hidden="true" className="ask-caret" />
-                        )}
-                      </p>
+                      <div key={i} className="ask-md">
+                        <Streamdown>{part.text}</Streamdown>
+                        {status === "streaming" && m.id === lastId && i === m.parts.length - 1 && <span aria-hidden="true" className="ask-caret" />}
+                      </div>
                     );
                   }
                   if (part.type === "tool-contact") {
@@ -121,7 +127,7 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
                 <button
                   type="button"
                   onClick={() => regenerate()}
-                  className="border-rule self-start border bg-[var(--accent-tint)] px-3 py-1.5 font-mono text-[length:var(--size-meta)] hover:bg-[var(--highlight)]"
+                  className="ask-btn border-rule self-start border bg-[var(--accent-tint)] px-3 py-1.5 font-mono text-[length:var(--size-meta)]"
                 >
                   Try again
                 </button>
@@ -166,11 +172,11 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
               className="border-rule bg-card min-w-0 flex-1 border px-3 py-2"
             />
             {busy ? (
-              <button type="button" onClick={() => stop()} className="border-rule border bg-[var(--accent-tint)] px-4 py-2 font-medium">
+              <button type="button" onClick={() => stop()} className="ask-btn border-rule border bg-[var(--accent-tint)] px-4 py-2 font-medium">
                 Stop
               </button>
             ) : (
-              <button type="submit" disabled={!input.trim()} className="border-rule border bg-[var(--highlight)] px-4 py-2 font-medium disabled:opacity-50">
+              <button type="submit" disabled={!input.trim()} className="ask-btn border-rule border bg-[var(--highlight)] px-4 py-2 font-medium disabled:opacity-50">
                 Ask
               </button>
             )}
