@@ -14,7 +14,8 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "brain:sync": "node scripts/export-brain.mjs"
   },
   "dependencies": {
     "@ai-sdk/react": "^4.0.109",

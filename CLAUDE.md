@@ -34,7 +34,8 @@ Vitest · Playwright · `mcp-handler` (serveur MCP sur `/api/mcp`) · déploieme
 | `src/data/trail.ts` | traces trail + ski (`public/gpx/<slug>.gpx` ⇄ une entrée `routes`, photos dans `public/photos/<slug>/`), courses et index UTMB (MCP seulement) |
 | `src/data/reading.ts` | livres et articles marquants + intro |
 | `src/data/music.ts` | playlist Spotify du moment (id → embed)
-| `content/notes/*.mdx` | notes du labo |
+| `content/notes/*.mdx` | notes du labo (aussi dans le corpus du chat) |
+| `src/data/brain-extract.json` | contenu curé du brain — généré par `npm run brain:sync`, jamais édité à la main ; publication via la skill `publish-brain` |
 | `src/styles/tokens/*.css` | design system « Notebook » (source : projet Claude Design, cf. brain) |
 
 Ces fichiers alimentent **les pages, le serveur MCP et l'assistant Ask** (`⌘K`, `/api/chat`,

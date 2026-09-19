@@ -1,4 +1,6 @@
 import "server-only";
+import { allNotes } from "content-collections";
+import brainExtract from "@/data/brain-extract.json";
 import { education, experience, profile, skills, stack } from "@/data/profile";
 import { projects } from "@/data/projects";
 import { articles } from "@/data/reading";
@@ -20,6 +22,9 @@ export function buildInstructions(context: AskContext) {
     projects,
     reading: articles.map(({ title, author, why }) => ({ title, author, why })),
     outdoor: routes.map(({ name, where, sport }) => ({ name, where, sport })),
+    labNotes: allNotes.filter((n) => !n.draft).map(({ title, date, summary, content }) => ({ title, date, summary, content })),
+    // Curated brain exports — see scripts/export-brain.mjs and the publish-brain skill.
+    notes: brainExtract.documents,
   };
 
   return [
