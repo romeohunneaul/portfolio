@@ -113,6 +113,16 @@ a:hover {
     transform: scale(1);
   }
 }
+@keyframes logo-fill {
+  to {
+    fill-opacity: 1;
+  }
+}
+@keyframes logo-fill-replay {
+  to {
+    fill-opacity: 1;
+  }
+}
 @keyframes logo-pop-replay {
   0% {
     transform: scale(0);
@@ -129,24 +139,29 @@ a:hover {
   animation: logo-dash 0.9s ease-out both;
 }
 .logo-draw [data-draw="2"] {
-  animation-delay: 0.85s;
+  animation-delay: 1.2s;
   animation-duration: 0.35s;
 }
 .logo-draw [data-draw="3"] {
-  animation-delay: 1.35s;
-  animation-duration: 0.4s;
+  animation-delay: 1.4s;
+  animation-duration: 0.35s;
 }
-.logo-draw [data-draw="4"] {
-  animation-delay: 1.47s;
-  animation-duration: 0.4s;
+.logo-draw [data-fill] {
+  fill-opacity: 0;
+  animation:
+    logo-dash 0.9s ease-out both,
+    logo-fill 0.4s ease-out 0.85s both;
 }
 .logo-draw [data-pop] {
   transform-box: fill-box;
   transform-origin: center;
-  animation: logo-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.15s both;
+  animation: logo-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.6s both;
 }
 .logo-draw:hover [data-draw] {
   animation-name: logo-dash-replay;
+}
+.logo-draw:hover [data-fill] {
+  animation-name: logo-dash-replay, logo-fill-replay;
 }
 .logo-draw:hover [data-pop] {
   animation-name: logo-pop-replay;

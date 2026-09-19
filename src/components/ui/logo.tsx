@@ -1,18 +1,29 @@
 /**
- * The brand mark, from the "Logo — variations" board. Two drawings, three
- * motions, CSS keyframes only (see the logo block in globals.css):
+ * The brand mark — François's Figma drawing (UIRA Sunset Logo): the filled
+ * ridge, a big sun behind it, and two grey snow liserets on the cols.
+ * Motion is CSS only (see the logo block in globals.css):
  *
- * - "static"  L1 open ridge — the header default.
- * - "draw"    M1: draws itself on load, replays on hover, two ski traces.
- * - "sunset"  M2 on L3: the disc sets behind the paper-filled silhouette,
- *             ochre to rose, 7s loop. Ambient — margin card, never a header.
- * - "snow"    M3: five flakes drifting. Only reads at 150px.
+ * - "static"  the drawing, still — the header default.
+ * - "draw"    ridge draws itself, fill settles, liserets, sun pops. Replays on hover.
+ * - "sunset"  the disc sets behind the silhouette, ochre to rose, 7s loop.
+ *             Ambient — margin card, never a header.
+ * - "snow"    five flakes drifting above. Only reads at 150px.
+ *
+ * The silhouette is filled with the surface colour so the sun passes behind:
+ * `--logo-fill` defaults to the page paper; set it to the card colour when the
+ * logo sits on a card (the margin does).
  */
 type LogoProps = {
   size?: number;
   variant?: "static" | "draw" | "sunset" | "snow";
   className?: string;
 };
+
+const RIDGE = "M3 30L16 9l7 11 5-6 12 16z";
+/* Snow grey from the Figma file. */
+const SNOW = "#d9d9d9";
+const LISERET_1 = "M12.9 18l3.15 2.05 3.45-2.25";
+const LISERET_2 = "M25.75 19.95l2.76 2.25 2.19-1.65";
 
 const frame = (size: number, className?: string, motion?: string) => ({
   width: size,
@@ -27,49 +38,41 @@ const frame = (size: number, className?: string, motion?: string) => ({
   className: [motion, className].filter(Boolean).join(" ") || undefined,
 });
 
+function Liserets({ draw }: { draw?: boolean }) {
+  const attrs = (order: string) => (draw ? { "data-draw": order, pathLength: 1 } : {});
+  return (
+    <>
+      <path {...attrs("2")} d={LISERET_1} stroke={SNOW} strokeWidth={1.6} strokeLinecap="square" />
+      <path {...attrs("3")} d={LISERET_2} stroke={SNOW} strokeWidth={1.6} strokeLinecap="square" />
+    </>
+  );
+}
+
 export function Logo({ size = 46, variant = "static", className }: LogoProps) {
-  if (variant === "sunset") {
+  if (variant === "draw") {
     return (
-      <svg {...frame(size, className, "logo-sunset")}>
-        <circle data-sun="1" cx="30" cy="13" r="6.4" fill="#e8a97f" stroke="none" />
-        <path d="M3 30L16 9l7 11 5-6 12 16z" fill="var(--paper-card)" />
-        <path d="M2 30h42" strokeWidth={0.9} strokeOpacity={0.4} />
+      <svg {...frame(size, className, "logo-draw")}>
+        <circle data-pop="1" cx="30" cy="13" r="6.4" fill="#e8a97f" stroke="none" />
+        <path data-draw="1" data-fill="1" d={RIDGE} pathLength={1} fill="var(--logo-fill, var(--paper))" />
+        <Liserets draw />
       </svg>
     );
   }
 
-  if (variant === "snow") {
-    return (
-      <svg {...frame(size, className, "logo-snow")}>
-        <circle cx="35.5" cy="6" r="2.6" fill="var(--accent-strong)" stroke="none" />
+  return (
+    <svg {...frame(size, className, variant === "sunset" ? "logo-sunset" : variant === "snow" ? "logo-snow" : undefined)}>
+      {variant === "snow" && (
         <g opacity={0.5} fill="currentColor" stroke="none">
           <circle className="flake" cx="9" cy="8" r="0.9" />
           <circle className="flake" cx="16" cy="5" r="0.7" />
           <circle className="flake" cx="24" cy="7" r="0.9" />
-          <circle className="flake" cx="30" cy="4" r="0.7" />
-          <circle className="flake" cx="41" cy="9" r="0.8" />
+          <circle className="flake" cx="36" cy="4" r="0.7" />
+          <circle className="flake" cx="42" cy="9" r="0.8" />
         </g>
-        <path d="M2 30h42" strokeWidth={0.9} strokeOpacity={0.4} />
-        <path d="M6 30l11-19 7 11 5-6 9 14" />
-        <path d="M14.5 14.2l2.2 1.4 2-1.6" strokeWidth={1.6} strokeOpacity={0.6} />
-      </svg>
-    );
-  }
-
-  const draw = variant === "draw";
-  const drawn = (order: string) => (draw ? { "data-draw": order, pathLength: 1 } : {});
-  return (
-    <svg {...frame(size, className, draw ? "logo-draw" : undefined)}>
-      <circle {...(draw ? { "data-pop": "1" } : {})} cx="35.5" cy="8" r="3.2" fill="var(--accent-strong)" stroke="none" />
-      <path d="M2 30h42" strokeWidth={0.9} strokeOpacity={0.4} />
-      <path {...drawn("1")} d="M6 30l11-19 7 11 5-6 9 14" />
-      <path {...drawn("2")} d="M14.5 14.2l2.2 1.4 2-1.6" strokeWidth={1.6} strokeOpacity={0.6} />
-      {draw && (
-        <>
-          <path data-draw="3" pathLength={1} d="M18.2 13.2c1.4 3.2 2.9 5.6 5.2 8.2" strokeWidth={1.1} strokeOpacity={0.5} />
-          <path data-draw="4" pathLength={1} d="M19.4 15c1.2 2.6 2.5 4.5 4.3 6.6" strokeWidth={1.1} strokeOpacity={0.5} />
-        </>
       )}
+      <circle data-sun="1" cx="30" cy="13" r="6.4" fill="#e8a97f" stroke="none" />
+      <path d={RIDGE} fill="var(--logo-fill, var(--paper))" />
+      <Liserets />
     </svg>
   );
 }

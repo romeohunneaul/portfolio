@@ -10,7 +10,7 @@ export function Margin() {
         className="border-rule bg-card flex h-[210px] items-center justify-center border-[length:var(--border)]"
         style={{ backgroundImage: "var(--paper-grid-fine)" }}
       >
-        <Logo size={150} variant="sunset" />
+        <Logo size={150} variant="sunset" className="[--logo-fill:var(--paper-card)]" />
       </div>
       <div className="flex items-center gap-2">
         <Mark name="arrow" />
