@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { DrawnMark } from "@/components/ui/drawn-mark";
 
 export const tabs = [
   { href: "/", label: "Home" },
@@ -23,9 +24,13 @@ export function NavTabs() {
             key={href}
             href={href}
             aria-current={active ? "page" : undefined}
-            className={`text-row px-2.5 py-1.5 no-underline hover:bg-[var(--accent-tint)] ${active ? "bg-[var(--accent-tint)] font-medium" : ""}`}
+            data-current={active || undefined}
+            className={`draws text-row px-2.5 py-1.5 no-underline ${active ? "font-medium" : ""}`}
           >
-            {label}
+            <span className="hd">
+              <span>{label}</span>
+              <DrawnMark />
+            </span>
           </Link>
         );
       })}

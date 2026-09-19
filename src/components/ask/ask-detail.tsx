@@ -52,9 +52,7 @@ export function AskDetail({ context }: { context: AskContext }) {
       </ul>
       <div className="flex flex-wrap items-center gap-2">
         {p.stack.map((s) => (
-          <Chip key={s} tone="none">
-            {s}
-          </Chip>
+          <Chip key={s}>{s}</Chip>
         ))}
         {p.links?.map((l) => (
           <a key={l.url} href={l.url} rel="noreferrer" className="text-meta">

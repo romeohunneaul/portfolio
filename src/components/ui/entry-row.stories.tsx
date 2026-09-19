@@ -27,7 +27,7 @@ export const WithMark: Story = {
 export const WithChipAndDetail: Story = {
   args: {
     title: "A catalogue you can talk to",
-    mark: <Chip tone="highlight">in progress</Chip>,
+    mark: <Chip>in progress</Chip>,
     meta: "2025–2026",
     detail: "Tooling for independent bookshops, built with a publisher-side co-founder.",
   },

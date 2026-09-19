@@ -4,9 +4,13 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import type { AskContext } from "@/lib/ask/context";
 import { AskDialog } from "./ask-dialog";
 
-type AskApi = { open: (context?: AskContext) => void };
+type AskApi = {
+  open: (context?: AskContext) => void;
+  /** The context whose panel is open right now — rows keep their loop drawn. */
+  current: AskContext;
+};
 
-const Ctx = createContext<AskApi>({ open: () => {} });
+const Ctx = createContext<AskApi>({ open: () => {}, current: null });
 export const useAsk = () => useContext(Ctx);
 
 /** Reads `data-ask-kind` / `data-ask-id` from the closest marked ancestor. */
@@ -18,8 +22,8 @@ function contextFrom(target: EventTarget | null): AskContext {
 }
 
 /**
- * ⌘K / Ctrl+K opens the dialog with whatever row the visitor last hovered or
- * focused. The visible "Ask" buttons do the same for touch and keyboard.
+ * ⌘K / Ctrl+K opens the panel with whatever row the visitor last hovered or
+ * focused. Rows themselves open it on click.
  */
 export function AskProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<{ open: boolean; context: AskContext; session: number }>({ open: false, context: null, session: 0 });
@@ -49,12 +53,12 @@ export function AskProvider({ children }: { children: ReactNode }) {
     };
   }, [open]);
 
-  const api = useMemo(() => ({ open }), [open]);
+  const api = useMemo(() => ({ open, current: state.open ? state.context : null }), [open, state.open, state.context]);
 
   return (
     <Ctx.Provider value={api}>
       {children}
-      {/* `key` resets the conversation each time the dialog is opened from a new place. */}
+      {/* `key` resets the conversation each time the panel is opened from a new place. */}
       <AskDialog key={state.session} open={state.open} context={state.context} onClose={() => setState((s) => ({ ...s, open: false }))} />
     </Ctx.Provider>
   );

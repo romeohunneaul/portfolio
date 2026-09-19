@@ -1,4 +1,5 @@
 import { AskRow } from "@/components/ask/ask-row";
+import { DrawnMark } from "@/components/ui/drawn-mark";
 import { LogoSquare } from "@/components/ui/logo-square";
 import { education, experience, type Experience } from "@/data/profile";
 import { experienceId } from "@/lib/ask/context";
@@ -15,7 +16,7 @@ function Head({ x, summary }: { x: Pick<Experience, "company" | "role" | "logo" 
     <span className="grid grid-cols-[auto_1fr] items-start gap-x-4 gap-y-1 sm:grid-cols-[auto_1fr_auto]">
       <LogoSquare name={x.company} src={x.logo} />
       <span className="text-row">
-        <span className="ask-title"><span className="font-semibold">{x.company}</span> — {x.role}</span>
+        <span className="hd"><span><span className="font-semibold">{x.company}</span> — {x.role}</span><DrawnMark /></span>
       </span>
       <span className="text-soft text-meta col-start-2 font-mono tabular-nums sm:col-start-auto sm:pt-1">{dates(x.start, x.end)}</span>
       {summary && <span className="col-start-2 max-w-[var(--measure)] sm:col-span-2">{summary}</span>}

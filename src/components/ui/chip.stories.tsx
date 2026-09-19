@@ -4,24 +4,24 @@ import { Chip } from "./chip";
 const meta = {
   title: "UI/Chip",
   component: Chip,
-  args: { children: "demo", tone: "accent" },
+  args: { children: "note" },
 } satisfies Meta<typeof Chip>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Accent: Story = {};
-export const Strong: Story = { args: { tone: "strong", children: "open source" } };
-export const Highlight: Story = { args: { tone: "highlight", children: "in progress" } };
-export const Outline: Story = { args: { tone: "none", children: "Prisma" } };
-
-export const AllTones: Story = {
+/** Bare type at rest — no fill, no border. */
+export const Rest: Story = {};
+/** The marker stays drawn. */
+export const Selected: Story = { args: { state: "selected" } };
+/** 38% ink, no marker — the only state with no yellow in it. */
+export const Disabled: Story = { args: { state: "disabled" } };
+/** Hover the row: the swipe belongs to the container, not the chip. */
+export const InsideARow: Story = {
   render: () => (
-    <div className="flex flex-wrap gap-2">
-      <Chip>accent</Chip>
-      <Chip tone="strong">strong</Chip>
-      <Chip tone="highlight">highlight</Chip>
-      <Chip tone="none">none</Chip>
-    </div>
+    <button type="button" className="draws border-rule flex w-full items-baseline gap-3 border-b py-4 text-left">
+      <span className="font-semibold">A catalogue you can talk to</span>
+      <Chip>in progress</Chip>
+    </button>
   ),
 };

@@ -35,7 +35,7 @@ export function NoteCard({ title, summary, slug, date, tags = [] }: NoteCardProp
   );
 
   const cls =
-    "bg-card border-rule flex flex-col gap-2 border-[length:var(--border)] px-6 py-5 no-underline transition-shadow duration-150 hover:shadow-[var(--shadow-hover)]";
+    "card-tilt draws bg-card border-rule flex flex-col gap-2 border-[length:var(--border)] px-6 py-5 no-underline hover:shadow-[var(--shadow-hover)]";
 
   return (
     <article>

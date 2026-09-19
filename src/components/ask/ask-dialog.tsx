@@ -5,6 +5,7 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { Streamdown } from "streamdown";
 import { resolve, suggestions, type AskContext } from "@/lib/ask/context";
+import { Button } from "@/components/ui/button";
 import { AskDetail } from "./ask-detail";
 import { ContactCard } from "./contact-card";
 
@@ -61,15 +62,18 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
       onClose={onClose}
       onClick={(e) => e.target === ref.current && onClose()}
       aria-labelledby="ask-title"
-      className="ask-panel bg-paper text-ink border-rule m-0 ml-auto h-dvh max-h-none w-[min(560px,100vw)] max-w-none border-l-[length:var(--border)] p-0 backdrop:bg-[rgba(47,53,66,0.35)]"
+      className="ask-panel bg-paper text-ink border-rule m-0 ml-auto h-dvh max-h-none w-[min(460px,100vw)] max-w-none border-l-[length:var(--border)] p-0 backdrop:bg-[rgba(47,53,66,0.35)]"
     >
       <div className="flex h-full flex-col">
         <header className="border-rule flex items-start justify-between gap-4 border-b px-6 py-5">
           <h2 id="ask-title" className="text-title m-0 font-semibold text-balance">
             {focus ? focus.label : "Ask about François"}
           </h2>
-          <button type="button" onClick={onClose} aria-label="Close" className="text-soft text-meta -mr-2 px-2 py-1 font-mono hover:underline">
-            esc
+          <button type="button" onClick={onClose} aria-label="Close" className="btn flex size-8 shrink-0 items-center justify-center !p-0">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={1.3} strokeLinecap="round">
+              <path d="M2 2l8 8" />
+              <path d="M10 2l-8 8" />
+            </svg>
           </button>
         </header>
 
@@ -124,13 +128,9 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
             {error && (
               <div className="flex flex-col gap-3">
                 <p className="m-0">The assistant is not answering right now.</p>
-                <button
-                  type="button"
-                  onClick={() => regenerate()}
-                  className="ask-btn border-rule self-start border bg-[var(--accent-tint)] px-3 py-1.5 font-mono text-[length:var(--size-meta)]"
-                >
+                <Button variant="quiet" onClick={() => regenerate()} className="self-start">
                   Try again
-                </button>
+                </Button>
                 <ContactCard />
               </div>
             )}
@@ -172,13 +172,11 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
               className="border-rule bg-card min-w-0 flex-1 border px-3 py-2"
             />
             {busy ? (
-              <button type="button" onClick={() => stop()} className="ask-btn border-rule border bg-[var(--accent-tint)] px-4 py-2 font-medium">
-                Stop
-              </button>
+              <Button onClick={() => stop()}>Stop</Button>
             ) : (
-              <button type="submit" disabled={!input.trim()} className="ask-btn border-rule border bg-[var(--highlight)] px-4 py-2 font-medium disabled:opacity-50">
+              <Button type="submit" disabled={!input.trim()}>
                 Ask
-              </button>
+              </Button>
             )}
           </form>
         </div>

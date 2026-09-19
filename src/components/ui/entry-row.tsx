@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DrawnMark } from "./drawn-mark";
 import type { ReactNode } from "react";
 
 type EntryRowProps = {
@@ -20,7 +21,14 @@ export function EntryRow({ title, meta, mark, detail, href }: EntryRowProps) {
   const body = (
     <>
       <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <span>{title}</span>
+        {href ? (
+          <span className="hd">
+            <span>{title}</span>
+            <DrawnMark />
+          </span>
+        ) : (
+          <span>{title}</span>
+        )}
         {mark}
       </span>
       {meta && <span className="text-soft text-meta flex gap-3 font-mono tabular-nums">{meta}</span>}
@@ -30,7 +38,7 @@ export function EntryRow({ title, meta, mark, detail, href }: EntryRowProps) {
 
   if (!href) return <div className={base}>{body}</div>;
 
-  const cls = `${base} no-underline hover:bg-[var(--accent-tint)]`;
+  const cls = `${base} draws no-underline`;
   return href.startsWith("http") ? (
     <a href={href} className={cls} rel="noreferrer">
       {body}

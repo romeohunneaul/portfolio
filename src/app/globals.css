@@ -3,6 +3,7 @@
 @import "../styles/tokens/typography.css";
 @import "../styles/tokens/spacing.css";
 @import "../styles/tokens/paper.css";
+@import "../styles/tokens/interaction.css";
 @source "../../node_modules/streamdown/dist/*.js";
 
 /* Tokens exposed as Tailwind utilities: bg-paper, text-ink, border-rule, text-meta… */
@@ -75,37 +76,122 @@ textarea:focus-visible {
   background: var(--highlight-punch);
 }
 
-/* Rows that open the panel. The outlined arrow is the standing target — it
-   survives touch and keyboard. Hover adds the marker sweep under the title
-   and fills the arrow: two signals, enrichment, never the only affordance. */
-.ask-title {
-  background-image: linear-gradient(transparent 14%, var(--highlight-punch) 14%, var(--highlight-punch) 86%, transparent 86%);
-  background-repeat: no-repeat;
-  background-size: 0% 100%;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  transition: background-size 0.4s ease;
+/* ── The three moves. One-mark rule: highlight = meaning (static),
+   drawn mark = interaction. See tokens/interaction.css. ─────────────── */
+
+/* drawn mark: .hd positions it, the closest .draws draws it */
+.hd {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
 }
-.ask-row:hover .ask-title,
-.ask-row:focus-visible .ask-title {
-  background-size: 100% 100%;
+.hd .mk {
+  position: absolute;
+  pointer-events: none;
+  overflow: visible;
 }
-.ask-arrow {
-  background-image: linear-gradient(transparent 14%, var(--highlight-punch) 14%, var(--highlight-punch) 86%, transparent 86%);
-  background-repeat: no-repeat;
-  background-size: 0% 100%;
-  transition: background-size 0.4s ease;
+.hd .mk.under {
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  margin-top: 1px;
 }
-.ask-arrow svg {
-  transition: translate 0.3s ease;
+.hd .mk.around {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-.ask-row:hover .ask-arrow,
-.ask-row:focus-visible .ask-arrow {
-  background-size: 100% 100%;
+.hd .mk path {
+  /* 1 3 + 1.02: at rest the dash sits fully outside the path — round caps
+     would otherwise leave a phantom dot at one end of every mark. */
+  stroke-dasharray: 1 3;
+  stroke-dashoffset: 1.02;
+  transition: stroke-dashoffset var(--draw-duration) var(--draw-ease);
 }
-.ask-row:hover .ask-arrow svg,
-.ask-row:focus-visible .ask-arrow svg {
-  translate: 3px 0;
+.draws:hover .mk path,
+.draws:focus-visible .mk path,
+.draws[data-current="true"] .mk path {
+  stroke-dashoffset: 0;
+}
+/* quiet rest: a faint copy stands, the ink copy swipes over it */
+.hd-rest .mk path.ghost {
+  stroke-dashoffset: 0;
+  stroke-opacity: var(--ghost-opacity);
+}
+
+/* chip: bare soft-ink mono; the marker swipes when its row or card is touched */
+.chip {
+  color: var(--ink-soft);
+  transition: color var(--swipe-duration) var(--swipe-ease);
+}
+.chip i {
+  position: absolute;
+  inset: 1px -4px;
+  background: var(--marker);
+  pointer-events: none;
+  transform: skewX(var(--swipe-skew)) scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform var(--swipe-duration) var(--swipe-ease);
+}
+.draws:hover .chip i,
+.draws:focus-visible .chip i,
+.chip[data-state="selected"] i {
+  transform: skewX(var(--swipe-skew)) scaleX(1);
+}
+.draws:hover .chip,
+.draws:focus-visible .chip,
+.chip[data-state="selected"] {
+  color: var(--ink);
+}
+.chip[data-state="disabled"] {
+  opacity: var(--disabled-opacity);
+}
+.chip[data-state="disabled"] i {
+  display: none;
+}
+
+/* outlined button: ink line + paper shift, never a fill */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: var(--border) solid var(--ink-rule);
+  background: transparent;
+  padding: 7px 13px;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    box-shadow 0.16s ease,
+    translate 0.16s ease,
+    opacity 0.16s ease;
+}
+.btn:hover:not(:disabled) {
+  box-shadow: 3px 3px 0 var(--ink);
+  translate: -1px -1px;
+}
+.btn:active:not(:disabled) {
+  box-shadow: 1px 1px 0 var(--ink);
+  translate: 0 0;
+}
+.btn:disabled {
+  opacity: var(--disabled-opacity);
+  cursor: default;
+}
+
+/* the only card: rests off-square, straightens under the pointer */
+.card-tilt {
+  transform: rotate(var(--tilt));
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+article:nth-of-type(even) .card-tilt {
+  transform: rotate(calc(var(--tilt) * -1));
+}
+.card-tilt:hover,
+.card-tilt:focus-visible {
+  transform: rotate(0deg);
 }
 
 /* Logo motions — from the "Logo — variations" board. CSS keyframes only.
@@ -328,18 +414,6 @@ textarea:focus-visible {
   background: var(--paper-card);
   border: 1px solid var(--ink-rule);
   padding: 0 4px;
-}
-
-/* Panel buttons: the DS pair — hard shadow and a 1px lift on hover. */
-.ask-btn {
-  transition:
-    box-shadow 0.2s ease,
-    translate 0.2s ease;
-}
-.ask-btn:hover:not(:disabled),
-.ask-btn:focus-visible:not(:disabled) {
-  box-shadow: 3px 3px 0 var(--ink-shadow);
-  translate: -1px -1px;
 }
 
 /* Suggestions drift in late, one at a time; typing dismisses them. */

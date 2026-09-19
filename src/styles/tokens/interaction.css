@@ -1,0 +1,20 @@
+/* Notebook — interaction. The three moves and nothing else:
+   an ink line, a paper shift, the marker. No fades, no scale, no colour swaps.
+   One-mark rule: highlight = meaning (static), drawn mark = interaction —
+   never both on one element, never a highlight that appears on hover. */
+:root {
+  /* the interaction yellow — distinct from --highlight, which is meaning */
+  --marker: color-mix(in srgb, var(--highlight) 80%, transparent);
+  --marker-pressed: var(--highlight);
+
+  --draw-duration: 0.36s;
+  --draw-ease: ease;
+  --swipe-skew: -9deg;
+  --swipe-duration: 0.26s;
+  --swipe-ease: cubic-bezier(0.3, 0.8, 0.35, 1);
+
+  --ghost-opacity: 0.28;
+  --disabled-opacity: 0.38;
+
+  --tilt: 0.3deg; /* cards rest a fraction off-square */
+}

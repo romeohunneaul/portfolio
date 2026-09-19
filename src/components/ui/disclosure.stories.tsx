@@ -10,7 +10,7 @@ const meta = {
       <>
         <span className="flex flex-wrap items-baseline gap-x-3">
           <span className="font-semibold">A catalogue you can talk to</span>
-          <Chip tone="highlight">in progress</Chip>
+          <Chip>in progress</Chip>
         </span>
         <span className="text-soft text-meta font-mono">2025–2026</span>
         <span className="col-span-2">Tooling for independent bookshops.</span>
