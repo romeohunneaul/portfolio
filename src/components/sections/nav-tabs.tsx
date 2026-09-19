@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DrawnMark } from "@/components/ui/drawn-mark";
+import { TextLink } from "@/components/ui/text-link";
 
 export const tabs = [
   { href: "/", label: "Home" },
@@ -16,22 +15,13 @@ export const tabs = [
 export function NavTabs() {
   const pathname = usePathname();
   return (
-    <nav aria-label="Sections" className="-mx-2.5 flex flex-wrap gap-x-1 gap-y-1">
+    <nav aria-label="Sections" className="flex flex-wrap gap-x-5 gap-y-1">
       {tabs.map(({ href, label }) => {
         const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
         return (
-          <Link
-            key={href}
-            href={href}
-            aria-current={active ? "page" : undefined}
-            data-current={active || undefined}
-            className={`draws text-row px-2.5 py-1.5 no-underline ${active ? "font-medium" : ""}`}
-          >
-            <span className="hd">
-              <span>{label}</span>
-              <DrawnMark />
-            </span>
-          </Link>
+          <TextLink key={href} href={href} current={active} className={`text-row py-1 ${active ? "font-medium" : ""}`}>
+            {label}
+          </TextLink>
         );
       })}
     </nav>

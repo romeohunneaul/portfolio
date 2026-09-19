@@ -1,3 +1,4 @@
+import { TextLink } from "@/components/ui/text-link";
 import { skills, stack, type Tech } from "@/data/profile";
 
 const groups: Tech["group"][] = ["AI", "Web", "Data", "Ops"];
@@ -28,9 +29,7 @@ export function StackGrid({ withSkills = false }: { withSkills?: boolean }) {
               .filter((t) => t.group === g)
               .map((t) => (
                 <dd key={t.name} className="m-0 flex flex-col">
-                  <a href={t.url} rel="noreferrer">
-                    {t.name}
-                  </a>
+                  <TextLink href={t.url}>{t.name}</TextLink>
                   <span className="text-soft text-meta">{t.used}</span>
                 </dd>
               ))}

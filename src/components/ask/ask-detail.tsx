@@ -1,3 +1,4 @@
+import { TextLink } from "@/components/ui/text-link";
 import { Chip } from "@/components/ui/chip";
 import { LogoSquare } from "@/components/ui/logo-square";
 import { resolve, type AskContext } from "@/lib/ask/context";
@@ -29,9 +30,9 @@ export function AskDetail({ context }: { context: AskContext }) {
           </ul>
         )}
         {x.url && (
-          <a href={x.url} rel="noreferrer" className="text-meta self-start">
+          <TextLink href={x.url} className="text-meta self-start">
             {new URL(x.url).hostname.replace("www.", "")}
-          </a>
+          </TextLink>
         )}
       </div>
     );
@@ -55,9 +56,9 @@ export function AskDetail({ context }: { context: AskContext }) {
           <Chip key={s}>{s}</Chip>
         ))}
         {p.links?.map((l) => (
-          <a key={l.url} href={l.url} rel="noreferrer" className="text-meta">
+          <TextLink key={l.url} href={l.url} className="text-meta">
             {l.label}
-          </a>
+          </TextLink>
         ))}
       </div>
     </div>

@@ -9,7 +9,7 @@ export function AskShortcut() {
     <button
       type="button"
       onClick={() => open(null)}
-      className="border-rule text-meta flex items-center gap-2 border px-2.5 py-1.5 font-mono hover:bg-[var(--accent-tint)]"
+      className="btn text-meta gap-2 font-mono"
     >
       Ask <kbd className="text-soft font-mono">⌘K</kbd>
     </button>

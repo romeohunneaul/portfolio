@@ -1,6 +1,6 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { TextLink } from "@/components/ui/text-link";
 
 type SectionProps = {
   id: string;
@@ -16,7 +16,7 @@ type SectionProps = {
 export function Section({ id, label, aside, lede, more, children }: SectionProps) {
   return (
     <section id={id} aria-labelledby={`${id}-label`} className="flex scroll-mt-8 flex-col gap-6">
-      <SectionHeading id={`${id}-label`} lede={lede} aside={more ? <Link href={more}>{aside ?? "See all"}</Link> : aside}>
+      <SectionHeading id={`${id}-label`} lede={lede} aside={more ? <TextLink href={more}>{aside ?? "See all"}</TextLink> : aside}>
         {label}
       </SectionHeading>
       {children}

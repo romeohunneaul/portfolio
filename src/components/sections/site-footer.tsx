@@ -1,3 +1,4 @@
+import { TextLink } from "@/components/ui/text-link";
 import { profile } from "@/data/profile";
 
 /** "Trouver François" — one line, not a banner. */
@@ -13,9 +14,9 @@ export function SiteFooter() {
     <footer id="hello" className="border-rule mt-16 flex flex-wrap items-baseline gap-x-6 gap-y-2 border-t-[length:var(--border)] pt-6">
       <span className="text-soft">Say hello</span>
       {links.map(([label, href]) => (
-        <a key={label} href={href} rel={href.startsWith("http") ? "noreferrer" : undefined}>
+        <TextLink key={label} href={href}>
           {label}
-        </a>
+        </TextLink>
       ))}
     </footer>
   );

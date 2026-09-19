@@ -5,6 +5,7 @@ import { Section } from "@/components/sections/section";
 import { StackGrid } from "@/components/sections/stack-grid";
 import { Timeline } from "@/components/sections/timeline";
 import { profile } from "@/data/profile";
+import { TextLink } from "@/components/ui/text-link";
 import { ledes } from "@/data/sections";
 
 export const metadata: Metadata = { title: "Work", description: "Career, problems worked on, tools actually used." };
@@ -17,11 +18,7 @@ export default function WorkPage() {
       <Section
         id="career"
         label="Career"
-        aside={
-          <a href={profile.links.linkedin} rel="noreferrer">
-            LinkedIn
-          </a>
-        }
+        aside={<TextLink href={profile.links.linkedin}>LinkedIn</TextLink>}
       >
         <Timeline variant="full" />
       </Section>
@@ -37,11 +34,7 @@ export default function WorkPage() {
       <Section
         id="code"
         label="Code"
-        aside={
-          <a href={profile.links.github} rel="noreferrer">
-            GitHub
-          </a>
-        }
+        aside={<TextLink href={profile.links.github}>GitHub</TextLink>}
       >
         <p className="m-0 max-w-[var(--measure)]">
           Client repositories stay private. Public: this site, and a Garmin MCP server. The rest shows up as lab notes.

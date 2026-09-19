@@ -1,3 +1,5 @@
+import { DrawnMark } from "@/components/ui/drawn-mark";
+import { TextLink } from "@/components/ui/text-link";
 import Image from "next/image";
 import { Trace } from "@/components/ui/trace";
 import { profile } from "@/data/profile";
@@ -23,8 +25,9 @@ export function RouteGrid({ routes }: { routes: LoadedRoute[] }) {
           <p className="m-0">
             {r.where}. {r.note}
           </p>
-          <a href={r.file} download className="text-meta self-start">
-            Download GPX
+          <a href={r.file} download className="draws hd hd-rest text-meta no-underline self-start">
+            <span>Download GPX</span>
+            <DrawnMark ghost />
           </a>
         </li>
       ))}
@@ -59,15 +62,8 @@ function RoutePhotos({ route }: { route: LoadedRoute }) {
 export function ElsewhereLine() {
   return (
     <p className="text-soft text-meta m-0">
-      {utmb.races} races so far. Also on{" "}
-      <a href={profile.links.strava} rel="noreferrer">
-        Strava
-      </a>{" "}
-      and{" "}
-      <a href={profile.links.utmb} rel="noreferrer">
-        UTMB
-      </a>
-      .
+      {utmb.races} races so far. Also on <TextLink href={profile.links.strava}>Strava</TextLink> and{" "}
+      <TextLink href={profile.links.utmb}>UTMB</TextLink>.
     </p>
   );
 }
