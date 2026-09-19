@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
 import { resolve, suggestions, type AskContext } from "@/lib/ask/context";
 import { AskDetail } from "./ask-detail";
 import { ContactCard } from "./contact-card";
@@ -11,15 +12,19 @@ type AskDialogProps = { open: boolean; context: AskContext; onClose: () => void 
 /**
  * A side panel on a native <dialog>: focus trap, Escape and backdrop come with
  * the platform. Top: the detail of the row that opened it. Bottom: the question
- * field, there from the start. Suggestions arrive late, and only if nothing
- * has been typed.
+ * field, there from the start; suggestions arrive late, and only if nothing has
+ * been typed. While the model works: pencil dots, a streaming caret, and Stop.
  */
 export function AskDialog({ open, context, onClose }: AskDialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
   const thread = useRef<HTMLDivElement>(null);
   const field = useRef<HTMLInputElement>(null);
+  const stick = useRef(true); // follow the stream only while the reader is at the bottom
   const [input, setInput] = useState("");
-  const { messages, sendMessage, status, error } = useChat();
+  const { messages, sendMessage, status, error, stop, regenerate } = useChat({
+    // The dialog remounts per opening (keyed), so the context is constant here.
+    transport: new DefaultChatTransport({ api: "/api/chat", body: { context } }),
+  });
   const focus = resolve(context);
   const busy = status === "submitted" || status === "streaming";
 
@@ -33,18 +38,21 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
     if (!open && d.open) d.close();
   }, [open]);
 
-  // Scroll the thread, never the page behind the panel.
+  // Scroll the thread, never the page — and never fight a reader who scrolled up.
   useEffect(() => {
     const el = thread.current;
-    if (el && messages.length > 0) el.scrollTop = el.scrollHeight;
+    if (el && stick.current && messages.length > 0) el.scrollTop = el.scrollHeight;
   }, [messages, status]);
 
   const ask = (text: string) => {
     const q = text.trim();
     if (!q || busy) return;
-    sendMessage({ text: q }, { body: { context } });
+    stick.current = true;
+    sendMessage({ text: q });
     setInput("");
   };
+
+  const lastId = messages.at(-1)?.id;
 
   return (
     <dialog
@@ -64,7 +72,14 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
           </button>
         </header>
 
-        <div ref={thread} className="flex flex-1 flex-col gap-6 overflow-y-auto px-6 py-6">
+        <div
+          ref={thread}
+          onScroll={(e) => {
+            const el = e.currentTarget;
+            stick.current = el.scrollHeight - el.scrollTop - el.clientHeight < 120;
+          }}
+          className="flex flex-1 flex-col gap-6 overflow-y-auto px-6 py-6"
+        >
           {focus ? <AskDetail context={context} /> : <p className="m-0">Answers come from the data behind this site, nothing else. When it does not know, it says so.</p>}
 
           <div className="flex flex-col gap-4" aria-live="polite">
@@ -75,6 +90,9 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
                     return (
                       <p key={i} className="m-0 whitespace-pre-wrap">
                         {part.text}
+                        {status === "streaming" && m.id === lastId && m.role === "assistant" && i === m.parts.length - 1 && (
+                          <span aria-hidden="true" className="ask-caret" />
+                        )}
                       </p>
                     );
                   }
@@ -87,11 +105,26 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
               </div>
             ))}
 
-            {status === "submitted" && <p className="text-soft text-meta m-0 font-mono">thinking</p>}
+            {status === "submitted" && (
+              <p className="text-soft m-0" aria-label="Thinking">
+                <span aria-hidden="true" className="ask-thinking">
+                  <span>·</span>
+                  <span>·</span>
+                  <span>·</span>
+                </span>
+              </p>
+            )}
 
             {error && (
               <div className="flex flex-col gap-3">
                 <p className="m-0">The assistant is not answering right now.</p>
+                <button
+                  type="button"
+                  onClick={() => regenerate()}
+                  className="border-rule self-start border bg-[var(--accent-tint)] px-3 py-1.5 font-mono text-[length:var(--size-meta)] hover:bg-[var(--highlight)]"
+                >
+                  Try again
+                </button>
                 <ContactCard />
               </div>
             )}
@@ -99,7 +132,7 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
         </div>
 
         <div className="border-rule flex flex-col gap-3 border-t px-6 py-5">
-          {/* Help arrives late: nothing for two seconds, then one question at a time. Typing dismisses it. */}
+          {/* Help arrives late: nothing for a beat, then one question at a time. Typing dismisses it. */}
           {messages.length === 0 && !input && (
             <ul className="m-0 flex list-none flex-col gap-2 p-0">
               {suggestions(context).map((q, i) => (
@@ -132,9 +165,15 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
               placeholder={focus ? "Ask about this" : "Ask a question"}
               className="border-rule bg-card min-w-0 flex-1 border px-3 py-2"
             />
-            <button type="submit" disabled={busy || !input.trim()} className="border-rule border bg-[var(--highlight)] px-4 py-2 font-medium disabled:opacity-50">
-              Ask
-            </button>
+            {busy ? (
+              <button type="button" onClick={() => stop()} className="border-rule border bg-[var(--accent-tint)] px-4 py-2 font-medium">
+                Stop
+              </button>
+            ) : (
+              <button type="submit" disabled={!input.trim()} className="border-rule border bg-[var(--highlight)] px-4 py-2 font-medium disabled:opacity-50">
+                Ask
+              </button>
+            )}
           </form>
         </div>
       </div>
