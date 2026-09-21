@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { TextLink } from "@/components/ui/text-link";
 
@@ -14,8 +15,17 @@ export const tabs = [
 /** Client only for the active state; the links work without JS. */
 export function NavTabs() {
   const pathname = usePathname();
+  const ref = useRef<HTMLElement>(null);
+
+  // Phones scroll the strip sideways: keep the current tab in view.
+  useEffect(() => {
+    const nav = ref.current;
+    const current = nav?.querySelector<HTMLElement>("[aria-current]");
+    if (nav && current) nav.scrollLeft = current.offsetLeft - nav.offsetLeft - 24;
+  }, [pathname]);
+
   return (
-    <nav aria-label="Sections" className="flex flex-wrap gap-x-5 gap-y-1">
+    <nav ref={ref} aria-label="Sections" className="nav-tabs flex gap-x-5 gap-y-1 sm:flex-wrap">
       {tabs.map(({ href, label }) => {
         const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
         return (

@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const panel = (page: import("@playwright/test").Page) => page.getByRole("dialog");
 
-test("⌘K ouvre le panneau avec le champ prêt, les questions arrivent ensuite", async ({ page }) => {
+test("⌘K ouvre le panneau avec le champ prêt, les questions arrivent ensuite", async ({ page, hasTouch }) => {
   await page.goto("/");
   const dialog = panel(page);
   // Le raccourci n'existe qu'après l'hydratation : on réessaie jusqu'à ce qu'il réponde.
@@ -12,7 +12,8 @@ test("⌘K ouvre le panneau avec le champ prêt, les questions arrivent ensuite"
   }).toPass();
 
   await expect(dialog.getByRole("heading", { name: "Ask about François" })).toBeVisible();
-  await expect(dialog.getByLabel("Your question")).toBeFocused();
+  // Sur tactile, pas de focus automatique : il ouvrirait le clavier par-dessus la fiche.
+  if (!hasTouch) await expect(dialog.getByLabel("Your question")).toBeFocused();
   await expect(dialog.getByRole("button", { name: "What does François do today?" })).toBeVisible();
 
   await page.keyboard.press("Escape");

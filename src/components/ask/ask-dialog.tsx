@@ -24,6 +24,7 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
   const field = useRef<HTMLInputElement>(null);
   const stick = useRef(true); // follow the stream only while the reader is at the bottom
   const [input, setInput] = useState("");
+  const [expanded, setExpanded] = useState(false); // the detail, once clamped
   const { messages, sendMessage, status, error, stop, regenerate } = useChat({
     // The dialog remounts per opening (keyed), so the context is constant here.
     transport: new DefaultChatTransport({ api: "/api/chat", body: { context } }),
@@ -36,7 +37,8 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
     if (!d) return;
     if (open && !d.open) {
       d.showModal();
-      field.current?.focus(); // showModal would focus the close button; the question field is the point
+      // showModal would focus the close button; the question field is the point — except on touch, where it would raise the keyboard over the detail.
+      if (!matchMedia("(pointer: coarse)").matches) field.current?.focus();
     }
     if (!open && d.open) d.close();
   }, [open]);
@@ -51,6 +53,7 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
     const q = text.trim();
     if (!q || busy) return;
     stick.current = true;
+    setExpanded(false);
     sendMessage({ text: q });
     setInput("");
   };
@@ -66,11 +69,11 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
       className="ask-panel bg-paper text-ink border-rule m-0 ml-auto h-dvh max-h-none w-[min(460px,100vw)] max-w-none border-l-[length:var(--border)] p-0 backdrop:bg-[rgba(47,53,66,0.35)]"
     >
       <div className="flex h-full flex-col">
-        <header className="border-rule flex items-start justify-between gap-4 border-b px-6 py-5">
+        <header className="border-rule flex items-start justify-between gap-4 border-b px-6 py-3 sm:py-5">
           <h2 id="ask-title" className="text-title m-0 font-semibold text-balance">
             {focus ? focus.label : "Ask about François"}
           </h2>
-          <button type="button" onClick={onClose} aria-label="Close" className="btn flex size-8 shrink-0 items-center justify-center !p-0">
+          <button type="button" onClick={onClose} aria-label="Close" className="btn flex size-11 shrink-0 sm:size-8 items-center justify-center !p-0">
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={1.3} strokeLinecap="round">
               <path d="M2 2l8 8" />
               <path d="M10 2l-8 8" />
@@ -86,7 +89,24 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
           }}
           className="flex flex-1 flex-col gap-6 overflow-y-auto px-6 py-6"
         >
-          {focus ? <AskDetail context={context} /> : <p className="m-0">Answers come from the data behind this site, nothing else. When it does not know, it says so.</p>}
+          {focus ? (
+            // Phones clamp the detail from the start; everywhere, the first question folds it so the answer lands in view.
+            <div className="flex flex-col gap-2">
+              <div className="ask-detail" data-clamp={expanded ? undefined : messages.length > 0 ? "always" : "phone"}>
+                <AskDetail context={context} />
+              </div>
+              <button
+                type="button"
+                aria-expanded={expanded}
+                onClick={() => setExpanded((v) => !v)}
+                className={`text-soft hover:text-ink text-meta self-start py-2 font-mono ${messages.length > 0 ? "" : "sm:hidden"}`}
+              >
+                {expanded ? "Show less −" : "Show more +"}
+              </button>
+            </div>
+          ) : (
+            <p className="m-0">Answers come from the data behind this site, nothing else. When it does not know, it says so.</p>
+          )}
 
           <div className="flex flex-col gap-4" aria-live="polite">
             {messages.map((m) => (
@@ -138,13 +158,13 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
           </div>
         </div>
 
-        <div className="border-rule flex flex-col gap-3 border-t px-6 py-5">
+        <div className="border-rule flex flex-col gap-3 border-t px-6 py-3 sm:py-5">
           {/* Help arrives late: nothing for a beat, then one question at a time. Typing dismisses it. */}
           {messages.length === 0 && !input && (
-            <ul className="m-0 flex list-none flex-col gap-2 p-0">
+            <ul className="ask-suggestions m-0 flex list-none gap-2 p-0 max-sm:-mx-6 max-sm:overflow-x-auto max-sm:px-6 sm:flex-col">
               {suggestions(context).map((q, i) => (
-                <li key={q} className="ask-suggestion" style={{ "--i": i } as React.CSSProperties}>
-                  <button type="button" onClick={() => ask(q)} className="draws text-soft hover:text-ink w-full text-left">
+                <li key={q} className="ask-suggestion max-sm:shrink-0" style={{ "--i": i } as React.CSSProperties}>
+                  <button type="button" onClick={() => ask(q)} className="draws text-soft hover:text-ink max-sm:border-rule max-sm:bg-card max-sm:text-meta w-full text-left max-sm:border max-sm:px-3 max-sm:py-2.5 max-sm:whitespace-nowrap">
                     <span className="hd">
                       <span>{q}</span>
                       <DrawnMark />
@@ -172,6 +192,7 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
               onChange={(e) => setInput(e.currentTarget.value)}
               maxLength={600}
               autoComplete="off"
+              enterKeyHint="send"
               placeholder={focus ? "Ask about this" : "Ask a question"}
               className="border-rule bg-card min-w-0 flex-1 border px-3 py-2"
             />

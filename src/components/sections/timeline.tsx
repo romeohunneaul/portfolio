@@ -7,6 +7,8 @@ import { experienceId } from "@/lib/ask/context";
 type TimelineProps = {
   /** `full` adds education under the positions. */
   variant?: "compact" | "full";
+  /** Home teaser: show only the N most recent positions. */
+  limit?: number;
 };
 
 const dates = (start: string, end: string) => `${start} – ${end}`;
@@ -25,10 +27,11 @@ function Head({ x, summary }: { x: Pick<Experience, "company" | "role" | "logo" 
 }
 
 /** The LinkedIn part: one row per position. A row opens the side panel with the detail and the questions. */
-export function Timeline({ variant = "compact" }: TimelineProps) {
+export function Timeline({ variant = "compact", limit }: TimelineProps) {
+  const positions = limit ? experience.slice(0, limit) : experience;
   return (
     <ol className="m-0 list-none p-0">
-      {experience.map((x) => (
+      {positions.map((x) => (
         <li key={x.company + x.start}>
           <AskRow context={{ kind: "experience", id: experienceId(x) }}>
             <Head x={x} summary={x.summary} />

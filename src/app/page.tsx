@@ -15,7 +15,7 @@ import { loadRoutes } from "@/lib/routes";
 export default async function Home() {
   const notes = allNotes.filter((n) => !n.draft).sort((a, b) => b.date.localeCompare(a.date));
   const routes = await loadRoutes();
-  const picks = [...routes.filter((r) => r.sport === "trail").slice(0, 3), ...routes.filter((r) => r.sport === "ski").slice(0, 3)];
+  const picks = [...routes.filter((r) => r.sport === "trail").slice(0, 2), ...routes.filter((r) => r.sport === "ski").slice(0, 2)];
 
   return (
     <main id="main" className="grid items-start gap-x-14 pt-12 lg:grid-cols-[1fr_var(--aside-width)]">
@@ -26,14 +26,14 @@ export default async function Home() {
 
         <Reveal delay={0.1}>
           <Section id="work" label="Work" lede={ledes.work} aside="Career, projects, tools" more="/work">
-            <Timeline />
+            <Timeline limit={3} />
           </Section>
         </Reveal>
 
         <Section id="lab" label="Lab" lede={ledes.lab} aside={`${notes.length} ${notes.length === 1 ? "note" : "notes"}`}>
           {notes.length > 0 ? (
             <div className="flex flex-col gap-4">
-              {notes.map((n) => (
+              {notes.slice(0, 3).map((n) => (
                 <NoteCard key={n.slug} title={n.title} summary={n.summary} slug={n.slug} date={n.date} tags={n.tags} />
               ))}
             </div>

@@ -19,7 +19,8 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --text-lede: var(--size-lede);
-  --text-lede--line-height: var(--leading-tight);
+  --text-lede--line-height: var(--leading-hero);
+  --text-lede--letter-spacing: -0.015em;
   --text-title: var(--size-title);
   --text-title--line-height: var(--leading-tight);
   --text-body: var(--size-body);
@@ -428,6 +429,61 @@ article:nth-of-type(even) .card-tilt {
   animation-delay: calc(1.4s + var(--i, 0) * 0.7s);
 }
 
+.ask-suggestions {
+  scrollbar-width: none;
+}
+
+/* Phone FAB: paper card + one hand-drawn ink loop that IS the border.
+   The loop redraws itself on a slow cycle, pauses drawn, then erases. */
+.ask-fab {
+  border-radius: 999px;
+  box-shadow: 0 10px 24px var(--ink-shadow);
+  background-image: var(--paper-grain);
+  background-size: var(--paper-grain-size);
+  margin-bottom: env(safe-area-inset-bottom);
+  margin-right: env(safe-area-inset-right);
+}
+.ask-fab-loop path {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  /* One draw, then it stays inked. Delayed so it happens after the page has
+     finished settling. A short redraw pulse plays every 12s to keep it alive. */
+  animation:
+    ask-fab-loop-draw 1.6s cubic-bezier(0.65, 0, 0.35, 1) 0.8s forwards,
+    ask-fab-loop-pulse 12s ease-in-out 4s infinite;
+}
+@keyframes ask-fab-loop-draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes ask-fab-loop-pulse {
+  0%, 92%, 100% { stroke-dashoffset: 0; }
+  96% { stroke-dashoffset: 0.15; }
+}
+.ask-fab:active {
+  transform: translateY(1px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ask-fab-loop path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* The detail folds to a few lines that fade out; "Show more" lifts the clamp. */
+.ask-detail[data-clamp="always"] {
+  max-height: 8.5rem;
+  overflow: hidden;
+  mask-image: linear-gradient(#000 55%, transparent);
+}
+@media (width < 40rem) {
+  /* Before any question the thread is empty: let the detail take about half the screen. */
+  .ask-detail[data-clamp="phone"] {
+    max-height: 45dvh;
+    overflow: hidden;
+    mask-image: linear-gradient(#000 75%, transparent);
+  }
+}
+
 /* Motion enriches, it never conditions reading. */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -436,5 +492,37 @@ article:nth-of-type(even) .card-tilt {
     animation-duration: 0.01ms !important;
     animation-delay: 0s !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Phone header: one sticky line, full-bleed paper, slides away on scroll down (data-hidden set in site-header.tsx). */
+@media (width < 40rem) {
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin: -2rem -1.5rem 0; /* cancels the artboard's pt-8 / px-6 */
+    padding: 0.75rem 1.5rem;
+    background-color: var(--paper);
+    background-image: var(--paper-grain);
+    background-size: var(--paper-grain-size);
+    transition: transform 0.25s ease;
+  }
+  .site-header[data-hidden]:not(:focus-within) {
+    transform: translateY(-100%);
+  }
+  .nav-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    /* padding-block gives room to the drawn underline, which sits at top:100% and would otherwise get clipped by the scroll box. */
+    padding-block: 4px 10px;
+    padding-inline-end: 1.5rem;
+    mask-image: linear-gradient(to right, #000 calc(100% - 1.5rem), transparent);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header {
+    transition: none;
   }
 }

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Schibsted_Grotesk, Space_Mono } from "next/font/google";
 import { AskProvider } from "@/components/ask/ask-provider";
 import { SiteHeader } from "@/components/sections/site-header";
+import { AskFab } from "@/components/ask/ask-fab";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { profile } from "@/data/profile";
 import "./globals.css";
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             {children}
             <SiteFooter />
           </div>
+          <AskFab />
         </AskProvider>
       </body>
     </html>
