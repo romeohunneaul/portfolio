@@ -8,7 +8,8 @@ export const profile = {
   location: "Lyon, France",
   headline: "Product manager, AI in business software.",
   bio: [
-    "Product manager, AI in business software. My job is wiring a model into tools people already depend on without breaking the people.",
+    // First entry duplicates the headline on purpose — Bio.tsx skips it. Rewrite here to add an elevator pitch.
+    "Product manager, AI in business software.",
     "SaaS, B2B2C, and a fair amount of AI — when it actually solves something. Ten years next to engineering teams, the last two building alone with an agent at my side.",
     "The rest of the time I run up hills, slowly. Both go in the notebook.",
   ],
@@ -24,8 +25,8 @@ export const profile = {
     strava: "https://www.strava.com/athletes/83347344",
     utmb: "https://utmb.world/fr/runner/5043490.francois.massanes",
     site: "https://francoismassanes.com",
-    /** "https://wa.me/<number, international, digits only>" — empty hides the WhatsApp link. */
-    whatsapp: "https://wa.me/33659605652",
+    /** WhatsApp is kept out of client data so the number does not ship in the JS bundle. To bring it back, expose it through a server-only source (env var + tiny API route). */
+    whatsapp: "",
   },
   languages: ["French (native)", "English (full professional)", "German (professional)"],
 } as const;

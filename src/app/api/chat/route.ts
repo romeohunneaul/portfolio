@@ -24,7 +24,8 @@ function limited(ip: string, max = 20, windowMs = 10 * 60_000) {
 const textOf = (m: UIMessage) => m.parts.map((p) => (p.type === "text" ? p.text : "")).join("");
 
 export async function POST(req: Request) {
-  if (!process.env.AI_GATEWAY_API_KEY && !process.env.VERCEL_OIDC_TOKEN) {
+  // On Vercel the OIDC token arrives per request (x-vercel-oidc-token header), not as an env var at runtime.
+  if (!process.env.AI_GATEWAY_API_KEY && !process.env.VERCEL_OIDC_TOKEN && !req.headers.get("x-vercel-oidc-token")) {
     return Response.json({ error: "The assistant is not configured." }, { status: 503 });
   }
 

@@ -9,9 +9,9 @@ export function AskShortcut() {
     <button
       type="button"
       onClick={() => open(null)}
-      className="btn text-meta gap-2 font-mono"
+      className="btn text-meta shrink-0 gap-2 font-mono"
     >
-      Ask <kbd className="text-soft font-mono">⌘K</kbd>
+      Ask <kbd className="text-soft font-mono pointer-coarse:hidden">⌘K</kbd>
     </button>
   );
 }
