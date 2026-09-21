@@ -45,7 +45,7 @@ const leader = <span aria-hidden="true" className="border-rule mx-2 mb-[3px] min
 function LeaderRow({ href, label }: { href: string; label: string }) {
   return (
     <li>
-      <a href={href} rel="noreferrer" className="draws text-meta flex items-baseline font-mono">
+      <a href={href} rel="noreferrer" style={{ textDecoration: "none" }} className="draws text-meta flex items-baseline font-mono">
         <span className="hd">
           <span>{label}</span>
           <DrawnMark />
@@ -71,7 +71,7 @@ function SkillRow({ skill }: { skill: LabSkill }) {
   }
   return (
     <li>
-      <a href={skill.href} rel="noreferrer" className="draws text-meta flex items-baseline font-mono">
+      <a href={skill.href} rel="noreferrer" style={{ textDecoration: "none" }} className="draws text-meta flex items-baseline font-mono">
         <span className="hd">
           <span>{skill.name}</span>
           <DrawnMark />
