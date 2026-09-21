@@ -1,4 +1,6 @@
 import { Highlight } from "@/components/ui/highlight";
+import { Mark } from "@/components/ui/mark";
+import { Sticker } from "@/components/ui/sticker";
 import { profile } from "@/data/profile";
 
 /** The top of the home page: the headline is the h1, the bio follows at reading size. */
@@ -17,6 +19,17 @@ export function Bio() {
         The rest of the time I am <Highlight>in the mountains</Highlight>, reading nerd articles, or listening to music.
         All of it ends up in this notebook.
       </p>
+      {/* Hand-drawn arrow → paper sticker, borrowed from the Margin motif. Whole sticker is one link. */}
+      <a
+        href={profile.links.linkedin}
+        rel="noreferrer"
+        target="_blank"
+        className="mt-2 inline-flex items-center gap-2 self-start no-underline"
+        aria-label="Say hi on LinkedIn"
+      >
+        <Mark name="arrow" />
+        <Sticker>say hi on linkedin</Sticker>
+      </a>
     </div>
   );
 }

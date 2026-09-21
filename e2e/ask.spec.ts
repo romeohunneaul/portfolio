@@ -57,8 +57,8 @@ test("sans réponse de l'assistant, la carte de contact apparaît", async ({ pag
   await dialog.getByRole("button", { name: "Ask", exact: true }).click();
 
   await expect(dialog.getByText("Ask François directly")).toBeVisible();
-  await expect(dialog.getByRole("link", { name: "WhatsApp" })).toHaveAttribute("href", /^https:\/\/wa\.me\//);
   await expect(dialog.getByRole("link", { name: "Mail" })).toHaveAttribute("href", /^mailto:/);
+  await expect(dialog.getByRole("link", { name: "LinkedIn" })).toHaveAttribute("href", /linkedin\.com/);
 });
 
 test("l'API refuse une requête mal formée", async ({ request }) => {
