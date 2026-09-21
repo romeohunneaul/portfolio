@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { TextLink } from "@/components/ui/text-link";
 import { allNotes } from "content-collections";
 import { MDXContent } from "@content-collections/mdx/react";
+import { DeliveryPipeline } from "@/components/sections/delivery-pipeline";
 import { Chip } from "@/components/ui/chip";
 
 export function generateStaticParams() {
@@ -40,7 +41,7 @@ export default async function NotePage({ params }: PageProps<"/sandbox/[slug]">)
         </header>
 
         <div className="prose mt-10 flex flex-col gap-5 [&_h2]:text-title [&_h2]:mt-6 [&_h2]:scroll-mt-8 [&_h2]:font-semibold">
-          <MDXContent code={note.mdx} />
+          <MDXContent code={note.mdx} components={{ DeliveryPipeline }} />
         </div>
       </article>
     </main>
