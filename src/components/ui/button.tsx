@@ -11,9 +11,9 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 export function Button({ variant = "outlined", children, className = "", ...rest }: ButtonProps) {
   if (variant === "quiet") {
     return (
-      <button type="button" {...rest} className={`hd draws hd-rest text-meta px-0.5 py-1 font-mono ${className}`}>
+      <button type="button" {...rest} className={`hd draws text-meta px-0.5 py-1 font-mono ${className}`}>
         {children}
-        <DrawnMark ghost />
+        <DrawnMark />
       </button>
     );
   }

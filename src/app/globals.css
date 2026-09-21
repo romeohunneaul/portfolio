@@ -51,14 +51,19 @@ body {
   text-wrap: pretty;
 }
 
-/* Links look like links. Rows and tabs opt out with `no-underline`. */
+/* Links inherit ink; chrome links carry the drawn underline (see .hd/.draws),
+   prose keeps a plain CSS underline scoped to note and chat content. */
 a {
   color: inherit;
+}
+.prose a,
+.ask-md a {
   text-decoration: underline;
   text-decoration-color: var(--ink-rule);
   text-underline-offset: 0.18em;
 }
-a:hover {
+.prose a:hover,
+.ask-md a:hover {
   text-decoration-color: currentColor;
 }
 
@@ -113,11 +118,6 @@ textarea:focus-visible {
 .draws:focus-visible .mk path,
 .draws[data-current="true"] .mk path {
   stroke-dashoffset: 0;
-}
-/* quiet rest: a faint copy stands, the ink copy swipes over it */
-.hd-rest .mk path.ghost {
-  stroke-dashoffset: 0;
-  stroke-opacity: var(--ghost-opacity);
 }
 
 /* chip: bare soft-ink mono; the marker swipes when its row or card is touched */

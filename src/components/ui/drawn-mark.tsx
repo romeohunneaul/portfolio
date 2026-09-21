@@ -6,16 +6,15 @@
  *
  * - "underline": stretches to its host's width (place inside an inline `.hd`).
  * - "loop": a hand loop around an icon-sized control.
- * `ghost` adds a faint copy that stands at rest (the quiet button).
  */
 const PATHS = {
   underline: { w: 60, h: 8, d: "M2 4.6c8-2 18-2.6 28-1.8 8 .6 17 1.6 28 .6", sw: 1.5 },
   loop: { w: 52, h: 42, d: "M38 9C30 5 14 5.5 9 12c-5 6.5 2 17 15 18 11 1 20-4 20-11 0-5-5-9-12-10.5", sw: 1.4 },
 } as const;
 
-type DrawnMarkProps = { shape?: keyof typeof PATHS; ghost?: boolean };
+type DrawnMarkProps = { shape?: keyof typeof PATHS };
 
-export function DrawnMark({ shape = "underline", ghost = false }: DrawnMarkProps) {
+export function DrawnMark({ shape = "underline" }: DrawnMarkProps) {
   const p = PATHS[shape];
   return (
     <svg
@@ -29,7 +28,6 @@ export function DrawnMark({ shape = "underline", ghost = false }: DrawnMarkProps
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      {ghost && <path className="ghost" d={p.d} pathLength={1} />}
       <path d={p.d} pathLength={1} />
     </svg>
   );

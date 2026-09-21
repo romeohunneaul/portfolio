@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { TextLink } from "@/components/ui/text-link";
 import { allNotes } from "content-collections";
 import { MDXContent } from "@content-collections/mdx/react";
 import { Chip } from "@/components/ui/chip";
@@ -24,9 +24,9 @@ export default async function NotePage({ params }: PageProps<"/sandbox/[slug]">)
 
   return (
     <main id="main" className="pt-12">
-      <Link href="/#lab" className="text-meta">
+      <TextLink href="/#lab" className="text-meta">
         Back to the notebook
-      </Link>
+      </TextLink>
 
       <article className="mt-10 max-w-[var(--measure)]">
         <header className="flex flex-col gap-4">
@@ -39,7 +39,7 @@ export default async function NotePage({ params }: PageProps<"/sandbox/[slug]">)
           </p>
         </header>
 
-        <div className="mt-10 flex flex-col gap-5 [&_h2]:text-title [&_h2]:mt-6 [&_h2]:scroll-mt-8 [&_h2]:font-semibold">
+        <div className="prose mt-10 flex flex-col gap-5 [&_h2]:text-title [&_h2]:mt-6 [&_h2]:scroll-mt-8 [&_h2]:font-semibold">
           <MDXContent code={note.mdx} />
         </div>
       </article>

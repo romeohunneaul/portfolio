@@ -6,6 +6,7 @@ import { DefaultChatTransport } from "ai";
 import { Streamdown } from "streamdown";
 import { resolve, suggestions, type AskContext } from "@/lib/ask/context";
 import { Button } from "@/components/ui/button";
+import { DrawnMark } from "@/components/ui/drawn-mark";
 import { AskDetail } from "./ask-detail";
 import { ContactCard } from "./contact-card";
 
@@ -143,8 +144,11 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
             <ul className="m-0 flex list-none flex-col gap-2 p-0">
               {suggestions(context).map((q, i) => (
                 <li key={q} className="ask-suggestion" style={{ "--i": i } as React.CSSProperties}>
-                  <button type="button" onClick={() => ask(q)} className="text-soft hover:text-ink w-full text-left underline decoration-[var(--ink-rule)] underline-offset-4">
-                    {q}
+                  <button type="button" onClick={() => ask(q)} className="draws text-soft hover:text-ink w-full text-left">
+                    <span className="hd">
+                      <span>{q}</span>
+                      <DrawnMark />
+                    </span>
                   </button>
                 </li>
               ))}

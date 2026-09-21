@@ -13,7 +13,6 @@
   --swipe-duration: 0.26s;
   --swipe-ease: cubic-bezier(0.3, 0.8, 0.35, 1);
 
-  --ghost-opacity: 0.28;
   --disabled-opacity: 0.38;
 
   --tilt: 0.3deg; /* cards rest a fraction off-square */

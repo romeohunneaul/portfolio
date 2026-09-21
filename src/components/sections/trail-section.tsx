@@ -25,9 +25,9 @@ export function RouteGrid({ routes }: { routes: LoadedRoute[] }) {
           <p className="m-0">
             {r.where}. {r.note}
           </p>
-          <a href={r.file} download className="draws hd hd-rest text-meta no-underline self-start">
+          <a href={r.file} download className="draws hd text-meta no-underline self-start">
             <span>Download GPX</span>
-            <DrawnMark ghost />
+            <DrawnMark />
           </a>
         </li>
       ))}

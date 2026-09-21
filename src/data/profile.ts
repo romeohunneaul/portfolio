@@ -82,7 +82,7 @@ export const experience: Experience[] = [
     url: "https://taster.com",
     kind: "job",
     summary:
-      "First product hire, then built the product team. Supply chain and logistics for 150+ delivery-only restaurants across five countries.",
+      "First product hire, then built the product team. OPS, Supply chain and marketing for 150+ delivery-only restaurants across five countries.",
     bullets: [
       "Owned the operations platform: ordering, kitchen flow, supply, quality.",
       "Moved the team from Scrum to Shape Up; measured the impact of every release.",
