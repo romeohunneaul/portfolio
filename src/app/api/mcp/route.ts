@@ -1,6 +1,7 @@
 import { createMcpHandler } from "mcp-handler";
 import { z } from "zod";
 import { education, experience, profile, skills, stack } from "@/data/profile";
+import { deliveryLab } from "@/data/delivery-lab";
 import { projects } from "@/data/projects";
 import { articles } from "@/data/reading";
 import { races, routes, utmb } from "@/data/trail";
@@ -60,6 +61,11 @@ const handler = createMcpHandler(
       "get_reading",
       { title: "Reading", description: "Articles that stuck, with a one-line why.", inputSchema: z.object({}) },
       async () => json(articles),
+    );
+    server.registerTool(
+      "get_delivery_lab",
+      { title: "Delivery lab", description: "Discovery-to-delivery pipeline: steps, status, tools and what is open.", inputSchema: z.object({}) },
+      async () => json(deliveryLab),
     );
     server.registerTool(
       "search",
