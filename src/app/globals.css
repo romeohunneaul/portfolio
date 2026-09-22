@@ -117,8 +117,7 @@ textarea:focus-visible {
 }
 .draws:hover .mk path,
 .draws:focus-visible .mk path,
-.draws[data-current="true"] .mk path,
-details[open] > summary .mk path {
+.draws[data-current="true"] .mk path {
   stroke-dashoffset: 0;
 }
 
