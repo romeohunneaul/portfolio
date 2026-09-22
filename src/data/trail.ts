@@ -17,6 +17,9 @@ export type Route = {
 
 // `note` is one sentence, first person — placeholders below until François rewrites them.
 export const routes: Route[] = [
+  { slug: "grande-bambee", name: "La Grande Bambée", where: "La Giettaz, Val d'Arly", note: "Aravis on one side, Mont Blanc on the other, all morning.", sport: "trail", kind: "race", photos: ["aravis-ridge.jpg", "mont-blanc.jpg", "start-trio.jpg"] },
+  { slug: "saint-nicolas-veroce", name: "Saint-Nicolas-de-Véroce", where: "Val Montjoie", note: "Mont Blanc dead ahead the whole climb. First try, first place.", sport: "trail", kind: "race", photos: ["mont-blanc-meadow.jpg", "mont-blanc-trees.jpg", "trail-path.jpg"] },
+  { slug: "kv-trou-de-la-mouche", name: "KV du Trou de la Mouche", where: "Aravis", note: "Straight up to the notch, moon out, sun going down.", sport: "trail", kind: "vertical", photos: ["arch-ridge.jpg", "sunset-valley.jpg", "moon-flowers.jpg"] },
   { slug: "mont-charvin", name: "Mont Charvin loop", where: "Aravis", note: "The one I send people to.", sport: "trail", kind: "loop", photos: [] },
   { slug: "kv-manigod", name: "KV Manigod", where: "Aravis", note: "1,000 m up, no down. Millet Manigod Trail Challenge 2025.", sport: "trail", kind: "vertical", photos: [] },
   { slug: "annecy-30k", name: "Annecy 30K, 1,500 m", where: "Annecy", note: "A long training loop above the lake.", sport: "trail", kind: "loop", photos: [] },
