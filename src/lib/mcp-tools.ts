@@ -10,6 +10,5 @@ export const mcpTools = [
   { name: "get_skills", description: "Skill groups and the tools actually used, with where." },
   { name: "get_trail", description: "Outdoor: trail and ski routes (GPX), plus races and UTMB index." },
   { name: "get_reading", description: "Articles that stuck, with a one-line why." },
-  { name: "get_delivery_lab", description: "Discovery-to-delivery pipeline: steps, status, tools and what is open." },
   { name: "search", description: "Full-text search across all of the above.", args: "query" },
 ] as const;
