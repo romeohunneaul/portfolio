@@ -38,7 +38,7 @@ export function SiteHeader() {
       </a>
       <span className="flex shrink-0 items-center gap-3">
         <Link href="/" aria-label="Home" className="no-underline">
-          <Logo size={40} />
+          <Logo size={40} variant="draw" />
         </Link>
         <TextLink href="/" className="text-meta font-mono tracking-[var(--track-name)] uppercase max-sm:hidden">
           François Massanes
