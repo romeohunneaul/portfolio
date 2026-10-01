@@ -5,8 +5,6 @@ import { AskHero } from "@/components/ask/ask-hero";
 import { Highlight } from "@/components/ui/highlight";
 import { DrawnMark } from "@/components/ui/drawn-mark";
 import { RidgeSketch } from "@/components/ui/ridge-sketch";
-import { Sticker } from "@/components/ui/sticker";
-import { profile } from "@/data/profile";
 import { Listening } from "@/components/sections/listening";
 import { ReadingList } from "@/components/sections/reading-list";
 import { Section } from "@/components/sections/section";
@@ -40,15 +38,11 @@ export default async function Home() {
             <Highlight punch>{askHome.title.mark}</Highlight>
             {askHome.title.after}
           </h1>
-          <p className="text-soft m-0 mt-5 max-w-[40em] text-balance">{askHome.intro}</p>
-          {/* The sticker is the human way in, next to the agent: stuck on the box's corner on wide
-              screens, under the caption on phones. */}
-          <div className="relative mt-10 flex w-full max-w-[var(--hero-measure)] justify-center sm:mt-14">
+          <p className="text-soft m-0 mt-5 max-w-[40em] text-[length:var(--size-hero-lede)] text-balance">{askHome.intro}</p>
+          <div className="mt-10 flex w-full max-w-[var(--hero-measure)] justify-center sm:mt-14">
             <AskHero />
-            <LinkedInSticker className="absolute -top-5 -right-6 max-lg:hidden" rotate={4} />
           </div>
           <p className="text-soft text-meta m-0 mt-4 max-w-[var(--hero-measure)] text-pretty">{askHome.helper}</p>
-          <LinkedInSticker className="mt-6 lg:hidden" />
         </div>
 
         {/* The way down: the logo draws itself on the page's paper, a hint that a notebook follows. */}
@@ -96,14 +90,5 @@ export default async function Home() {
         </Section>
       </div>
     </main>
-  );
-}
-
-/** The standing contact target: one channel, LinkedIn. */
-function LinkedInSticker({ className = "", rotate }: { className?: string; rotate?: number }) {
-  return (
-    <a href={profile.links.linkedin} rel="noreferrer" target="_blank" aria-label="Say hi on LinkedIn" className={`no-underline ${className}`}>
-      <Sticker rotate={rotate}>have a look around or say hi on linkedin</Sticker>
-    </a>
   );
 }

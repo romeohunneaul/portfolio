@@ -444,6 +444,17 @@ article:nth-of-type(even) .card-tilt {
   }
 }
 
+/* Phone Menu (site-header.tsx): drops from under the header. */
+@keyframes menu-drop {
+  from {
+    transform: translateY(-8px);
+    opacity: 0;
+  }
+}
+details[open] > .menu-sheet {
+  animation: menu-drop 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
 /* The home's examples sheet (ask-hero.tsx): rises from the bottom like the Ask sheet. */
 .examples-sheet[open] {
   animation: ask-sheet-in 0.35s cubic-bezier(0.32, 0.72, 0, 1);

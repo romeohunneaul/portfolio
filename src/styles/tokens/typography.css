@@ -19,8 +19,11 @@
   --size-body: clamp(1rem, 0.9rem + 0.3vw, 1.125rem); /* everything you read — 16 → 18px */
   --size-meta: clamp(0.8125rem, 0.75rem + 0.2vw, 0.9375rem); /* dates, counts, chips — 13 → 15px, never smaller */
   --size-sticker: clamp(0.6875rem, 0.62rem + 0.15vw, 0.8125rem); /* the one exception: the margin sticker — 11 → 13px */
-  /* The home's question only: the one title bigger than a page title. */
-  --size-hero: clamp(1.75rem, 1.2rem + 3vw, 4rem); /* 30px on a phone, ~58px at 1280, 64px max */
+  /* The home's hero only: the question, the one title bigger than a page title, and the line under it.
+     The pair keeps a clear ratio on every screen (≈2.3× on a phone, ≈3.4× wide); a strict ratio
+     would push the line under legible on phones, so it bottoms out at ~15px. */
+  --size-hero: clamp(2rem, 1.5rem + 2.6vw, 4rem); /* ~34px on a phone, ~57px at 1280, 64px max */
+  --size-hero-lede: clamp(0.875rem, 0.8rem + 0.5vw, 1.125rem); /* ~15px on a phone → 18px */
   --hero-measure: clamp(720px, 55vw, 880px); /* the ask box widens with the window */
 
   --leading-hero: 1.1;  /* the page title only */
