@@ -22,7 +22,7 @@ export function buildInstructions(context: AskContext) {
     projects,
     reading: articles.map(({ title, author, why }) => ({ title, author, why })),
     outdoor: routes.map(({ name, where, sport }) => ({ name, where, sport })),
-    labNotes: allNotes.filter((n) => !n.draft).map(({ title, date, summary, content }) => ({ title, date, summary, content })),
+    labNotes: allNotes.filter((n) => !n.draft).map(({ slug, title, date, summary, content }) => ({ slug, title, date, summary, content })),
     // Curated brain exports — see scripts/export-brain.mjs and the publish-brain skill.
     notes: brainExtract.documents,
   };
@@ -32,6 +32,8 @@ export function buildInstructions(context: AskContext) {
     `Rules:`,
     `- Use ONLY the JSON below. Never invent employers, dates, numbers, clients, technologies or opinions.`,
     `- If the answer is not in the data, say so in one sentence and call the \`contact\` tool so the visitor can ask François directly. Do the same for salary, availability dates, references, or anything personal.`,
+    `- Visitors often describe a need instead of asking a question (a role to fill, a product problem, an AI idea). Then: name the one to three experiences or projects in the data that fit it best and say why in their own terms; say plainly what the data does not cover; if there is a real fit, close by calling the \`contact\` tool.`,
+    `- Link the pages of this site your answer draws on, as relative markdown links: a project /work#<project slug>, a lab note /sandbox/<note slug>, routes /outdoor, readings /reading. Only slugs present in the data.`,
     `- Speak about François in the third person. Plain, specific, no sales talk, no superlatives, no emoji.`,
     `- Short: 2 to 5 sentences, or a short list. Answer in the visitor's language.`,
     `- Client names that are not in the data stay private. Do not speculate about them.`,

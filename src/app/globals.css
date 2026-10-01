@@ -6,6 +6,9 @@
 @import "../styles/tokens/interaction.css";
 @source "../../node_modules/streamdown/dist/*.js";
 
+/* `dark:` follows the night switch (data-theme on <html>), not the OS setting. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /* Tokens exposed as Tailwind utilities: bg-paper, text-ink, border-rule, text-meta… */
 @theme inline {
   --color-paper: var(--paper);
@@ -33,10 +36,6 @@
   --text-sticker--line-height: 1.3;
   --radius-*: initial;
   --radius: 0px;
-}
-
-html {
-  color-scheme: light;
 }
 
 body {
@@ -181,6 +180,48 @@ details[open] > summary .mk path {
   cursor: default;
 }
 
+/* day / night switch: a ruled track, a square ink knob that slides (theme-toggle.tsx) */
+.theme-toggle {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  width: 50px;
+  height: 26px;
+  padding: 0 5px;
+  border: var(--border) solid var(--ink-rule);
+  background: var(--paper-card);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition:
+    box-shadow var(--draw-duration) var(--draw-ease),
+    translate var(--draw-duration) var(--draw-ease);
+}
+.theme-toggle:hover {
+  box-shadow: 3px 3px 0 var(--ink);
+  translate: -1px -1px;
+}
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.theme-toggle .knob {
+  position: absolute;
+  top: 1.5px;
+  left: 1.5px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  background: var(--ink);
+  color: var(--paper);
+  transition: translate var(--swipe-duration) var(--swipe-ease);
+}
+.theme-toggle[aria-checked="true"] .knob {
+  translate: 24px 0;
+}
+
 /* the only card: rests off-square, straightens under the pointer */
 .card-tilt {
   transform: rotate(var(--tilt));
@@ -277,15 +318,15 @@ article:nth-of-type(even) .card-tilt {
 @keyframes logo-sunset {
   0% {
     transform: translateY(-2px);
-    fill: #e8a97f;
+    fill: var(--sun);
   }
   50% {
     transform: translateY(9px);
-    fill: #d4756a;
+    fill: var(--sun-set);
   }
   100% {
     transform: translateY(-2px);
-    fill: #e8a97f;
+    fill: var(--sun);
   }
 }
 .logo-sunset [data-sun] {
@@ -327,6 +368,20 @@ article:nth-of-type(even) .card-tilt {
   animation-delay: 2.3s;
 }
 
+/* Ridge sketch (margin): each stroke traces itself on its own clock, set inline by ridge-sketch.tsx. */
+.sketch [data-line] {
+  stroke-dasharray: 1;
+  animation: logo-dash var(--dur) ease-in-out var(--at) both;
+}
+.sketch [data-fill] {
+  animation: sketch-settle var(--dur) ease-out var(--at) both;
+}
+@keyframes sketch-settle {
+  from {
+    opacity: 0;
+  }
+}
+
 /* The loops must fail visible, not mid-frame. */
 @media (prefers-reduced-motion: reduce) {
   .logo-snow .flake {
@@ -360,6 +415,48 @@ article:nth-of-type(even) .card-tilt {
 }
 .ask-panel[open]::backdrop {
   animation: ask-backdrop-in 0.35s ease-out both;
+}
+
+/* One way to ask at a time: the floating button stands aside while the home's composer is on screen (ask-hero.tsx). */
+[data-composer] .ask-fab {
+  display: none;
+}
+
+/* Phones: a bottom sheet over the visible viewport (--vv-* set by ask-dialog.tsx), so the field stays above the keyboard. */
+@keyframes ask-sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+@media (width < 40rem) {
+  .ask-panel {
+    --sheet-gap: 2.5rem;
+    inset: auto 0;
+    top: calc(var(--vv-top, 0px) + var(--sheet-gap));
+    width: 100%;
+    height: calc(var(--vv-h, 100dvh) - var(--sheet-gap));
+    border-left: 0;
+    border-top: var(--border) solid var(--ink-rule);
+    box-shadow: 0 -6px 0 var(--ink-shadow);
+  }
+  .ask-panel[open] {
+    animation-name: ask-sheet-in;
+  }
+}
+
+/* The home's examples sheet (ask-hero.tsx): rises from the bottom like the Ask sheet. */
+.examples-sheet[open] {
+  animation: ask-sheet-in 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.examples-sheet[open]::backdrop {
+  animation: ask-backdrop-in 0.3s ease-out both;
+}
+
+/* "Read the notebook" glides down to #cv. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 /* While the model works: three pencil dots, then a caret while it streams. */

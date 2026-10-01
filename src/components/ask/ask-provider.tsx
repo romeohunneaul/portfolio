@@ -5,7 +5,8 @@ import type { AskContext } from "@/lib/ask/context";
 import { AskDialog } from "./ask-dialog";
 
 type AskApi = {
-  open: (context?: AskContext) => void;
+  /** `question` is sent as soon as the panel opens (the home's field). */
+  open: (context?: AskContext, question?: string) => void;
   /** The context whose panel is open right now — rows keep their loop drawn. */
   current: AskContext;
 };
@@ -23,14 +24,18 @@ function contextFrom(target: EventTarget | null): AskContext {
 
 /**
  * ⌘K / Ctrl+K opens the panel with whatever row the visitor last hovered or
- * focused. Rows themselves open it on click.
+ * focused (on the home with none, it focuses the ask box). Rows themselves open it on click.
  */
 export function AskProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<{ open: boolean; context: AskContext; session: number }>({ open: false, context: null, session: 0 });
+  const [state, setState] = useState<{ open: boolean; context: AskContext; question?: string; session: number }>({
+    open: false,
+    context: null,
+    session: 0,
+  });
   const hovered = useRef<AskContext>(null);
 
-  const open = useCallback((context: AskContext = null) => {
-    setState((s) => ({ open: true, context, session: s.session + 1 }));
+  const open = useCallback((context: AskContext = null, question?: string) => {
+    setState((s) => ({ open: true, context, question, session: s.session + 1 }));
   }, []);
 
   useEffect(() => {
@@ -40,7 +45,10 @@ export function AskProvider({ children }: { children: ReactNode }) {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
-        open(hovered.current);
+        // On the home, with no row in hand, ⌘K goes to the hero's ask box rather than the panel.
+        const composer = document.getElementById("ask-home");
+        if (!hovered.current && composer) composer.focus();
+        else open(hovered.current);
       }
     };
     document.addEventListener("pointerover", track);
@@ -59,7 +67,7 @@ export function AskProvider({ children }: { children: ReactNode }) {
     <Ctx.Provider value={api}>
       {children}
       {/* `key` resets the conversation each time the panel is opened from a new place. */}
-      <AskDialog key={state.session} open={state.open} context={state.context} onClose={() => setState((s) => ({ ...s, open: false }))} />
+      <AskDialog key={state.session} open={state.open} context={state.context} question={state.question} onClose={() => setState((s) => ({ ...s, open: false }))} />
     </Ctx.Provider>
   );
 }

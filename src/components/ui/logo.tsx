@@ -9,6 +9,8 @@
  *             Ambient — margin card, never a header.
  * - "snow"    five flakes drifting above. Only reads at 150px.
  *
+ * At night (data-theme="dark") a crescent replaces the sun, as in the margin sketch.
+ *
  * The silhouette is filled with the surface colour so the sun passes behind:
  * `--logo-fill` defaults to the page paper; set it to the card colour when the
  * logo sits on a card (the margin does).
@@ -20,17 +22,20 @@ type LogoProps = {
 };
 
 const RIDGE = "M3 30L16 9l7 11 5-6 12 16z";
-/* Snow grey from the Figma file. */
-const SNOW = "#d9d9d9";
+/* Snow grey and sun from the Figma file — tokens, so the night theme can dim them. */
+const SNOW = "var(--snow)";
 const LISERET_1 = "M12.9 18l3.15 2.05 3.45-2.25";
 const LISERET_2 = "M25.75 19.95l2.76 2.25 2.19-1.65";
+/* The sun's disc minus an offset one, opening to the upper right. */
+const MOON = "M30.59 6.63A6.4 6.4 0 1 0 35.71 15.9A5.3 5.3 0 1 1 30.59 6.63Z";
+const MOON_FILL = "color-mix(in srgb, var(--ink) 75%, var(--highlight-punch))";
 
 const frame = (size: number, className?: string, motion?: string) => ({
   width: size,
   height: (size * 34) / 46,
   viewBox: "0 0 46 34",
   fill: "none",
-  stroke: "currentColor",
+  stroke: "var(--ridge)",
   strokeWidth: 2.4,
   strokeLinecap: "round" as const,
   strokeLinejoin: "round" as const,
@@ -52,7 +57,8 @@ export function Logo({ size = 46, variant = "static", className }: LogoProps) {
   if (variant === "draw") {
     return (
       <svg {...frame(size, className, "logo-draw")}>
-        <circle data-pop="1" cx="30" cy="13" r="6.4" fill="#e8a97f" stroke="none" />
+        <circle data-pop="1" cx="30" cy="13" r="6.4" fill="var(--sun)" stroke="none" className="dark:hidden" />
+        <path data-pop="1" d={MOON} fill={MOON_FILL} stroke="none" className="hidden dark:inline" />
         <path data-draw="1" data-fill="1" d={RIDGE} pathLength={1} fill="var(--logo-fill, var(--paper))" />
         <Liserets draw />
       </svg>
@@ -70,7 +76,8 @@ export function Logo({ size = 46, variant = "static", className }: LogoProps) {
           <circle className="flake" cx="42" cy="9" r="0.8" />
         </g>
       )}
-      <circle data-sun="1" cx="30" cy="13" r="6.4" fill="#e8a97f" stroke="none" />
+      <circle data-sun="1" cx="30" cy="13" r="6.4" fill="var(--sun)" stroke="none" className="dark:hidden" />
+      <path d={MOON} fill={MOON_FILL} stroke="none" className="hidden dark:inline" />
       <path d={RIDGE} fill="var(--logo-fill, var(--paper))" />
       <Liserets />
     </svg>

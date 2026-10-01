@@ -60,6 +60,30 @@ export const PROTOS: Proto[] = [
     ],
     load: () => import("./protos/mcp-app-builder"),
   },
+  {
+    slug: "hero-sketch",
+    name: "Hand-drawn ridge",
+    author: "François",
+    description: "The logo drawn by hand in the margin; its switch is the site's night mode.",
+    axes: [
+      { key: "trace", label: "Hand feel", values: [
+        { id: "draw", label: "Draws itself" },
+        { id: "draw-boil", label: "Draws + boil" },
+        { id: "boil", label: "Boil only" },
+      ] },
+      { key: "da", label: "Art direction", values: [
+        { id: "liner", label: "Fine liner" },
+        { id: "pencil", label: "Soft pencil" },
+        { id: "crayon", label: "Colour pencil (off-register fills)" },
+        { id: "ink", label: "Ink + wash" },
+      ] },
+      { key: "size", label: "Placement", values: [
+        { id: "margin", label: "Margin (272px)" },
+        { id: "hero", label: "Hero (wide)" },
+      ] },
+    ],
+    load: () => import("./protos/hero-sketch"),
+  },
 ];
 
 export const findProto = (slug: string) => PROTOS.find((p) => p.slug === slug);

@@ -1,12 +1,16 @@
-/* Notebook — colours. Source: Claude Design project 82f4ba6a, tokens/colors.css */
+/* Notebook — colours. The repo is the source; Claude Design project "Notebook — Portfolio"
+   (50bc1b1b) mirrors it through design-sync (.design-sync/). */
 :root {
+  color-scheme: light;
+
   /* Paper & ink */
   --paper: #f7f4ef;
   --paper-card: #fdfcfa;
   --ink: #2f3542;
   --ink-soft: #5c6472; /* ≥ 4.5:1 on paper */
-  --ink-rule: rgba(47, 53, 66, 0.4);
-  --ink-shadow: rgba(47, 53, 66, 0.16);
+  --ink-rule: color-mix(in srgb, var(--ink) 40%, transparent);
+  --ink-shadow: color-mix(in srgb, var(--ink) 16%, transparent);
+  --scrim: color-mix(in srgb, var(--ink) 35%, transparent); /* behind a modal panel */
 
   /* Accents — pastel, applied as tint, never as fill */
   --accent: #dbe7f2;
@@ -18,4 +22,35 @@
   --accent-tint: color-mix(in srgb, var(--accent) 35%, transparent);
   --accent-strong-tint: color-mix(in srgb, var(--accent-strong) 35%, transparent);
   --highlight-tint: color-mix(in srgb, var(--highlight) 85%, transparent);
+
+  /* The logo's own colours (Figma drawing) */
+  --ridge: var(--ink);
+  --sun: #e8a97f;
+  --sun-set: #d4756a;
+  --snow: #d9d9d9;
+}
+
+/* Night notebook — the same page with the lights off: blue-black paper, chalk ink.
+   Accents keep their hue but drop to dark tints, so text still sits on them at ≥ 4.5:1.
+   Set by the theme switch on <html>; see src/lib/theme.ts. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper: #1c212b;
+  --paper-card: #252b37;
+  --ink: #ece6dc;
+  --ink-soft: #a9b0bc; /* ≥ 4.5:1 on paper and card */
+  --ink-rule: color-mix(in srgb, var(--ink) 30%, transparent);
+  --ink-shadow: rgb(0 0 0 / 0.45); /* a light shadow reads as a glow — keep it black */
+  --scrim: rgb(8 10 14 / 0.6);
+
+  --accent: #34465c;
+  --accent-warm: #5b4535;
+  --accent-strong: #e69b74;
+  --highlight: #4a4232;
+  --highlight-punch: #7a6531;
+
+  /* Night ridge: a dim outline, not chalk — a white mountain reads as snow, not as night. */
+  --ridge: color-mix(in srgb, var(--ink-soft) 70%, var(--paper));
+  --snow: #5b6474;
 }

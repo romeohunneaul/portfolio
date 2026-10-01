@@ -1,13 +1,15 @@
 import { expect, test } from "@playwright/test";
 
-test("la home affiche la bio, le parcours et les tabs", async ({ page }) => {
+test("la home ouvre sur la question, le carnet suit dessous", async ({ page, isMobile }) => {
   await page.goto("/");
 
-  await expect(page.getByRole("heading", { level: 1, name: /Product manager/ })).toBeVisible();
-  await expect(page.getByText(/Product manager, AI in business software/)).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "How can I help?" })).toBeVisible();
+  await expect(page.getByText("10 years in product and AI in business software")).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: /^Work/ })).toBeVisible();
   await expect(page.getByText("Taster")).toBeVisible();
 
+  // Phones fold the tabs into the header's Menu.
+  if (isMobile) await page.getByText("Menu", { exact: true }).click();
   const nav = page.getByRole("navigation", { name: "Sections" });
   for (const tab of ["Home", "Work", "Outdoor", "Reading", "MCP"]) {
     await expect(nav.getByRole("link", { name: tab })).toBeVisible();
@@ -19,24 +21,28 @@ test("la section Lab est présente sur la home", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 2, name: /^Lab/ })).toBeVisible();
 });
 
-test("les tabs mènent aux pages détaillées", async ({ page }) => {
+test("les tabs mènent aux pages détaillées", async ({ page, isMobile }) => {
   await page.goto("/");
-  const nav = page.getByRole("navigation", { name: "Sections" });
+  // Phones fold the tabs into the header's Menu, which closes on each navigation.
+  const go = async (name: string) => {
+    if (isMobile) await page.getByText("Menu", { exact: true }).click();
+    await page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name }).click();
+  };
 
-  await nav.getByRole("link", { name: "Work" }).click();
+  await go("Work");
   await expect(page).toHaveURL(/\/work$/);
   await expect(page.getByRole("heading", { level: 2, name: "Career" })).toBeVisible();
 
-  await nav.getByRole("link", { name: "Outdoor" }).click();
+  await go("Outdoor");
   await expect(page).toHaveURL(/\/outdoor$/);
   await expect(page.getByRole("img", { name: /Mont Charvin loop, seen from above/ })).toBeVisible();
   await expect(page.getByRole("link", { name: "Download GPX" }).first()).toHaveAttribute("href", /\.gpx$/);
 
-  await nav.getByRole("link", { name: "reading" }).click();
+  await go("reading");
   await expect(page).toHaveURL(/\/reading$/);
   await expect(page.getByRole("link", { name: /Getting Real/ })).toBeVisible();
 
-  await nav.getByRole("link", { name: "mcp" }).click();
+  await go("mcp");
   await expect(page).toHaveURL(/\/mcp$/);
   await expect(page.getByText("get_profile")).toBeVisible();
 });

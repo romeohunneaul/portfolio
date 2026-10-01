@@ -5,11 +5,11 @@
   --paper-grain-size: 140px 140px;
 
   --paper-grid:
-    repeating-linear-gradient(0deg, rgba(47, 53, 66, 0.1) 0 1px, transparent 1px 24px),
-    repeating-linear-gradient(90deg, rgba(47, 53, 66, 0.1) 0 1px, transparent 1px 24px);
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--ink) 10%, transparent) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--ink) 10%, transparent) 0 1px, transparent 1px 24px);
   --paper-grid-fine:
-    repeating-linear-gradient(0deg, rgba(47, 53, 66, 0.13) 0 1px, transparent 1px 16px),
-    repeating-linear-gradient(90deg, rgba(47, 53, 66, 0.13) 0 1px, transparent 1px 16px);
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--ink) 13%, transparent) 0 1px, transparent 1px 16px),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--ink) 13%, transparent) 0 1px, transparent 1px 16px);
 
   /* Pen families — one per page */
   --stroke-fine: 1.5px;

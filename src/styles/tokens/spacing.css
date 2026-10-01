@@ -8,10 +8,12 @@
   --space-6: 24px;
   --space-8: 32px;
   --space-16: 64px;
+  --space-section: clamp(64px, 3rem + 4vw, 112px); /* between page sections: always clearly more than between rows */
 
-  --artboard-max: 1080px;
-  --aside-width: 272px; /* margin column holding the drawing */
-  --measure: 62ch; /* ≈ 70 characters at 16px */
+  /* The page widens with the window instead of floating, small, in the middle of a big screen. */
+  --artboard-max: clamp(1080px, 80vw, 1400px);
+  --aside-width: clamp(272px, 20vw, 340px); /* margin column */
+  --measure: 62ch; /* ≈ 70 characters; ch follows the body size, so it scales with it */
 
   --radius: 0px; /* nothing is rounded, ever */
   --border: 1.5px;
