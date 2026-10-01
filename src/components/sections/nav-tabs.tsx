@@ -4,12 +4,13 @@ import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { TextLink } from "@/components/ui/text-link";
 
+/** `hint` is the phone Menu's right-hand annotation for each page. */
 export const tabs = [
-  { href: "/", label: "Home" },
-  { href: "/work", label: "Work" },
-  { href: "/outdoor", label: "Outdoor" },
-  { href: "/reading", label: "Reading" },
-  { href: "/mcp", label: "MCP" },
+  { href: "/", label: "Home", hint: "ask, or read" },
+  { href: "/work", label: "Work", hint: "career, projects, tools" },
+  { href: "/outdoor", label: "Outdoor", hint: "routes, ski included" },
+  { href: "/reading", label: "Reading", hint: "books and articles" },
+  { href: "/mcp", label: "MCP", hint: "this site, for agents" },
 ] as const;
 
 /** Client only for the active state; the links work without JS. */

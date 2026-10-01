@@ -10,19 +10,21 @@ import { DrawnMark } from "@/components/ui/drawn-mark";
 import { AskDetail } from "./ask-detail";
 import { ContactCard } from "./contact-card";
 
-type AskDialogProps = { open: boolean; context: AskContext; onClose: () => void };
+type AskDialogProps = { open: boolean; context: AskContext; question?: string; onClose: () => void };
 
 /**
  * A side panel on a native <dialog>: focus trap, Escape and backdrop come with
  * the platform. Top: the detail of the row that opened it. Bottom: the question
  * field, there from the start; suggestions arrive late, and only if nothing has
  * been typed. While the model works: pencil dots, a streaming caret, and Stop.
+ * On phones it is a bottom sheet sized to the visual viewport, so the field rides above the keyboard.
  */
-export function AskDialog({ open, context, onClose }: AskDialogProps) {
+export function AskDialog({ open, context, question, onClose }: AskDialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
   const thread = useRef<HTMLDivElement>(null);
   const field = useRef<HTMLInputElement>(null);
   const stick = useRef(true); // follow the stream only while the reader is at the bottom
+  const asked = useRef(false); // the opening question goes out once
   const [input, setInput] = useState("");
   const [expanded, setExpanded] = useState(false); // the detail, once clamped
   const { messages, sendMessage, status, error, stop, regenerate } = useChat({
@@ -43,6 +45,24 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
     if (!open && d.open) d.close();
   }, [open]);
 
+  // iOS keeps the layout viewport under the keyboard; the sheet follows the visible part instead (.ask-panel in globals.css).
+  useEffect(() => {
+    const vv = window.visualViewport;
+    const d = ref.current;
+    if (!open || !vv || !d) return;
+    const fit = () => {
+      d.style.setProperty("--vv-h", `${vv.height}px`);
+      d.style.setProperty("--vv-top", `${vv.offsetTop}px`);
+    };
+    fit();
+    vv.addEventListener("resize", fit);
+    vv.addEventListener("scroll", fit);
+    return () => {
+      vv.removeEventListener("resize", fit);
+      vv.removeEventListener("scroll", fit);
+    };
+  }, [open]);
+
   // Scroll the thread, never the page — and never fight a reader who scrolled up.
   useEffect(() => {
     const el = thread.current;
@@ -58,6 +78,17 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
     setInput("");
   };
 
+  // A tick late: useChat stops its chat when an effect pass unmounts (Strict Mode does one on mount),
+  // and a request sent before that pass would die with it.
+  useEffect(() => {
+    if (!open || !question || asked.current) return;
+    const id = setTimeout(() => {
+      asked.current = true;
+      sendMessage({ text: question });
+    });
+    return () => clearTimeout(id);
+  }, [open, question, sendMessage]);
+
   const lastId = messages.at(-1)?.id;
 
   return (
@@ -66,7 +97,7 @@ export function AskDialog({ open, context, onClose }: AskDialogProps) {
       onClose={onClose}
       onClick={(e) => e.target === ref.current && onClose()}
       aria-labelledby="ask-title"
-      className="ask-panel bg-paper text-ink border-rule m-0 ml-auto h-dvh max-h-none w-[min(460px,100vw)] max-w-none border-l-[length:var(--border)] p-0 backdrop:bg-[rgba(47,53,66,0.35)]"
+      className="ask-panel bg-paper text-ink border-rule m-0 ml-auto h-dvh max-h-none w-[min(460px,100vw)] max-w-none border-l-[length:var(--border)] p-0 backdrop:bg-[var(--scrim)]"
     >
       <div className="flex h-full flex-col">
         <header className="border-rule flex items-start justify-between gap-4 border-b px-6 py-3 sm:py-5">

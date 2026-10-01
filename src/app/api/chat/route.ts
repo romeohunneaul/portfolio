@@ -49,7 +49,7 @@ export async function POST(req: Request) {
     tools: {
       // No `execute`: the client renders the contact card when this part shows up.
       contact: tool({
-        description: "Show the visitor how to reach François directly. Call it when the data does not answer the question.",
+        description: "Show the visitor how to reach François directly. Call it when the data does not answer the question, or when a need the visitor described fits his work.",
         inputSchema: z.object({ reason: z.string().describe("One short sentence: what the visitor wanted to know.") }),
       }),
     },
