@@ -17,6 +17,12 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Code généré par content-collections au build : pas à linter.
     ".content-collections/**",
+    // design-sync (Claude Design) : scripts copiés, sorties de build, référence Storybook.
+    ".ds-sync/**",
+    "ds-bundle/**",
+    "dist/**",
+    ".design-sync/sb-reference/**",
+    ".design-sync/.cache/**",
   ]),
   ...storybook.configs["flat/recommended"]
 ]);

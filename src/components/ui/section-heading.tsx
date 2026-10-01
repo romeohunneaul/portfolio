@@ -9,11 +9,12 @@ type SectionHeadingProps = {
   id?: string;
 };
 
-/** A real heading — 19px, weight 600 — a hairline to close it, and an optional sentence under it. */
+/** A real heading — title size, weight 600 — closed by an ink rule (rows inside use the softer
+ *  rule colour, so a section start never reads as one more row), and an optional sentence under it. */
 export function SectionHeading({ children, aside, lede, id }: SectionHeadingProps) {
   return (
     <div className="flex flex-col gap-3">
-      <div className="border-rule flex items-baseline justify-between gap-4 border-b-[length:var(--border)] pb-3">
+      <div className="border-ink flex items-baseline justify-between gap-4 border-b-[length:var(--border)] pb-3">
         <h2 id={id} className="text-title m-0 font-semibold">
           {children}
         </h2>

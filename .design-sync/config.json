@@ -1,0 +1,31 @@
+{
+  "projectId": "50bc1b1b-6ae9-477c-ab65-809d7ea533ca",
+  "pkg": "portfolio",
+  "globalName": "Notebook",
+  "shape": "storybook",
+  "storybookConfigDir": ".storybook",
+  "storybookStatic": ".design-sync/sb-reference",
+  "srcDir": "src/components/ui",
+  "tsconfig": "tsconfig.json",
+  "titleMap": {
+    "DeliveryPipeline": null,
+    "Listening": null,
+    "ProjectsList": null,
+    "StackGrid": null,
+    "Timeline": null
+  },
+  "entry": ".design-sync/entry.ts",
+  "buildCmd": "npx tsc -p .design-sync/tsconfig.types.json",
+  "storyImports": {
+    "loaders": {
+      ".png": "dataurl"
+    }
+  },
+  "overrides": {
+    "ThemeToggle": {
+      "cardMode": "single",
+      "primaryStory": "Day"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}
