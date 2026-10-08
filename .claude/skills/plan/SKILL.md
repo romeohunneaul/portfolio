@@ -13,9 +13,24 @@ Le plan est **jetable**. Il est consommé par l'implémentation et périmé dès
 quelque chose. Ce qui doit durer vit ailleurs : l'intention dans le brief, les décisions
 d'architecture coûteuses à défaire dans un ADR.
 
+**PRÉREQUIS :** appliquer `preflight` (setup, sources, mode one-shot), puis `writing-rules` à toute rédaction, exception : le plan vit dans le repo de code, `writing-rules` s'applique s'il est joignable.
+
+## Prérequis
+
+| | |
+|---|---|
+| Racine | Product OS (`CLAUDE.md`, `problem/`, `solution/`) |
+| Clés `CLAUDE.md` | `## Connaissance produit` : `Solution`, `Repos` |
+| Sources à balayer | `solution/<slug>/` : `brief.md`, `PRD.md`, `specs/` ; dans le repo de code : `CLAUDE.md`, `AGENTS.md`, `.claude/rules/`, ADR, le code de la zone touchée |
+| Connecteurs | aucun |
+
+Chemins ci-dessous : défauts `problem/`, `solution/`.
+
 ## Étape 1 — Rassembler
 
-- Le **brief** s'il existe (section `## Brain` du `CLAUDE.md`), ou la conversation en cours.
+- Le **brief** et le **PRD** de la feature s'ils existent, dans le Product OS :
+  `solution/<slug>/brief.md`, `PRD.md`, `specs/`. Depuis une app clonée sous `repos/`, le
+  Product OS est le dossier parent de `repos/`. Sinon, la conversation en cours.
 - Le **repo** : `CLAUDE.md`, `AGENTS.md`, `.claude/rules/`, `CONTEXT.md` et ADR s'ils
   existent. Le vocabulaire du plan est celui du projet.
 - Le **code de la zone touchée**, pour connaître son état réel plutôt que supposé.
@@ -121,3 +136,6 @@ Quand il n'y en a aucune, l'écrire : `Aucune action humaine requise.`
 Dire où le plan a été écrit, ce que contient `action-required.md`, et la suite : implémenter
 **une tranche à la fois**, en repartant d'un contexte vierge entre chacune, puis relire le
 diff contre ce plan avant de commiter.
+
+Les sources balayées et celles écartées, avec la raison (liste du `## Prérequis`).
+
