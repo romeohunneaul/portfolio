@@ -10,16 +10,19 @@
  * never masks silently. On success it writes src/data/brain-extract.json,
  * which is committed and reviewed like any other change.
  *
- * The name denylist is itself confidential, so it lives in the PRIVATE brain
- * repo: _brain/projects/portfolio/brain-denylist.json — { "patterns": [...] },
+ * The name denylist is itself confidential, so it lives in the PRIVATE source
+ * folder: <BRAIN_DIR>/projects/portfolio/brain-denylist.json — { "patterns": [...] },
  * matched case-insensitively. Generic financial/contact patterns are built in.
  */
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-import { homedir } from "node:os";
 import path from "node:path";
 
 const ROOT = path.dirname(new URL(import.meta.url, "file:").pathname);
-const BRAIN = process.env.BRAIN_DIR ?? path.join(homedir(), "Desktop/Projects/_brain");
+const BRAIN = process.env.BRAIN_DIR;
+if (!BRAIN) {
+  console.error("BRAIN_DIR is not set: point it at the private source folder (e.g. BRAIN_DIR=/path/to/notes npm run brain:sync).");
+  process.exit(1);
+}
 const OUT = path.join(ROOT, "../src/data/brain-extract.json");
 
 const GENERIC = [

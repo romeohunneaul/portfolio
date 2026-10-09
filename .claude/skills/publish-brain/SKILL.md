@@ -14,9 +14,9 @@ Règle d'or : **tout ce qui entre dans le corpus est public** (prompt du chat
 + repo GitHub public). Le pipeline bloque, il ne masque jamais en silence.
 
 Chemins :
-- Brain (privé) : `~/Desktop/Projects/_brain/`
-- Allowlist (publique) : `scripts/brain-allowlist.json` — chemins relatifs au brain
-- Denylist (CONFIDENTIELLE) : `~/Desktop/Projects/_brain/projects/portfolio/brain-denylist.json`
+- Source privée : le dossier pointé par la variable d'environnement `BRAIN_DIR` (jamais écrit dans ce repo)
+- Allowlist (publique) : `scripts/brain-allowlist.json` — chemins relatifs à `BRAIN_DIR`
+- Denylist (CONFIDENTIELLE) : `$BRAIN_DIR/projects/portfolio/brain-denylist.json`
 - Sortie commitée : `src/data/brain-extract.json` → injectée dans le prompt par `src/lib/ask/instructions.ts`
 
 ## Déroulé
