@@ -60,12 +60,12 @@ export const experience: Experience[] = [
     location: "Lyon",
     kind: "freelance",
     summary:
-      "End to end on small teams or alone: user research, design, build, launch. Missions in biobanking, publishing, treasury software and construction.",
+      "End to end on small teams or alone: user research, design, build, launch. Missions in biobanking, publishing, treasury software and retail banking.",
     bullets: [
       "Cryospace — a SaaS for cryogenic sample management, where a data-model mistake has physical consequences (NestJS, Prisma, React, GCP).",
       "Odyssée — bookshop catalogue tooling with AI tagging and natural-language search over publisher feeds (Next.js, Vercel AI SDK, Supabase, LangSmith).",
       "Agicap — product management reinforcement on treasury squads, with an outside eye on the team's agentic tooling.",
-      "Mineral Expertise — a Claude Code assistant for a project manager: supplier consultations and a price reference that builds itself as a side effect.",
+      "Crédit Agricole — product work on the launch of a B2C banking app in Germany.",
     ],
   },
   {

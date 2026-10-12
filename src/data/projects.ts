@@ -64,27 +64,6 @@ export const projects: Project[] = [
     status: "shipped",
   },
   {
-    slug: "mineral-expertise",
-    questions: [
-      "Why build an assistant instead of a new app?",
-      "How does the price list build itself?",
-      "Which limits were accepted up front?",
-    ],
-    title: "A price list that writes itself",
-    year: "2026",
-    role: "Discovery, architecture, skills",
-    context: "A one-person construction project management firm.",
-    problem:
-      "Three hours to prepare each supplier consultation, a supplier pool that lives in one head, and a price reference that every previous tool failed to keep alive.",
-    approach: [
-      "No new app. Claude Code, a Dropbox MCP and three skills, installed as a plugin.",
-      "The price reference is a side effect of the work, never a task of its own.",
-      "Accepted limits written down: no binaries written, files under 5 MB.",
-    ],
-    stack: ["Claude Code", "MCP", "Skills / plugins"],
-    status: "prototype",
-  },
-  {
     slug: "agicap",
     questions: [
       "What was the mission at Agicap?",

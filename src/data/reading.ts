@@ -159,7 +159,7 @@ export const articles: Article[] = [
     author: "Maggie Appleton",
     year: 2024,
     url: "https://maggieappleton.com/home-cooked-software",
-    why: "What the Mineral Expertise assistant is, better said than I could.",
+    why: "Software built by and for the people who have the problem — the case for small, bespoke tools.",
     kind: "article",
     tags: ["ai", "product"],
   },
