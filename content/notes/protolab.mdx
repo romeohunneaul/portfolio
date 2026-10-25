@@ -1,0 +1,42 @@
+---
+title: "Prototyping on the real product, without the weight of a branch"
+date: "2026-10-25"
+summary: "Why I built my own prototyping lab: what I used before, where each tool stopped, and what the lab keeps from production."
+tags: ["prototyping", "design system", "skills"]
+draft: true
+---
+
+I design screens with Claude. The idea is never the slow part. The slow part comes after:
+seeing it run with the product's real components and believable data, next to two other
+versions, then sending someone a link to the one I mean.
+
+Here is what I used before, where each tool stopped, and why I ended up building my own:
+protolab, a lab that lives inside the app's repo.
+
+## What I used before
+
+As a product manager I need two things at once. The prototype has to sit on the real
+product: its components, data shaped like its own, flows and scenarios as tangled as the
+real ones. And it has to be fast: three UX ideas compared this afternoon, not next sprint.
+
+The tools I tried each pick one side. Claude Design, Lovable and Figma Make are fast, but
+they bring their own components and their own data; in my tests of Claude Design (October
+2026), every state and every scenario was faked by hand. A dev branch and Storybook have the
+real thing, but every change is slow, and versions never sit side by side.
+
+<ProtolabJourney />
+
+So I built protolab. It has its costs: it needs the app's repo to run, and a link leaves my
+machine only once the lab is deployed. But of everything I tried, it is the best balance
+between the real product and speed.
+
+## What it keeps, what it adds
+
+One page in protolab, marked up. Pick a number.
+
+<ProtolabKeepsAdds />
+
+The engine is open source: [romeohunneaul/protolab](https://github.com/romeohunneaul/protolab).
+It installs in a Next.js project and builds with that project's own components.
+
+_Inspired by an internal prototyping tool I used on a fintech engagement._

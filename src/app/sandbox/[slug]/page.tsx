@@ -3,6 +3,8 @@ import { TextLink } from "@/components/ui/text-link";
 import { allNotes } from "content-collections";
 import { MDXContent } from "@content-collections/mdx/react";
 import { DeliveryPipeline } from "@/components/sections/delivery-pipeline";
+import { ProtolabJourney } from "@/components/sections/protolab-journey";
+import { ProtolabKeepsAdds } from "@/components/sections/protolab-keeps-adds";
 import { Chip } from "@/components/ui/chip";
 
 export function generateStaticParams() {
@@ -21,7 +23,8 @@ const longDate = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long
 export default async function NotePage({ params }: PageProps<"/sandbox/[slug]">) {
   const { slug } = await params;
   const note = allNotes.find((n) => n.slug === slug);
-  if (!note || note.draft) notFound();
+  // A draft stays off the home page and the assistant, and answers at its URL everywhere but production.
+  if (!note || (note.draft && process.env.VERCEL_ENV === "production")) notFound();
 
   return (
     <main id="main" className="pt-12">
@@ -41,7 +44,7 @@ export default async function NotePage({ params }: PageProps<"/sandbox/[slug]">)
         </header>
 
         <div className="prose mt-10 flex flex-col gap-5 [&_h2]:text-title [&_h2]:mt-6 [&_h2]:scroll-mt-8 [&_h2]:font-semibold">
-          <MDXContent code={note.mdx} components={{ DeliveryPipeline }} />
+          <MDXContent code={note.mdx} components={{ DeliveryPipeline, ProtolabJourney, ProtolabKeepsAdds }} />
         </div>
       </article>
     </main>
