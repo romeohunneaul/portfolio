@@ -57,7 +57,7 @@ export function ProtolabJourney() {
   const pinned = (id: string) => (id === lab.id ? "bg-card border-rule sticky right-0 z-10 border-l" : "");
 
   return (
-    <section aria-label="What I used before" className="flex flex-col gap-6">
+    <section aria-label="What I used before" className="flex flex-col gap-6 pb-4">
       <Blocks />
 
       <InView threshold={0.4} className="hidden overflow-x-auto sm:block lg:w-[48rem]">

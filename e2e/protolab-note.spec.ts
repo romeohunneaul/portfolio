@@ -1,7 +1,5 @@
 import { expect, test } from "@playwright/test";
 
-// The note is a draft: it answers at its URL outside production, and stays off the home page.
-
 test("la note protolab montre le parcours et ce que l'outil garde ou ajoute", async ({ page, isMobile }) => {
   await page.goto("/sandbox/protolab");
 
@@ -22,7 +20,7 @@ test("la note protolab montre le parcours et ce que l'outil garde ou ajoute", as
   await expect(page.getByRole("link", { name: "romeohunneaul/protolab" })).toHaveAttribute("href", "https://github.com/romeohunneaul/protolab");
 });
 
-test("la note protolab, en brouillon, n'est pas listée sur la home", async ({ page }) => {
+test("la note protolab est listée dans le Lab de la home", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByText("Prototyping on the real product")).toHaveCount(0);
+  await expect(page.getByText("Prototyping on the real product, without the weight of a branch")).toBeVisible();
 });

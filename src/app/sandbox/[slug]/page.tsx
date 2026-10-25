@@ -6,6 +6,7 @@ import { DeliveryPipeline } from "@/components/sections/delivery-pipeline";
 import { ProtolabJourney } from "@/components/sections/protolab-journey";
 import { ProtolabKeepsAdds } from "@/components/sections/protolab-keeps-adds";
 import { Chip } from "@/components/ui/chip";
+import { Highlight } from "@/components/ui/highlight";
 
 export function generateStaticParams() {
   return allNotes.map((note) => ({ slug: note.slug }));
@@ -44,7 +45,7 @@ export default async function NotePage({ params }: PageProps<"/sandbox/[slug]">)
         </header>
 
         <div className="prose mt-10 flex flex-col gap-5 [&_h2]:text-title [&_h2]:mt-6 [&_h2]:scroll-mt-8 [&_h2]:font-semibold">
-          <MDXContent code={note.mdx} components={{ DeliveryPipeline, ProtolabJourney, ProtolabKeepsAdds }} />
+          <MDXContent code={note.mdx} components={{ DeliveryPipeline, Highlight, ProtolabJourney, ProtolabKeepsAdds }} />
         </div>
       </article>
     </main>
