@@ -22,5 +22,5 @@ test("la note protolab montre le parcours et ce que l'outil garde ou ajoute", as
 
 test("la note protolab est listée dans le Lab de la home", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByText("Prototyping on the real product, without the weight of a branch")).toBeVisible();
+  await expect(page.getByText("Building the prototyping tool I needed as a PM")).toBeVisible();
 });
