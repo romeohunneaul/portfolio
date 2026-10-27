@@ -33,6 +33,11 @@ AI SDK 7 + AI Gateway ; le profil entier tient dans le prompt, pas de RAG ; clé
 `.env.local`, cf. `.env.example`). Ajouter une trace =
 déposer le `.gpx` + une ligne dans `routes`. Ajouter un article = une ligne.
 
+**Mesure** : visites dans PostHog EU sans cookies (`src/instrumentation-client.ts`, proxy `/ingest`
+dans `next.config.ts`) ; chaque appel Ask tracé en OpenTelemetry vers PostHog (`src/lib/ask/telemetry.ts`)
+et signalé sur Telegram (`src/lib/ask/alert.ts`). `@ai-sdk/otel` épingle une version exacte de `ai` :
+les monter ensemble, sinon deux copies de `@ai-sdk/provider-utils` cassent le typecheck.
+
 ⚠️ **Next.js 16 diffère des données d'entraînement des modèles.** Lire
 `node_modules/next/dist/docs/` avant d'écrire du code Next spécifique
 (cf. bloc `nextjs-agent-rules` dans `AGENTS.md`).
