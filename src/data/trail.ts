@@ -17,6 +17,7 @@ export type Route = {
 
 // `note` is one sentence, first person — placeholders below until François rewrites them.
 export const routes: Route[] = [
+  { slug: "grand-trail-templiers", name: "Grand Trail des Templiers", where: "Millau, Grands Causses", note: "Off at 5:10 in the dark behind the knights, 8:51:54 to the line.", sport: "trail", kind: "race", photos: ["night-lights.jpg", "rock-arch.jpg", "start-trio.jpg", "templar-start.jpg"] },
   { slug: "grande-bambee", name: "La Grande Bambée", where: "La Giettaz, Val d'Arly", note: "Aravis on one side, Mont Blanc on the other, all morning.", sport: "trail", kind: "race", photos: ["aravis-ridge.jpg", "mont-blanc.jpg", "start-trio.jpg"] },
   { slug: "saint-nicolas-veroce", name: "Saint-Nicolas-de-Véroce", where: "Val Montjoie", note: "Mont Blanc dead ahead the whole climb. First try, first place.", sport: "trail", kind: "race", photos: ["mont-blanc-meadow.jpg", "mont-blanc-trees.jpg", "trail-path.jpg"] },
   { slug: "kv-trou-de-la-mouche", name: "KV du Trou de la Mouche", where: "Aravis", note: "Straight up to the notch, moon out, sun going down.", sport: "trail", kind: "vertical", photos: ["arch-ridge.jpg", "sunset-valley.jpg", "moon-flowers.jpg"] },
@@ -40,6 +41,7 @@ export const utmb = {
 export type Race = { date: string; name: string; km: number; gain: number; time: string; rank: string };
 
 export const races: Race[] = [
+  { date: "2026-10-18", name: "Grand Trail des Templiers", km: 80.7, gain: 3443, time: "8:51:54", rank: "149 / 2297" },
   { date: "2026-08-30", name: "La Grande Bambée", km: 44, gain: 2700, time: "4:48:51", rank: "4 / 124" },
   { date: "2026-07-05", name: "La Mini'Hard", km: 18, gain: 1270, time: "1:51:19", rank: "1 / 305" },
   { date: "2026-05-15", name: "Volvic Volcanic Experience", km: 86, gain: 2750, time: "8:07:56", rank: "18 / 720" },
