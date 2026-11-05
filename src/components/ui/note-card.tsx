@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CARD_FRAME } from "./card-frame";
 import { Chip } from "./chip";
 
 type NoteCardProps = {
@@ -11,7 +12,7 @@ type NoteCardProps = {
 
 const monthYear = new Intl.DateTimeFormat("en-GB", { month: "short", year: "numeric" });
 
-/** Only published notes get to be cards. Hover: a hard offset shadow, nothing else. */
+/** A published note as a card. Hover: a hard offset shadow, nothing else. */
 export function NoteCard({ title, summary, slug, date, tags = [] }: NoteCardProps) {
   const inner = (
     <>
@@ -34,8 +35,7 @@ export function NoteCard({ title, summary, slug, date, tags = [] }: NoteCardProp
     </>
   );
 
-  const cls =
-    "card-tilt draws bg-card border-rule flex flex-col gap-2 border-[length:var(--border)] px-6 py-5 no-underline hover:shadow-[var(--shadow-hover)]";
+  const cls = `${CARD_FRAME} gap-2 px-6 py-5`;
 
   return (
     <article>

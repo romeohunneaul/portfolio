@@ -8,7 +8,7 @@ import { profile } from "@/data/profile";
 import { TextLink } from "@/components/ui/text-link";
 import { ledes } from "@/data/sections";
 
-export const metadata: Metadata = { title: "Work", description: "Career, problems worked on, tools actually used." };
+export const metadata: Metadata = { title: "Work", description: "Career, things I’ve done, tools actually used." };
 
 export default function WorkPage() {
   return (
@@ -23,7 +23,7 @@ export default function WorkPage() {
         <Timeline variant="full" />
       </Section>
 
-      <Section id="problems" label="Problems worked on" lede="Told by the problem. Clients stay backstage.">
+      <Section id="problems" label="Things I’ve done">
         <ProjectsList />
       </Section>
 

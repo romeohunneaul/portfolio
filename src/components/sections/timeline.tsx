@@ -13,15 +13,34 @@ type TimelineProps = {
 
 const dates = (start: string, end: string) => `${start} – ${end}`;
 
-function Head({ x, summary }: { x: Pick<Experience, "company" | "role" | "logo" | "start" | "end">; summary?: string }) {
+type HeadProps = {
+  x: Pick<Experience, "company" | "role" | "logo" | "start" | "end">;
+  summary?: string;
+  /** Inside an AskRow: on a phone the first line leaves room for its arrow. */
+  trigger?: boolean;
+};
+
+function Head({ x, summary, trigger = false }: HeadProps) {
   return (
-    <span className="grid grid-cols-[auto_1fr] items-start gap-x-4 gap-y-1 sm:grid-cols-[auto_1fr_auto]">
-      <LogoSquare name={x.company} src={x.logo} />
-      <span className="text-row">
-        <span className="hd"><span><span className="font-semibold">{x.company}</span> — {x.role}</span><DrawnMark /></span>
+    // Phone: no logo (only two of five have one), the company one step up with the dates against it,
+    // the role on its own line in soft ink (it describes the entry, like the dates), a gap, then the summary
+    // in full; both run the whole width. From `sm`: logo, "Company — Role", dates.
+    <span className="grid grid-cols-[1fr_auto] items-baseline gap-x-4 gap-y-1 sm:grid-cols-[auto_1fr_auto] sm:items-start">
+      <span className="hidden sm:block">
+        <LogoSquare name={x.company} src={x.logo} />
       </span>
-      <span className="text-soft text-meta col-start-2 font-mono tabular-nums sm:col-start-auto sm:pt-1">{dates(x.start, x.end)}</span>
-      {summary && <span className="col-start-2 max-w-[var(--measure)] sm:col-span-2">{summary}</span>}
+      <span className="text-title sm:text-row">
+        <span className="hd">
+          <span>
+            <span className="font-semibold">{x.company}</span>
+            <span className="hidden sm:inline"> — {x.role}</span>
+          </span>
+          <DrawnMark />
+        </span>
+      </span>
+      <span className={`text-soft text-meta font-mono whitespace-nowrap tabular-nums sm:mr-0 sm:pt-1 ${trigger ? "mr-10" : ""}`}>{dates(x.start, x.end)}</span>
+      <span className="text-soft col-span-2 sm:hidden">{x.role}</span>
+      {summary && <span className="col-span-2 max-w-[var(--measure)] pt-3 sm:col-start-2 sm:pt-0">{summary}</span>}
     </span>
   );
 }
@@ -34,7 +53,7 @@ export function Timeline({ variant = "compact", limit }: TimelineProps) {
       {positions.map((x) => (
         <li key={x.company + x.start}>
           <AskRow context={{ kind: "experience", id: experienceId(x) }}>
-            <Head x={x} summary={x.summary} />
+            <Head x={x} summary={x.summary} trigger />
           </AskRow>
           {/* Without JavaScript the panel cannot open: the missions stay readable here. */}
           {x.bullets && (

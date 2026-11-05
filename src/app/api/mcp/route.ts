@@ -32,7 +32,7 @@ const handler = createMcpHandler(
     );
     server.registerTool(
       "get_projects",
-      { title: "Projects", description: "Problems worked on: context, problem, approach, stack, status.", inputSchema: z.object({}) },
+      { title: "Projects", description: "Things I’ve done: context, problem, approach, stack, status.", inputSchema: z.object({}) },
       async () => json(projects),
     );
     server.registerTool(
