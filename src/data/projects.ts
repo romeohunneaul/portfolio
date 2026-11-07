@@ -13,6 +13,8 @@ export type Project = {
   approach: string[];
   stack: string[];
   links?: { label: string; url: string }[];
+  /** A short demo film, shown at the top of the panel; `preview` is a silent excerpt for the row. Files live in `public/videos/`. */
+  video?: { src: string; preview: string; poster: string; label: string };
   /** Three questions a visitor would actually ask here — each answerable from this file. */
   questions: string[];
   status: "shipped" | "in progress" | "prototype" | "open source";
@@ -36,9 +38,16 @@ export const projects: Project[] = [
       "Aggregate the industry feeds (ONIX / Dilicom) into one browsable grid, then enrich it.",
       "AI tagging across several taxonomies, every run traced so a wrong tag can be explained.",
       "Extract the editor's own pitch from catalogue PDFs with a dedicated skill.",
-      "Next: an agent that turns a sentence into filters on the grid — it proposes, the interface stays in charge.",
+      "An agent that turns a sentence into filters on the grid, answers about a book from its catalogue record and fills the cart — it proposes, the interface stays in charge.",
     ],
     stack: ["Next.js", "Vercel AI SDK", "OpenRouter", "LangSmith", "Supabase", "n8n", "Playwright"],
+    video: {
+      src: "/videos/odyssee-demo.mp4",
+      preview: "/videos/odyssee-demo-preview.mp4",
+      poster: "/videos/odyssee-demo-poster.jpg",
+      label:
+        "52-second demo: a bookseller asks the assistant for climate titles, it filters the grid, answers a question about the author and adds the book to the cart.",
+    },
     status: "in progress",
   },
   {
@@ -62,27 +71,6 @@ export const projects: Project[] = [
     ],
     stack: ["NestJS", "Prisma", "PostgreSQL", "React", "TanStack", "Zustand", "Tailwind", "Storybook", "Cloud Run"],
     status: "shipped",
-  },
-  {
-    slug: "agicap",
-    questions: [
-      "What was the mission at Agicap?",
-      "What did he observe about the team's agent tooling?",
-      "Which squads did he work with?",
-    ],
-    title: "A product team industrialising its agents",
-    year: "2026",
-    role: "Product manager, freelance",
-    context: "Treasury software, procure-to-pay then accounts receivable squads.",
-    problem:
-      "Cover a product manager's absence without slowing two squads — and look at how a team shares one agentic toolbox.",
-    approach: [
-      "Shipped on the existing roadmap from week one.",
-      "Observed a shared Claude Code meta-repo — contexts, skills, agents — resynced every morning.",
-      "Material for a note on agentic workflows at team scale.",
-    ],
-    stack: ["Claude Code", "Notion"],
-    status: "in progress",
   },
   {
     slug: "claude-garmin",

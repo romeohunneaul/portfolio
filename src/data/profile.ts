@@ -54,7 +54,7 @@ export const experience: Experience[] = [
       "Which of these projects put an LLM in production?",
       "What does he build himself, end to end?",
     ],
-    role: "Product builder — AI in business software",
+    role: "Product builder, AI in business software",
     start: "2025",
     end: "now",
     location: "Lyon",

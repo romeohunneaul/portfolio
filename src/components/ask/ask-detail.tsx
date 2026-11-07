@@ -41,6 +41,18 @@ export function AskDetail({ context }: { context: AskContext }) {
   const p = r.data;
   return (
     <div className="flex flex-col gap-4">
+      {p.video && (
+        <video
+          controls
+          playsInline
+          preload="metadata"
+          poster={p.video.poster}
+          aria-label={p.video.label}
+          className="border-rule bg-card block aspect-video w-full border-[length:var(--border)]"
+        >
+          <source src={p.video.src} type="video/mp4" />
+        </video>
+      )}
       <span className="text-soft text-meta font-mono">
         {p.year}, {p.role.toLowerCase()}, {p.status}
       </span>
