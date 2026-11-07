@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
   },
   // /trail devient /outdoor (ski inclus) — l'ancienne URL a circulé.
   redirects: async () => [{ source: "/trail", destination: "/outdoor", permanent: true }],
+  // PostHog through our own domain: ad blockers drop requests to *.posthog.com.
+  rewrites: async () => [
+    { source: "/ingest/static/:path*", destination: "https://eu-assets.i.posthog.com/static/:path*" },
+    { source: "/ingest/array/:path*", destination: "https://eu-assets.i.posthog.com/array/:path*" },
+    { source: "/ingest/:path*", destination: "https://eu.i.posthog.com/:path*" },
+  ],
+  // PostHog calls its API with trailing slashes; a redirect would break them.
+  skipTrailingSlashRedirect: true,
 };
 
 export default withContentCollections(nextConfig);
