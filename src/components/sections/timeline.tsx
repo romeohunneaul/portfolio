@@ -33,13 +33,13 @@ function Head({ x, summary, trigger = false }: HeadProps) {
         <span className="hd">
           <span>
             <span className="font-semibold">{x.company}</span>
-            <span className="hidden sm:inline"> — {x.role}</span>
+            <span className="sr-only sm:not-sr-only"> — {x.role}</span>
           </span>
           <DrawnMark />
         </span>
       </span>
       <span className={`text-soft text-meta font-mono whitespace-nowrap tabular-nums sm:mr-0 sm:pt-1 ${trigger ? "mr-10" : ""}`}>{dates(x.start, x.end)}</span>
-      <span className="text-soft col-span-2 sm:hidden">{x.role}</span>
+      <span aria-hidden className="text-soft col-span-2 sm:hidden">{x.role}</span>
       {summary && <span className="col-span-2 max-w-[var(--measure)] pt-3 sm:col-start-2 sm:pt-0">{summary}</span>}
     </span>
   );
