@@ -7,6 +7,7 @@ import { Streamdown } from "streamdown";
 import { resolve, suggestions, type AskContext } from "@/lib/ask/context";
 import { Button } from "@/components/ui/button";
 import { AskDetail } from "./ask-detail";
+import { AskResize } from "./ask-resize";
 import { ContactCard } from "./contact-card";
 
 type AskDialogProps = { open: boolean; context: AskContext; question?: string; onClose: () => void };
@@ -17,6 +18,7 @@ type AskDialogProps = { open: boolean; context: AskContext; question?: string; o
  * field, there from the start; suggestions arrive late, and only if nothing has
  * been typed. While the model works: pencil dots, a streaming caret, and Stop.
  * On phones it is a bottom sheet sized to the visual viewport, so the field rides above the keyboard.
+ * Wider screens can drag its left edge to resize it (ask-resize.tsx).
  */
 export function AskDialog({ open, context, question, onClose }: AskDialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
@@ -96,8 +98,9 @@ export function AskDialog({ open, context, question, onClose }: AskDialogProps) 
       onClose={onClose}
       onClick={(e) => e.target === ref.current && onClose()}
       aria-labelledby="ask-title"
-      className="ask-panel bg-paper text-ink border-rule m-0 ml-auto h-dvh max-h-none w-[min(460px,100vw)] max-w-none border-l-[length:var(--border)] p-0 backdrop:bg-[var(--scrim)]"
+      className="ask-panel bg-paper text-ink border-rule m-0 ml-auto h-dvh max-h-none w-[min(var(--ask-w,460px),100vw)] max-w-none border-l-[length:var(--border)] p-0 backdrop:bg-[var(--scrim)]"
     >
+      <AskResize panel={ref} />
       <div className="flex h-full flex-col">
         <header className="border-rule flex items-start justify-between gap-4 border-b px-6 py-3 sm:py-5">
           <h2 id="ask-title" className="text-title m-0 font-semibold text-balance">
@@ -140,7 +143,7 @@ export function AskDialog({ open, context, question, onClose }: AskDialogProps) 
 
           <div className="flex flex-col gap-4" aria-live="polite">
             {messages.map((m) => (
-              <div key={m.id} className={m.role === "user" ? "border-rule self-end border bg-[var(--accent-tint)] px-4 py-2" : "flex flex-col gap-3"}>
+              <div key={m.id} className={m.role === "user" ? "border-rule/50 self-end rounded-md border bg-[var(--accent-tint)] px-4 py-2" : "flex flex-col gap-3"}>
                 {m.parts.map((part, i) => {
                   if (part.type === "text") {
                     if (m.role === "user") {
@@ -194,7 +197,7 @@ export function AskDialog({ open, context, question, onClose }: AskDialogProps) 
             <ul className="ask-suggestions m-0 flex list-none gap-2 p-0 max-sm:-mx-6 max-sm:overflow-x-auto max-sm:px-6 sm:flex-col">
               {suggestions(context).map((q, i) => (
                 <li key={q} className="ask-suggestion max-sm:shrink-0" style={{ "--i": i } as React.CSSProperties}>
-                  <button type="button" onClick={() => ask(q)} className="draws text-soft hover:text-ink max-sm:border-rule max-sm:bg-card max-sm:text-meta w-full text-left max-sm:border max-sm:px-3 max-sm:py-2.5 max-sm:whitespace-nowrap">
+                  <button type="button" onClick={() => ask(q)} className="draws text-soft hover:text-ink max-sm:border-rule max-sm:bg-card max-sm:text-meta w-full text-left max-sm:rounded-sm max-sm:border max-sm:px-3 max-sm:py-2.5 max-sm:whitespace-nowrap">
                     <span className="hd">
                       <span>{q}</span>
                     </span>
@@ -209,7 +212,7 @@ export function AskDialog({ open, context, question, onClose }: AskDialogProps) 
               e.preventDefault();
               ask(input);
             }}
-            className="flex gap-3"
+            className="border-rule/50 bg-card focus-within:border-ink flex items-center gap-2 rounded-lg border py-1.5 pr-1.5 pl-3 transition-colors"
           >
             <label htmlFor="ask-input" className="sr-only">
               Your question
@@ -223,7 +226,7 @@ export function AskDialog({ open, context, question, onClose }: AskDialogProps) 
               autoComplete="off"
               enterKeyHint="send"
               placeholder={focus ? "Ask about this" : "Ask a question"}
-              className="border-rule bg-card min-w-0 flex-1 border px-3 py-2"
+              className="min-w-0 flex-1 bg-transparent py-1.5 focus-visible:outline-none"
             />
             {busy ? (
               <Button onClick={() => stop()}>Stop</Button>
