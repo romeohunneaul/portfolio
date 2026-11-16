@@ -14,25 +14,17 @@ const meta = {
   ],
   args: {
     title: "A catalogue you can talk to",
-    year: "2025–2026",
-    status: "in progress",
-    summary: "Tooling for independent bookshops, built with a publisher-side co-founder.",
     stack: ["Next.js", "Vercel AI SDK", "OpenRouter", "LangSmith", "Supabase", "n8n"],
+    image: { src: "/projects/odyssee.jpg", alt: "OdysseeAI sign-in screen over a light grid" },
+    more: "See the project",
   },
 } satisfies Meta<typeof ProjectCard>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const WithMedia: Story = {
-  args: {
-    media: (
-      // A plain poster: in the site the media slot holds the hover preview.
-      // eslint-disable-next-line @next/next/no-img-element
-      <img src="/videos/odyssee-demo-poster.jpg" alt="" className="block h-full w-full object-cover" />
-    ),
-  },
-};
-export const TextOnly: Story = {};
+export const WithImage: Story = {};
+export const NoImage: Story = { args: { image: undefined } };
+export const LongTitle: Story = { args: { title: "An assistant for cryogenic sample storage" } };
 export const ShortStack: Story = { args: { stack: ["Python", "MCP"] } };
 export const NoStack: Story = { args: { stack: [] } };

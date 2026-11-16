@@ -68,7 +68,7 @@ export function AskHero() {
         e.preventDefault();
         send();
       }}
-      className="border-ink bg-card flex w-full max-w-[var(--hero-measure)] flex-col border-[length:var(--border)] text-left shadow-[var(--shadow-hover)]"
+      className="border-rule/50 bg-card focus-within:border-ink flex w-full max-w-[var(--hero-measure)] flex-col rounded-lg border text-left transition-colors"
     >
       <label htmlFor="ask-home" className="sr-only">
         {askHome.label}
@@ -121,7 +121,7 @@ export function AskHero() {
           <span />
         )}
         <Button type="submit" className="shrink-0">
-          Ask →
+          Ask
         </Button>
       </div>
 

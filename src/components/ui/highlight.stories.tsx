@@ -15,5 +15,4 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Soft: Story = {};
-export const Punch: Story = { args: { punch: true } };
+export const Default: Story = {};

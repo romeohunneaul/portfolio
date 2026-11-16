@@ -23,7 +23,7 @@ function FitMark({ fit }: { fit: Fit }) {
   );
 }
 
-const name = (id: string, tool: string) => (id === lab.id ? <Highlight punch>{tool}</Highlight> : tool);
+const name = (id: string, tool: string) => (id === lab.id ? <Highlight>{tool}</Highlight> : tool);
 
 /** Below `sm`: each tool and only the criteria it misses. */
 function Blocks() {

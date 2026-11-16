@@ -1,5 +1,4 @@
 import { AskRow } from "@/components/ask/ask-row";
-import { DrawnMark } from "@/components/ui/drawn-mark";
 import { LogoSquare } from "@/components/ui/logo-square";
 import { education, experience, type Experience } from "@/data/profile";
 import { experienceId } from "@/lib/ask/context";
@@ -35,7 +34,6 @@ function Head({ x, summary, trigger = false }: HeadProps) {
             <span className="font-semibold">{x.company}</span>
             <span className="sr-only sm:not-sr-only"> — {x.role}</span>
           </span>
-          <DrawnMark />
         </span>
       </span>
       <span className={`text-soft text-meta font-mono whitespace-nowrap tabular-nums sm:mr-0 sm:pt-1 ${trigger ? "mr-10" : ""}`}>{dates(x.start, x.end)}</span>

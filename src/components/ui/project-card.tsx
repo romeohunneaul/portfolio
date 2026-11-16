@@ -1,62 +1,45 @@
-import type { ReactNode } from "react";
+import Image from "next/image";
 import { Chip } from "./chip";
-import { DrawnMark } from "./drawn-mark";
 
 type ProjectCardProps = {
   title: string;
-  year: string;
-  status: string;
-  summary: string;
   stack?: string[];
-  /** 16:9, full width at the top of the card. */
-  media?: ReactNode;
-  /** From the `sm` breakpoint, media on the left half and the text beside it. The frame must turn to a row too. */
-  wide?: boolean;
+  /** 16:10, inset at the top of the card. Without one, a flat paper panel holds the place. */
+  image?: { src: string; alt: string };
+  /** The invitation at the end of the card, drawn as a button, e.g. "See the project". */
+  more: string;
 };
 
-const STACK_SHOWN = 4;
+const STACK_SHOWN = 2;
 
 /**
- * A problem worked on, as a card: media when there is one, then when and where it stands, the title,
- * three lines at most, and the stack. Spans only, so it can sit inside the button that opens the panel.
+ * A problem worked on, as a card: the photo first, a short title, two technologies, an invitation to
+ * open it. One type family throughout: the stack is plain text, not mono chips. Spans only, so it can
+ * sit inside the button that opens the panel.
  */
-export function ProjectCard({ title, year, status, summary, stack = [], media, wide = false }: ProjectCardProps) {
+export function ProjectCard({ title, stack = [], image, more }: ProjectCardProps) {
   const shown = stack.slice(0, STACK_SHOWN);
-  const rest = stack.length - shown.length;
   return (
-    <>
-      {media && (
-        <span
-          className={`border-rule block aspect-video shrink-0 overflow-hidden border-b-[length:var(--border)] ${
-            wide ? "sm:w-1/2 sm:self-start sm:border-r-[length:var(--border)] sm:border-b-0" : ""
-          }`}
-        >
-          {media}
-        </span>
-      )}
-      <span className="flex flex-1 flex-col">
-        <span className="flex flex-1 flex-col gap-2 px-5 pt-4 pb-5">
-          <span className="text-soft text-meta flex flex-wrap items-center gap-x-3 gap-y-1 font-mono tabular-nums">
-            {year}
-            <Chip>{status}</Chip>
-          </span>
-          <span className="text-title font-semibold">
-            <span className="hd">
-              <span>{title}</span>
-              <DrawnMark />
-            </span>
-          </span>
-          <span className="line-clamp-3">{summary}</span>
-        </span>
+    <span className="flex h-full flex-col gap-3 p-2">
+      <span className="border-rule/40 bg-paper relative block aspect-[16/10] shrink-0 overflow-hidden rounded-sm border">
+        {image && (
+          <Image src={image.src} alt={image.alt} fill sizes="(min-width: 640px) 50vw, 100vw" className="object-cover object-top" />
+        )}
+      </span>
+      <span className="flex-1 px-2 leading-[var(--leading-tight)] font-semibold">
+        <span className="hd">{title}</span>
+      </span>
+      <span className="flex flex-wrap items-center justify-between gap-2 px-2 pb-2">
         {shown.length > 0 && (
-          <span className="border-rule flex flex-wrap items-center gap-2 border-t-[length:var(--border)] px-5 py-3">
+          <span className="flex flex-wrap items-center gap-1.5">
             {shown.map((s) => (
               <Chip key={s}>{s}</Chip>
             ))}
-            {rest > 0 && <span className="text-soft text-meta font-mono">+{rest}</span>}
+            {stack.length > shown.length && <span className="text-soft text-meta">…</span>}
           </span>
         )}
+        <span className="btn text-meta whitespace-nowrap">{more}</span>
       </span>
-    </>
+    </span>
   );
 }

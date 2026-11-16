@@ -1,4 +1,3 @@
-import { DrawnMark } from "@/components/ui/drawn-mark";
 import { TextLink } from "@/components/ui/text-link";
 import Image from "next/image";
 import { Trace } from "@/components/ui/trace";
@@ -27,7 +26,6 @@ export function RouteGrid({ routes }: { routes: LoadedRoute[] }) {
           </p>
           <a href={r.file} download className="draws hd text-meta no-underline self-start">
             <span>Download GPX</span>
-            <DrawnMark />
           </a>
         </li>
       ))}

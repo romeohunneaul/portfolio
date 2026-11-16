@@ -6,7 +6,6 @@ import { DefaultChatTransport } from "ai";
 import { Streamdown } from "streamdown";
 import { resolve, suggestions, type AskContext } from "@/lib/ask/context";
 import { Button } from "@/components/ui/button";
-import { DrawnMark } from "@/components/ui/drawn-mark";
 import { AskDetail } from "./ask-detail";
 import { ContactCard } from "./contact-card";
 
@@ -198,7 +197,6 @@ export function AskDialog({ open, context, question, onClose }: AskDialogProps) 
                   <button type="button" onClick={() => ask(q)} className="draws text-soft hover:text-ink max-sm:border-rule max-sm:bg-card max-sm:text-meta w-full text-left max-sm:border max-sm:px-3 max-sm:py-2.5 max-sm:whitespace-nowrap">
                     <span className="hd">
                       <span>{q}</span>
-                      <DrawnMark />
                     </span>
                   </button>
                 </li>

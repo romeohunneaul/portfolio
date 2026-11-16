@@ -13,8 +13,10 @@ export type Project = {
   approach: string[];
   stack: string[];
   links?: { label: string; url: string }[];
-  /** A short demo film, shown at the top of the panel; `preview` is a silent excerpt for the row. Files live in `public/videos/`. */
-  video?: { src: string; preview: string; poster: string; label: string };
+  /** The card's thumbnail, 16:10, in `public/projects/<slug>.jpg`. */
+  image?: { src: string; alt: string };
+  /** A short demo film, shown at the top of the panel. Files live in `public/videos/`. */
+  video?: { src: string; poster: string; label: string };
   /** Three questions a visitor would actually ask here — each answerable from this file. */
   questions: string[];
   status: "shipped" | "in progress" | "prototype" | "open source";
@@ -41,14 +43,38 @@ export const projects: Project[] = [
       "An agent that turns a sentence into filters on the grid, answers about a book from its catalogue record and fills the cart — it proposes, the interface stays in charge.",
     ],
     stack: ["Next.js", "Vercel AI SDK", "OpenRouter", "LangSmith", "Supabase", "n8n", "Playwright"],
+    image: { src: "/projects/odyssee.jpg", alt: "OdysseeAI sign-in screen over a light grid" },
     video: {
       src: "/videos/odyssee-demo.mp4",
-      preview: "/videos/odyssee-demo-preview.mp4",
       poster: "/videos/odyssee-demo-poster.jpg",
       label:
         "52-second demo: a bookseller asks the assistant for climate titles, it filters the grid, answers a question about the author and adds the book to the cart.",
     },
     status: "in progress",
+  },
+  {
+    slug: "portfolio-manon",
+    questions: [
+      "How does Manon add a new shoot?",
+      "How do the photos stay sharp on a phone?",
+      "What happens when she publishes in Sanity?",
+    ],
+    title: "A photographer's site she runs herself",
+    year: "2026",
+    role: "Product, design, build",
+    context: "Portfolio for Manon Battut, outdoor photographer. French and English, photos first, built for the phone.",
+    problem:
+      "Her work is seen on a phone, from an Instagram link. Photos must open full-screen and sharp on a small screen, and she must add a shoot herself, without a developer.",
+    approach: [
+      "Content lives in Sanity: projects, photos, categories and both languages are edited in the Studio. Publishing calls a signed webhook that refreshes only the site's cached content.",
+      "Mobile first: the opening photo has its own crop for phones, and each photo loads at the size of the screen from Sanity's CDN, quality 90.",
+      "Next.js 16 with Cache Components on Vercel: pages stay static until she publishes, and each branch gets a preview link she can open.",
+      "Eight home layouts were compared side by side in a Protolab lab before one went live: an airy slideshow.",
+    ],
+    stack: ["Sanity", "Vercel", "Next.js", "Tailwind", "TypeScript"],
+    image: { src: "/projects/portfolio-manon.jpg", alt: "Home of Manon Battut's portfolio: “Photographe outdoor” over a cyclist at dusk" },
+    links: [{ label: "live", url: "https://portfolio-manon-two.vercel.app" }],
+    status: "shipped",
   },
   {
     slug: "cryospace",
@@ -57,7 +83,7 @@ export const projects: Project[] = [
       "What happens when a tank reports an anomaly?",
       "What does the stack look like?",
     ],
-    title: "Samples, tanks and the cold chain",
+    title: "An assistant for cryogenic sample storage",
     year: "2026",
     role: "Product, data model, build",
     context: "A SaaS for cryogenic biobanks, for an AI studio's life-science client.",
@@ -70,25 +96,8 @@ export const projects: Project[] = [
       "Hexagonal API, previews per branch, a UI kit with stories.",
     ],
     stack: ["NestJS", "Prisma", "PostgreSQL", "React", "TanStack", "Zustand", "Tailwind", "Storybook", "Cloud Run"],
+    image: { src: "/projects/cryospace.jpg", alt: "Freezer inventory: shelves, racks and boxes with their fill rate, and the placement assistant" },
     status: "shipped",
-  },
-  {
-    slug: "claude-garmin",
-    questions: [
-      "What can Claude do with the Garmin data?",
-      "How is the server built?",
-      "Is it open source?",
-    ],
-    title: "Garmin, read by an agent",
-    year: "2026",
-    role: "Author",
-    context: "Side project, MIT.",
-    problem:
-      "Training data sits in an app that answers no questions. Twenty tools expose recovery, load, running dynamics and plans to Claude Desktop.",
-    approach: ["Python MCP server over the Garmin Connect API.", "Feeds the trail section of this site."],
-    stack: ["Python", "MCP"],
-    links: [{ label: "github", url: "https://github.com/Jack-Abyss/claude-garmin" }],
-    status: "open source",
   },
   {
     slug: "this-site",
@@ -108,6 +117,7 @@ export const projects: Project[] = [
       "Storybook for every component, Playwright on desktop and mobile.",
     ],
     stack: ["Next.js", "Tailwind", "GSAP", "MDX", "mcp-handler", "Storybook", "Vitest", "Playwright"],
+    image: { src: "/projects/this-site.jpg", alt: "Home of this notebook: “How can I help?” over the Ask box" },
     links: [{ label: "github", url: "https://github.com/romeohunneaul/portfolio" }],
     status: "in progress",
   },

@@ -30,7 +30,7 @@ export function NavTabs() {
       {tabs.map(({ href, label }) => {
         const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
         return (
-          <TextLink key={href} href={href} current={active} className={`text-row py-1 ${active ? "font-medium" : ""}`}>
+          <TextLink key={href} href={href} current={active} className={`text-row py-1 ${active ? "" : "text-soft hover:text-ink transition-colors"}`}>
             {label}
           </TextLink>
         );
