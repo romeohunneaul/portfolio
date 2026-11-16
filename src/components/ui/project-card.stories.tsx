@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { PROJECT_FRAME } from "./card-frame";
+import { CARD_FRAME } from "./card-frame";
 import { ProjectCard } from "./project-card";
 
 const meta = {
@@ -7,7 +7,7 @@ const meta = {
   component: ProjectCard,
   decorators: [
     (Story) => (
-      <div className={`${PROJECT_FRAME} max-w-sm`}>
+      <div className={`${CARD_FRAME} max-w-sm`}>
         <Story />
       </div>
     ),
@@ -16,7 +16,7 @@ const meta = {
     title: "A catalogue you can talk to",
     stack: ["Next.js", "Vercel AI SDK", "OpenRouter", "LangSmith", "Supabase", "n8n"],
     image: { src: "/projects/odyssee.jpg", alt: "OdysseeAI sign-in screen over a light grid" },
-    more: "See the project →",
+    more: "See the project",
   },
 } satisfies Meta<typeof ProjectCard>;
 

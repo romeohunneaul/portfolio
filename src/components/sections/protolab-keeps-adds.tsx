@@ -164,7 +164,7 @@ export function ProtolabKeepsAdds() {
                           >
                             {num(p.id)}
                           </span>
-                          <span className="font-semibold">{on ? <Highlight punch>{p.title}</Highlight> : p.title}</span>
+                          <span className="font-semibold">{on ? <Highlight>{p.title}</Highlight> : p.title}</span>
                         </button>
                         {on && (
                           <div className="flex flex-col gap-10 pb-5 pl-9 transition-[opacity,translate] duration-500 ease-[var(--swipe-ease)] starting:translate-y-1 starting:opacity-0 motion-reduce:starting:translate-y-0 lg:pb-3">

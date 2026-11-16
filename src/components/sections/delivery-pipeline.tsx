@@ -1,5 +1,4 @@
 import { Chip } from "@/components/ui/chip";
-import { DrawnMark } from "@/components/ui/drawn-mark";
 import { LogoSquare } from "@/components/ui/logo-square";
 import { OpenOnHash } from "@/components/ui/open-on-hash";
 import { brandMarks } from "@/data/brand-marks";
@@ -48,7 +47,6 @@ function LeaderRow({ href, label }: { href: string; label: string }) {
       <a href={href} rel="noreferrer" style={{ textDecoration: "none" }} className="draws text-meta flex items-baseline font-mono">
         <span className="hd">
           <span>{label}</span>
-          <DrawnMark />
         </span>
         {leader}
         <ExternalIcon />
@@ -74,7 +72,6 @@ function SkillRow({ skill }: { skill: LabSkill }) {
       <a href={skill.href} rel="noreferrer" style={{ textDecoration: "none" }} className="draws text-meta flex items-baseline font-mono">
         <span className="hd">
           <span>{skill.name}</span>
-          <DrawnMark />
         </span>
         {source && <span className="text-soft ml-2 shrink-0">{source}</span>}
         {leader}
@@ -126,7 +123,6 @@ export function DeliveryPipeline() {
                   <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                     <span className="hd text-row font-semibold">
                       <span>{s.title}</span>
-                      <DrawnMark />
                     </span>
                     <Chip>{statusLabel[s.status]}</Chip>
                   </span>

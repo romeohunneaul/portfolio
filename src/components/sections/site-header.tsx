@@ -9,7 +9,6 @@ import { NavTabs, tabs } from "./nav-tabs";
 import { TextLink } from "@/components/ui/text-link";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Sticker } from "@/components/ui/sticker";
-import { DrawnMark } from "@/components/ui/drawn-mark";
 import { profile } from "@/data/profile";
 
 /**
@@ -103,7 +102,6 @@ export function SiteHeader() {
                     >
                       <span className={`hd ${active ? "font-semibold" : ""}`}>
                         <span>{label}</span>
-                        <DrawnMark />
                       </span>
                       <span className="text-meta text-soft text-right font-mono">{hint}</span>
                     </Link>

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { DrawnMark } from "./drawn-mark";
 import type { ReactNode } from "react";
 
 type EntryRowProps = {
@@ -24,7 +23,6 @@ export function EntryRow({ title, meta, mark, detail, href }: EntryRowProps) {
         {href ? (
           <span className="hd">
             <span>{title}</span>
-            <DrawnMark />
           </span>
         ) : (
           <span>{title}</span>

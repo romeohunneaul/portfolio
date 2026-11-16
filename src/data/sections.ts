@@ -11,7 +11,7 @@ export const ledes = {
 /** The "Things I've done" block: its heading on the home and on /work, the card's invitation, the link to all of it. */
 export const projectsBlock = {
   label: "Things I’ve done",
-  more: "See the project →",
+  more: "See the project",
   all: "All work",
 } as const;
 

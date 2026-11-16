@@ -1,6 +1,6 @@
 /**
  * A hand-drawn box around a region, in the loud colour: four strokes that overshoot at the corners,
- * drawn one after the other when `on`, the way DrawnMark draws under a link. Lines in percentages
+ * drawn one after the other when `on`, the way a hand would draw them. Lines in percentages
  * keep the pen width whatever the region's size. The parent must be `relative`.
  */
 const STROKES = [
@@ -24,7 +24,7 @@ export function DrawnBox({ on }: { on: boolean }) {
           {...l}
           pathLength={1}
           strokeLinecap="round"
-          // 1 3 + 1.02, as in DrawnMark: at rest the dash sits fully outside the line.
+          // 1 3 + 1.02, at rest the dash sits fully outside the line.
           className={`[stroke-dasharray:1_3] [stroke-width:var(--stroke-fine)] transition-[stroke-dashoffset] duration-[var(--draw-duration)] ease-[var(--draw-ease)] motion-reduce:transition-none ${
             on ? `[stroke-dashoffset:0] ${DELAYS[i]}` : "[stroke-dashoffset:1.02]"
           }`}

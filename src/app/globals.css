@@ -35,7 +35,9 @@
   --text-sticker: var(--size-sticker);
   --text-sticker--line-height: 1.3;
   --radius-*: initial;
-  --radius: 0px;
+  --radius-sm: var(--round-sm);
+  --radius-md: var(--round-md);
+  --radius-lg: var(--round-lg);
 }
 
 body {
@@ -81,99 +83,94 @@ textarea:focus-visible {
   background: var(--highlight-punch);
 }
 
-/* ── The three moves. One-mark rule: highlight = meaning (static),
-   drawn mark = interaction. See tokens/interaction.css. ─────────────── */
+/* ── Interaction (2026-11-16, lab "surfaces"): accent by weight only, no marker, no drawn line.
+   A link underlines under the pointer; the current page keeps a 2px line and the semibold weight.
+   A card or row that opens something lights its border with a gradient (.edge). ──────────── */
 
-/* drawn mark: .hd positions it, the closest .draws draws it */
+/* .hd: the part of a .draws element that underlines (a title, a label) */
 .hd {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
+  text-decoration-line: none;
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 1px;
 }
-.hd .mk {
-  position: absolute;
-  pointer-events: none;
-  overflow: visible;
+.draws:hover .hd,
+.draws:focus-visible .hd,
+.draws.hd:hover,
+.draws.hd:focus-visible {
+  text-decoration-line: underline;
 }
-.hd .mk.under {
-  top: 100%;
-  left: 0;
-  width: 100%;
-  height: 8px;
-  margin-top: 1px;
-}
-.hd .mk.around {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.hd .mk path {
-  /* 1 3 + 1.02: at rest the dash sits fully outside the path — round caps
-     would otherwise leave a phantom dot at one end of every mark. */
-  stroke-dasharray: 1 3;
-  stroke-dashoffset: 1.02;
-  transition: stroke-dashoffset var(--draw-duration) var(--draw-ease);
-}
-.draws:hover .mk path,
-.draws:focus-visible .mk path,
-.draws[data-current="true"] .mk path,
-details[open] > summary .mk path {
-  stroke-dashoffset: 0;
+.draws[data-current="true"] .hd {
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.45em;
+  font-weight: 600;
 }
 
-/* chip: bare soft-ink mono; the marker swipes when its row or card is touched */
+/* .edge: on hover or keyboard focus, the border runs from the loud accent to nothing. The mask keeps
+   only the border ring, so the colour never reaches the content. Needs a positioned, rounded parent. */
+.edge {
+  position: relative;
+}
+.edge::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: var(--border) solid transparent;
+  border-radius: inherit;
+  background: linear-gradient(
+      120deg,
+      var(--accent-strong),
+      color-mix(in srgb, var(--accent-strong) 25%, transparent) 45%,
+      transparent 75%
+    )
+    border-box;
+  mask:
+    linear-gradient(#000 0 0) padding-box exclude,
+    linear-gradient(#000 0 0) border-box;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.edge:hover::after,
+.edge:focus-visible::after,
+.edge:focus-within::after {
+  opacity: 1;
+}
+
+/* chip: a small rounded tag in the body face, soft ink on a hairline. Static: nothing moves on hover. */
 .chip {
   color: var(--ink-soft);
-  transition: color var(--swipe-duration) var(--swipe-ease);
+  border: 1px solid color-mix(in srgb, var(--ink-rule) 40%, transparent);
+  border-radius: var(--round-sm);
 }
-.chip i {
-  position: absolute;
-  inset: 1px -4px;
-  background: var(--marker);
-  pointer-events: none;
-  transform: skewX(var(--swipe-skew)) scaleX(0);
-  transform-origin: 0 50%;
-  transition: transform var(--swipe-duration) var(--swipe-ease);
-}
-.draws:hover .chip i,
-.draws:focus-visible .chip i,
-.chip[data-state="selected"] i {
-  transform: skewX(var(--swipe-skew)) scaleX(1);
-}
-.draws:hover .chip,
-.draws:focus-visible .chip,
 .chip[data-state="selected"] {
   color: var(--ink);
+  border-color: var(--ink);
 }
 .chip[data-state="disabled"] {
   opacity: var(--disabled-opacity);
 }
-.chip[data-state="disabled"] i {
-  display: none;
-}
 
-/* outlined button: ink line + paper shift, never a fill */
+/* outlined button: rounded hairline on the card colour; the paper shows through under the pointer */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: var(--border) solid var(--ink-rule);
-  background: transparent;
-  padding: 7px 13px;
+  border: 1px solid color-mix(in srgb, var(--ink-rule) 60%, transparent);
+  border-radius: var(--round-sm);
+  background: var(--paper-card);
+  padding: 5px 12px;
   color: var(--ink);
+  font-weight: 600;
   cursor: pointer;
   transition:
-    box-shadow 0.16s ease,
-    translate 0.16s ease,
+    background-color 0.16s ease,
+    border-color 0.16s ease,
     opacity 0.16s ease;
 }
 .btn:hover:not(:disabled) {
-  box-shadow: 3px 3px 0 var(--ink);
-  translate: -1px -1px;
-}
-.btn:active:not(:disabled) {
-  box-shadow: 1px 1px 0 var(--ink);
-  translate: 0 0;
+  background: var(--paper);
+  border-color: var(--ink-rule);
 }
 .btn:disabled {
   opacity: var(--disabled-opacity);
@@ -191,16 +188,14 @@ details[open] > summary .mk path {
   height: 26px;
   padding: 0 5px;
   border: var(--border) solid var(--ink-rule);
+  border-radius: var(--round-sm);
   background: var(--paper-card);
   color: var(--ink-soft);
   cursor: pointer;
-  transition:
-    box-shadow var(--draw-duration) var(--draw-ease),
-    translate var(--draw-duration) var(--draw-ease);
+  transition: border-color var(--draw-duration) var(--draw-ease);
 }
 .theme-toggle:hover {
-  box-shadow: 3px 3px 0 var(--ink);
-  translate: -1px -1px;
+  border-color: var(--ink);
 }
 .theme-toggle:focus-visible {
   outline: 2px solid var(--ink);
@@ -214,27 +209,13 @@ details[open] > summary .mk path {
   place-items: center;
   width: 20px;
   height: 20px;
+  border-radius: calc(var(--round-sm) - 2px);
   background: var(--ink);
   color: var(--paper);
   transition: translate var(--swipe-duration) var(--swipe-ease);
 }
 .theme-toggle[aria-checked="true"] .knob {
   translate: 24px 0;
-}
-
-/* the only card: rests off-square, straightens under the pointer */
-.card-tilt {
-  transform: rotate(var(--tilt));
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-article:nth-of-type(even) .card-tilt {
-  transform: rotate(calc(var(--tilt) * -1));
-}
-.card-tilt:hover,
-.card-tilt:focus-visible {
-  transform: rotate(0deg);
 }
 
 /* Logo motions — from the "Logo — variations" board. CSS keyframes only.

@@ -3,7 +3,6 @@ import { NoteCard } from "@/components/ui/note-card";
 import { Reveal } from "@/components/ui/reveal";
 import { AskHero } from "@/components/ask/ask-hero";
 import { Highlight } from "@/components/ui/highlight";
-import { DrawnMark } from "@/components/ui/drawn-mark";
 import { RidgeSketch } from "@/components/ui/ridge-sketch";
 import { Listening } from "@/components/sections/listening";
 import { ProjectsList } from "@/components/sections/projects-list";
@@ -33,10 +32,10 @@ export default async function Home() {
         <div className="flex w-full flex-col items-start pt-10 sm:my-auto sm:items-center sm:pt-0">
           <h1
             id="ask-title-home"
-            className="m-0 text-[length:var(--size-hero)] leading-[var(--leading-hero)] font-semibold text-balance"
+            className="m-0 text-[length:var(--size-hero)] leading-[var(--leading-hero)] font-normal text-balance"
           >
             {askHome.title.before}
-            <Highlight punch>{askHome.title.mark}</Highlight>
+            <Highlight>{askHome.title.mark}</Highlight>
             {askHome.title.after}
           </h1>
           <p className="text-soft m-0 mt-5 max-w-[40em] text-[length:var(--size-hero-lede)] text-balance">{askHome.intro}</p>
@@ -52,10 +51,7 @@ export default async function Home() {
           <span className="max-sm:hidden">
             <RidgeSketch width={64} />
           </span>
-          <span className="hd text-meta font-mono">
-            <span>{askHome.classic} ↓</span>
-            <DrawnMark />
-          </span>
+          <span className="hd text-meta">{askHome.classic} ↓</span>
         </a>
       </section>
 
