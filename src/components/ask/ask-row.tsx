@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import type { AskContext } from "@/lib/ask/context";
 import { DrawnMark } from "@/components/ui/drawn-mark";
-import { CARD_FRAME } from "@/components/ui/card-frame";
+import { PROJECT_FRAME } from "@/components/ui/card-frame";
 import { useAsk } from "./ask-provider";
 
 type AskRowProps = { context: NonNullable<AskContext>; children: ReactNode };
@@ -46,15 +46,10 @@ export function AskRow({ context, children }: AskRowProps) {
   );
 }
 
-type AskCardProps = AskRowProps & {
-  /** From the `sm` breakpoint the card lays its parts out in a row (a `wide` ProjectCard). */
-  wide?: boolean;
-};
-
 /** A card that opens the panel: the whole card is the target, its title takes the drawn underline. */
-export function AskCard({ context, children, wide = false }: AskCardProps) {
+export function AskCard({ context, children }: AskRowProps) {
   return (
-    <button {...useAskTrigger(context)} className={`${CARD_FRAME} h-full w-full cursor-pointer text-left ${wide ? "sm:flex-row" : ""}`}>
+    <button {...useAskTrigger(context)} className={`${PROJECT_FRAME} h-full w-full cursor-pointer text-left`}>
       {children}
     </button>
   );

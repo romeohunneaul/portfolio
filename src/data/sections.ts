@@ -8,6 +8,13 @@ export const ledes = {
   listening: "What is playing while I work, this month.",
 } as const;
 
+/** The "Things I've done" block: its heading on the home and on /work, the card's invitation, the link to all of it. */
+export const projectsBlock = {
+  label: "Things I’ve done",
+  more: "See the project →",
+  all: "All work",
+} as const;
+
 /**
  * The home's opening: one broad question, one field, the notebook one scroll below.
  * `examples` rotate as the placeholder. Each starter fills the field with its example:

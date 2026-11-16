@@ -6,7 +6,7 @@ import { StackGrid } from "@/components/sections/stack-grid";
 import { Timeline } from "@/components/sections/timeline";
 import { profile } from "@/data/profile";
 import { TextLink } from "@/components/ui/text-link";
-import { ledes } from "@/data/sections";
+import { ledes, projectsBlock } from "@/data/sections";
 
 export const metadata: Metadata = { title: "Work", description: "Career, things I’ve done, tools actually used." };
 
@@ -23,7 +23,7 @@ export default function WorkPage() {
         <Timeline variant="full" />
       </Section>
 
-      <Section id="problems" label="Things I’ve done">
+      <Section id="problems" label={projectsBlock.label}>
         <ProjectsList />
       </Section>
 

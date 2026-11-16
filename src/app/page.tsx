@@ -6,11 +6,12 @@ import { Highlight } from "@/components/ui/highlight";
 import { DrawnMark } from "@/components/ui/drawn-mark";
 import { RidgeSketch } from "@/components/ui/ridge-sketch";
 import { Listening } from "@/components/sections/listening";
+import { ProjectsList } from "@/components/sections/projects-list";
 import { ReadingList } from "@/components/sections/reading-list";
 import { Section } from "@/components/sections/section";
 import { Timeline } from "@/components/sections/timeline";
 import { RouteGrid } from "@/components/sections/trail-section";
-import { askHome, ledes } from "@/data/sections";
+import { askHome, ledes, projectsBlock } from "@/data/sections";
 import { loadRoutes } from "@/lib/routes";
 
 /** Ask first: one broad question and the ask box fill the first screen, centred. The notebook
@@ -64,6 +65,10 @@ export default async function Home() {
             <Timeline limit={3} />
           </Section>
         </Reveal>
+
+        <Section id="projects" label={projectsBlock.label} aside={projectsBlock.all} more="/work#problems">
+          <ProjectsList />
+        </Section>
 
         <Section id="lab" label="Lab" lede={ledes.lab} aside={`${notes.length} ${notes.length === 1 ? "note" : "notes"}`}>
           {notes.length > 0 ? (
